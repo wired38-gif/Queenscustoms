@@ -1,32 +1,362 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 
+  <!-- ── HOMEPAGE ─────────────────────────────────────────────────────── -->
   <url>
     <loc>https://queenscustoms.com/</loc>
-    <lastmod>2025-06-01</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://queenscustoms.com/assets/hero.jpeg</image:loc>
-      <image:title>Queens Custom Creations — The Vibe Queen</image:title>
+      <image:loc>https://queenscustoms.com/assets/hero-poster.jpg</image:loc>
+      <image:title>Queens Custom Creations — Reign in Your Style</image:title>
+      <image:caption>Custom epoxy glitter tumblers by The Vibe Queen. Houston, TX.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://queenscustoms.com/assets/artist.jpg</image:loc>
       <image:title>The Vibe Queen — Custom Tumbler Artist Houston TX</image:title>
+      <image:caption>The artist behind Queens Custom Creations — @the_vibe_queen_hbic on TikTok</image:caption>
     </image:image>
     <image:image>
+      <image:loc>https://queenscustoms.com/assets/logo-circle.jpeg</image:loc>
+      <image:title>Queens Custom Creations Logo</image:title>
+    </image:image>
+    <!-- Product images for Google Image Search -->
+    <image:image>
       <image:loc>https://queenscustoms.com/assets/products/fairy-moon.jpg</image:loc>
-      <image:title>Fairy Moon Custom Glitter Tumbler</image:title>
+      <image:title>Fairy Moon Custom Glitter Tumbler — Queens Custom Creations</image:title>
+      <image:caption>Hand-crafted epoxy glitter tumbler. Custom orders $40. Houston TX.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://queenscustoms.com/assets/products/wolf-glow.jpg</image:loc>
       <image:title>Wolf Glow Custom Epoxy Tumbler</image:title>
+      <image:caption>Custom glow epoxy tumbler by The Vibe Queen.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://queenscustoms.com/assets/products/tropical-hibiscus.jpg</image:loc>
-      <image:title>Tropical Hibiscus Custom Tumbler</image:title>
+      <image:title>Tropical Hibiscus Custom Glitter Tumbler</image:title>
+      <image:caption>Tropical-themed custom epoxy tumbler. $40 each.</image:caption>
     </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/blue-ocean-storm.jpg</image:loc>
+      <image:title>Blue Ocean Storm Epoxy Tumbler</image:title>
+      <image:caption>Ocean drip teal blue epoxy resin tumbler. Custom order.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/mountain-galaxy.jpg</image:loc>
+      <image:title>Mountain Galaxy Purple Glitter Tumbler</image:title>
+      <image:caption>Purple galaxy epoxy glitter tumbler. Queens Custom Creations.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/emerald-forest.jpg</image:loc>
+      <image:title>Emerald Forest Custom Epoxy Tumbler</image:title>
+      <image:caption>Fire and ice ombre glitter tumbler with chrome finish.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/be-mine-valentine.jpg</image:loc>
+      <image:title>Be Mine Valentine Rose Gold Tumbler</image:title>
+      <image:caption>Rose gold and champagne glitter tumbler. Perfect Valentine gift.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/mama-mini-set.jpg</image:loc>
+      <image:title>Mama and Mini Matching Tumbler Set — Gift Set</image:title>
+      <image:caption>Matching mama and mini tumbler gift set. Two 20oz tumblers.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/freedom-skull.jpg</image:loc>
+      <image:title>Freedom Skull Midnight Noir Tumbler</image:title>
+      <image:caption>Black epoxy skull tumbler with silver micro-glitter.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/teal-marble-pour.jpg</image:loc>
+      <image:title>Teal Marble Pour Custom Tumbler</image:title>
+      <image:caption>Teal and marble epoxy pour tumbler. Custom glitter art.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/psycho-path.jpg</image:loc>
+      <image:title>Psycho Path Custom Glitter Tumbler</image:title>
+      <image:caption>Bold custom epoxy tumbler design. Queens Custom Creations Houston TX.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/glow-elephant.jpg</image:loc>
+      <image:title>Glow Elephant Custom Epoxy Tumbler</image:title>
+      <image:caption>Glow-in-dark elephant custom tumbler. Hand-crafted.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/butterfly-find-yourself.jpg</image:loc>
+      <image:title>Butterfly Find Yourself Tumbler</image:title>
+      <image:caption>Butterfly-themed custom epoxy glitter tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/walk-by-faith.jpg</image:loc>
+      <image:title>Walk By Faith Custom Tumbler</image:title>
+      <image:caption>Faith-inspired custom glitter tumbler. Queens Custom Creations.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/back-the-blue.jpg</image:loc>
+      <image:title>Back The Blue Custom Epoxy Tumbler</image:title>
+      <image:caption>Blue custom epoxy tumbler. Support thin blue line. $40.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/dont-worry-hippie.jpg</image:loc>
+      <image:title>Don't Worry Hippie Custom Tumbler</image:title>
+      <image:caption>Boho hippie themed custom glitter tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/easter-gnome.jpg</image:loc>
+      <image:title>Easter Gnome Seasonal Tumbler</image:title>
+      <image:caption>Seasonal Easter gnome epoxy tumbler. Limited edition.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/fairy-believing.jpg</image:loc>
+      <image:title>Fairy Believing Custom Glitter Tumbler</image:title>
+      <image:caption>Magical fairy custom epoxy tumbler. Hand-crafted in Houston TX.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/grinch-face.jpg</image:loc>
+      <image:title>Grinch Face Holiday Tumbler</image:title>
+      <image:caption>Holiday Grinch custom epoxy tumbler. Christmas limited edition.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/jack-grinch-mashup.jpg</image:loc>
+      <image:title>Jack and Grinch Mashup Holiday Tumbler</image:title>
+      <image:caption>Jack Skellington and Grinch mashup custom tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/orange-halloween-ghost.jpg</image:loc>
+      <image:title>Orange Halloween Ghost Tumbler</image:title>
+      <image:caption>Halloween ghost custom epoxy tumbler. Seasonal limited edition.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/silver-ghost-boo.jpg</image:loc>
+      <image:title>Silver Ghost Boo Halloween Tumbler</image:title>
+      <image:caption>Silver holographic ghost Halloween custom tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/pink-christmas-tree-green.jpg</image:loc>
+      <image:title>Pink Christmas Tree Green Tumbler</image:title>
+      <image:caption>Pink and green Christmas tree custom holiday tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/pink-christmas-tree-pink.jpg</image:loc>
+      <image:title>Pink Christmas Tree Pink Tumbler</image:title>
+      <image:caption>All-pink Christmas tree custom holiday tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/red-bow-christmas.jpg</image:loc>
+      <image:title>Red Bow Christmas Custom Tumbler</image:title>
+      <image:caption>Red bow holiday glitter tumbler. Christmas gift idea.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/red-stripe-classic.jpg</image:loc>
+      <image:title>Red Stripe Classic Epoxy Tumbler</image:title>
+      <image:caption>Classic red stripe custom epoxy tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/you-serious-clark.jpg</image:loc>
+      <image:title>You Serious Clark Holiday Tumbler</image:title>
+      <image:caption>Christmas Vacation inspired custom holiday tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/your-crazy.jpg</image:loc>
+      <image:title>Your Crazy Custom Glitter Tumbler</image:title>
+      <image:caption>Bold statement custom epoxy glitter tumbler.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p214.jpg</image:loc>
+      <image:title>Custom Order Tumbler — Design Yours</image:title>
+      <image:caption>Custom order tumbler. You pick colors, theme, and vibe.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p215.jpg</image:loc>
+      <image:title>Custom Epoxy Glitter Tumbler — Queens Custom Creations</image:title>
+      <image:caption>Hand-crafted custom tumbler. Houston TX. $40.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p482.jpg</image:loc>
+      <image:title>Custom Glitter Tumbler — The Vibe Queen</image:title>
+      <image:caption>Epoxy glitter tumbler by The Vibe Queen. @the_vibe_queen_hbic</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p595.jpg</image:loc>
+      <image:title>Custom Epoxy Tumbler — Queens Custom Creations Houston</image:title>
+      <image:caption>Custom epoxy tumbler. One-of-a-kind. Ships in 7-10 days.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p614.jpg</image:loc>
+      <image:title>Custom Glitter Tumbler — Queens Custom Creations</image:title>
+      <image:caption>Handcrafted epoxy glitter tumbler by The Vibe Queen.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p620.jpg</image:loc>
+      <image:title>Custom Epoxy Tumbler Design</image:title>
+      <image:caption>Custom tumbler. Houston TX crafter. $40 each.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p621.jpg</image:loc>
+      <image:title>Custom Glitter Cup — Queens Custom Creations</image:title>
+      <image:caption>Hand-poured epoxy glitter cup. Custom orders available.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p622.jpg</image:loc>
+      <image:title>Epoxy Glitter Tumbler — Houston TX</image:title>
+      <image:caption>Custom epoxy tumbler. Ships nationwide. DM to order.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p623.jpg</image:loc>
+      <image:title>Custom Tumbler Art — The Vibe Queen</image:title>
+      <image:caption>Artisan epoxy tumbler. Queens Custom Creations Houston TX.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p624.jpg</image:loc>
+      <image:title>Handcrafted Glitter Tumbler — Custom Order</image:title>
+      <image:caption>Custom glitter and epoxy tumbler. $40 base price.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p625.jpg</image:loc>
+      <image:title>Custom Epoxy Cup — Queens Custom Creations</image:title>
+      <image:caption>One-of-a-kind epoxy tumbler. Custom colors and glitter.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p626.jpg</image:loc>
+      <image:title>Glitter Epoxy Tumbler — The Vibe Queen Houston</image:title>
+      <image:caption>Custom glitter tumbler by The Vibe Queen. 13K TikTok followers.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p627.jpg</image:loc>
+      <image:title>Custom Pour Tumbler — Queens Custom Creations</image:title>
+      <image:caption>Hand-poured epoxy tumbler. Custom design. Houston TX.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p628.jpg</image:loc>
+      <image:title>Epoxy Resin Tumbler — Custom Order Houston</image:title>
+      <image:caption>Custom resin tumbler by Queens Custom Creations.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/p629.jpg</image:loc>
+      <image:title>Custom Glitter Tumbler — Ready to Ship</image:title>
+      <image:caption>Ready-to-ship custom glitter tumbler. Queens Custom Creations.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ── STUDIO / SHOP ─────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://queenscustoms.com/shop/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/logo-circle.jpeg</image:loc>
+      <image:title>Queens Custom Studio — Design Your Tumbler Online</image:title>
+      <image:caption>Interactive Canva-style tumbler builder. Pick colors, glitter, patterns. Order online.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ── BULK ORDERS ───────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://queenscustoms.com/shop/bulk.html</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/mama-mini-set.jpg</image:loc>
+      <image:title>Bulk Custom Tumbler Orders — Bridal, Corporate, Events</image:title>
+      <image:caption>Bulk tumbler orders for weddings, corporate gifts, and events. 4+ units $38 each, 12+ $35 each.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ── PAGE SECTIONS (anchor URLs for Google indexing) ──────────────── -->
+  <url>
+    <loc>https://queenscustoms.com/#shop</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#gallery</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#builder</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#collections</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#sessions</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#amazon-store</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#queen-supplies</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#diy-kit</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#tiktok-section</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#about</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#contact</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#marketplace</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://queenscustoms.com/#wishlist</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
 
 </urlset>
