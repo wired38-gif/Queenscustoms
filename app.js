@@ -642,7 +642,7 @@
 
   function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
-    const btn = document.getElementById('theme-toggle');
+    const btn = document.getElementById('theme-btn');
     if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
   }
 
