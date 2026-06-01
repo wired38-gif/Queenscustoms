@@ -762,3 +762,45 @@ document.addEventListener('DOMContentLoaded', () => {
   initBulkForm();
   updateCartFab();
 });
+
+/* ── Admin Account ──────────────────────────────────── */
+// Admin account is created at first login via the signup form.
+// Use the signup tab to register with your admin email — account
+// persists in localStorage on that device going forward.
+
+/* ── Gate Music Player ──────────────────────────────── */
+(function initGateMusic() {
+  const audio   = document.getElementById('gate-audio');
+  const toggle  = document.getElementById('gm-toggle');
+  const volSldr = document.getElementById('gm-vol');
+  const iconPlay= document.getElementById('gm-icon-play');
+  const iconPause=document.getElementById('gm-icon-pause');
+  if (!audio || !toggle) return;
+
+  audio.volume = 0.05;
+  let playing = false;
+
+  toggle.addEventListener('click', () => {
+    if (playing) {
+      audio.pause();
+      iconPlay.style.display = '';
+      iconPause.style.display = 'none';
+    } else {
+      audio.play().catch(() => {});
+      iconPlay.style.display = 'none';
+      iconPause.style.display = '';
+    }
+    playing = !playing;
+  });
+
+  if (volSldr) {
+    volSldr.addEventListener('input', () => { audio.volume = parseFloat(volSldr.value); });
+  }
+
+  // Also hide music player when logged in (main app has its own)
+  document.addEventListener('qcc:loggedin', () => {
+    const gm = document.getElementById('gate-music');
+    if (gm) gm.style.display = 'none';
+    audio.pause();
+  });
+})();

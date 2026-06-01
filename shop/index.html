@@ -19,12 +19,47 @@
 </head>
 <body>
 
+<!-- ── MUSIC PLAYER (gate) ───────────────────────────── -->
+<div class="gate-music" id="gate-music">
+  <button class="gm-btn" id="gm-toggle" aria-label="Play music">
+    <svg id="gm-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="gm-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+  <span class="gm-label">Vibe Music</span>
+  <input type="range" class="gm-vol" id="gm-vol" min="0" max="1" step="0.05" value="0.05"/>
+</div>
+<audio id="gate-audio" loop src="../assets/vibe-music.mp3"></audio>
+
 <!-- ── AUTH GATE OVERLAY ─────────────────────────────── -->
 <div class="auth-gate" id="auth-gate">
+
+  <!-- Queen background image -->
+  <div class="gate-queen-bg">
+    <img src="../assets/artist.jpg" alt="The Vibe Queen" class="gate-queen-img"/>
+    <div class="gate-queen-overlay"></div>
+  </div>
+
+  <!-- Tagline -->
+  <div class="gate-tagline-wrap">
+    <p class="gate-tagline">"Because your vibe isn't basic."</p>
+  </div>
+
   <div class="auth-gate-inner">
     <img src="../assets/logo-circle.jpeg" alt="Queens Custom Creations" class="gate-logo"/>
     <h1 class="gate-title">Queens Custom Studio</h1>
-    <p class="gate-sub">Sign in to design your tumbler & track your orders</p>
+
+    <!-- What is this / why account -->
+    <div class="gate-explain">
+      <p class="gate-explain-lead">Your personal design space — built for queens who don't do basic.</p>
+      <div class="gate-perks">
+        <div class="gate-perk"><span>🎨</span><span>Design your tumbler live with a Canva-style builder</span></div>
+        <div class="gate-perk"><span>💅</span><span>Pick colors, glitter, patterns & personalize with your name</span></div>
+        <div class="gate-perk"><span>📦</span><span>Place orders & track every creation in your account</span></div>
+        <div class="gate-perk"><span>👑</span><span>Get early access to drops, exclusive coupons & bulk deals</span></div>
+        <div class="gate-perk"><span>✨</span><span>Save your designs & come back anytime</span></div>
+      </div>
+      <p class="gate-explain-why">We ask you to create a free account so The Vibe Queen can personally fulfill every order and keep you updated every step of the way. Your info stays with us — always.</p>
+    </div>
 
     <div class="gate-tabs">
       <button class="gate-tab active" data-tab="login">Sign In</button>
@@ -43,7 +78,7 @@
       </div>
       <p class="gate-msg" id="gate-login-msg"></p>
       <button type="submit" class="btn-gate">Sign In & Start Designing 👑</button>
-      <a href="https://queenscustoms.com" class="gate-back">← Back to main site</a>
+      <a href="https://queenscustoms.com" class="gate-back">← Back to Main Site</a>
     </form>
 
     <!-- Signup -->
@@ -71,7 +106,7 @@
       <p class="gate-msg" id="gate-signup-msg"></p>
       <button type="submit" class="btn-gate">Create Account & Design 👑</button>
       <p class="gate-fine">By signing up you agree to receive order updates and occasional exclusive drops from Queens Custom Creations. We never sell your data.</p>
-      <a href="https://queenscustoms.com" class="gate-back">← Back to main site</a>
+      <a href="https://queenscustoms.com" class="gate-back">← Back to Main Site</a>
     </form>
   </div>
 </div>

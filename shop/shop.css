@@ -1223,3 +1223,124 @@ input,select,textarea { font-family:inherit; font-size:inherit; }
   .cup-grid        { grid-template-columns: repeat(2, 1fr); }
   .glitter-grid    { grid-template-columns: 1fr; }
 }
+
+/* ── Gate Queen Background ──────────────────────────── */
+.gate-queen-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.gate-queen-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.18;
+  filter: saturate(1.4) brightness(0.7);
+}
+.gate-queen-overlay {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(255,26,140,0.08) 0%, rgba(13,13,13,0.85) 70%);
+}
+
+/* ── Gate Tagline ───────────────────────────────────── */
+.gate-tagline-wrap {
+  position: fixed;
+  bottom: 2.5rem; left: 0; right: 0;
+  text-align: center;
+  z-index: 1;
+  pointer-events: none;
+}
+.gate-tagline {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  color: rgba(255,255,255,0.22);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ── Gate Explanation ───────────────────────────────── */
+.gate-explain {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,26,140,0.15);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.gate-explain-lead {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.gate-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.gate-perk {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.4;
+}
+.gate-perk span:first-child { flex-shrink: 0; font-size: 1rem; }
+.gate-explain-why {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 0.75rem;
+  margin: 0;
+}
+
+/* ── Gate Music Player ──────────────────────────────── */
+.gate-music {
+  position: fixed;
+  bottom: 1.25rem; right: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(13,13,13,0.85);
+  border: 1px solid rgba(255,26,140,0.25);
+  border-radius: 50px;
+  padding: 0.45rem 0.9rem 0.45rem 0.5rem;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+}
+.gm-btn {
+  background: var(--pink);
+  border: none;
+  border-radius: 50%;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.gm-btn:hover { transform: scale(1.1); }
+.gm-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+.gm-vol {
+  width: 70px;
+  accent-color: var(--pink);
+}
+
+/* ── Auth gate inner — ensure above queen bg ────────── */
+.auth-gate {
+  position: relative;
+  z-index: 10;
+}
+.auth-gate-inner {
+  position: relative;
+  z-index: 11;
+}
