@@ -1024,9 +1024,34 @@
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- ── Music Player ─────────────────────────────────────── -->
+<div class="music-player paused" id="music-player">
+  <button class="music-toggle-btn" id="music-toggle-btn" aria-label="Play/Pause music">
+    <!-- Play icon (shown when paused) -->
+    <svg id="music-play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+    <!-- Pause icon (hidden when paused) -->
+    <svg id="music-pause-icon" viewBox="0 0 24 24" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+  </button>
+  <div class="music-info">
+    <span class="music-label">Vibe Mode</span>
+    <span class="music-title">Chill &amp; Create ✨</span>
+  </div>
+  <div class="music-bars">
+    <div class="music-bar"></div>
+    <div class="music-bar"></div>
+    <div class="music-bar"></div>
+    <div class="music-bar"></div>
+  </div>
+  <input type="range" class="music-vol" id="music-vol" min="0" max="1" step="0.05" value="0.3" aria-label="Volume">
+</div>
+<audio id="bg-music" loop preload="none">
+  <source src="assets/vibe-music.mp3" type="audio/mpeg">
+</audio>
+
 <script src="app.js"></script>
 <script src="builder.js"></script>
 <script src="auth.js"></script>
 <script src="tiktok.js"></script>
+<script src="music.js"></script>
 </body>
 </html>
