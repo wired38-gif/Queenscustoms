@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://queenscustoms.com/sitemap.xml
+Sitemap: https://queenscustoms.shop/sitemap.xml
 
 # Crawl-delay (be polite to bots)
 Crawl-delay: 1

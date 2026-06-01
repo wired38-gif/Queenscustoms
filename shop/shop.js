@@ -141,7 +141,7 @@ function initAuth() {
       name, hash: simpleHash(pass),
       social, phone,
       signupDate: new Date().toISOString(),
-      source: 'queenscustoms.com/shop',
+      source: 'queenscustoms.shop/shop',
     };
     saveUsers(users);
 
@@ -724,7 +724,7 @@ function initBulkForm() {
       date:     el('bq-date')?.value,
       budget:   el('bq-budget')?.value,
       vision:   el('bq-vision')?.value,
-      source:   'queenscustoms.com/shop/bulk',
+      source:   'queenscustoms.shop/shop/bulk',
       submittedAt: new Date().toISOString(),
     };
     // Save lead
