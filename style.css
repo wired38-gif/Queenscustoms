@@ -199,6 +199,11 @@ h1,h2,h3,h4,h5 {
   border-radius: var(--radius-sm);
   color: var(--text);
   transition: background var(--dur-fast);
+  position: relative;
+  z-index: 210;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(255,26,140,0.2);
+  touch-action: manipulation;
 }
 .ham-btn:hover { background: var(--pink-pale); color: var(--pink); }
 
@@ -3030,33 +3035,40 @@ button.quick-add {
   margin: 0;
 }
 
-/* ── Music Player ─────────────────────────────────────────── */
-.music-player {
+
+/* ── Vibe Selector Player ──────────────────────────────────── */
+.vibe-player {
   position: fixed;
-  bottom: 80px;
+  bottom: 24px;
   right: 20px;
   z-index: 999;
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* Main pill */
+.vibe-pill {
+  display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(13,13,13,0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,26,140,0.3);
+  background: rgba(13,13,13,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,26,140,0.35);
   border-radius: 50px;
   padding: 8px 14px 8px 8px;
   box-shadow: 0 4px 24px rgba(255,26,140,0.2);
-  transition: all 0.3s ease;
-  max-width: 220px;
+  transition: box-shadow 0.3s ease;
 }
-.music-player.collapsed {
-  max-width: 48px;
-  padding: 8px;
-  overflow: hidden;
+.vibe-pill:hover {
+  box-shadow: 0 6px 30px rgba(255,26,140,0.35);
 }
-.music-toggle-btn {
-  width: 34px;
-  height: 34px;
+
+/* Play/Pause button */
+.vibe-toggle-btn {
+  width: 36px; height: 36px;
   border-radius: 50%;
   background: linear-gradient(135deg, #FF1A8C, #cc0066);
   border: none;
@@ -3066,93 +3078,166 @@ button.quick-add {
   justify-content: center;
   flex-shrink: 0;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 10px rgba(255,26,140,0.4);
+  box-shadow: 0 2px 12px rgba(255,26,140,0.45);
+  touch-action: manipulation;
 }
-.music-toggle-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 4px 16px rgba(255,26,140,0.6);
-}
-.music-toggle-btn svg {
-  width: 16px;
+.vibe-toggle-btn:hover { transform: scale(1.08); }
+.vibe-toggle-btn svg   { width: 15px; height: 15px; }
+
+/* Animated bars */
+.vibe-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
   height: 16px;
-  fill: white;
-  stroke: none;
+  flex-shrink: 0;
 }
-.music-info {
+.vibe-bar {
+  width: 3px;
+  background: #FF1A8C;
+  border-radius: 2px;
+  animation: vibeBar 1s ease-in-out infinite;
+  transform-origin: bottom;
+}
+.vibe-bar:nth-child(1){ height:6px;  animation-delay:0s;    }
+.vibe-bar:nth-child(2){ height:13px; animation-delay:0.2s;  }
+.vibe-bar:nth-child(3){ height:8px;  animation-delay:0.4s;  }
+.vibe-bar:nth-child(4){ height:11px; animation-delay:0.15s; }
+.vibe-bars.paused .vibe-bar { animation-play-state: paused; }
+@keyframes vibeBar {
+  0%,100% { transform: scaleY(0.35); }
+  50%      { transform: scaleY(1); }
+}
+
+/* Info text */
+.vibe-info {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  transition: opacity 0.3s ease;
   min-width: 0;
 }
-.music-player.collapsed .music-info {
-  opacity: 0;
-  width: 0;
-  pointer-events: none;
-}
-.music-label {
+.vibe-label-top {
   font-family: 'Satoshi', sans-serif;
-  font-size: 10px;
-  color: rgba(255,255,255,0.5);
+  font-size: 9px;
+  color: rgba(255,255,255,0.45);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   white-space: nowrap;
 }
-.music-title {
+.vibe-label-name {
   font-family: 'Satoshi', sans-serif;
   font-size: 12px;
   font-weight: 600;
   color: #fff;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-.music-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 14px;
+
+/* 🎵 Pick vibe button */
+.vibe-pick-btn {
+  font-size: 16px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(255,26,140,0.15);
+  border: 1px solid rgba(255,26,140,0.3);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  transition: background 0.2s, transform 0.2s;
+  touch-action: manipulation;
 }
-.music-bar {
-  width: 3px;
-  background: #FF1A8C;
-  border-radius: 2px;
-  animation: musicBar 1s ease-in-out infinite;
-  transform-origin: bottom;
-}
-.music-bar:nth-child(1) { height: 6px;  animation-delay: 0s; }
-.music-bar:nth-child(2) { height: 12px; animation-delay: 0.2s; }
-.music-bar:nth-child(3) { height: 8px;  animation-delay: 0.4s; }
-.music-bar:nth-child(4) { height: 10px; animation-delay: 0.1s; }
-.music-player.paused .music-bar { animation-play-state: paused; }
-
-@keyframes musicBar {
-  0%, 100% { transform: scaleY(0.4); }
-  50%       { transform: scaleY(1); }
+.vibe-pick-btn:hover,
+.vibe-pick-btn.active {
+  background: rgba(255,26,140,0.3);
+  transform: rotate(15deg) scale(1.1);
 }
 
-/* volume slider */
-.music-vol {
+/* Volume slider */
+.vibe-vol {
   -webkit-appearance: none;
   appearance: none;
-  width: 60px;
+  width: 55px;
   height: 3px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.18);
   border-radius: 2px;
   outline: none;
-  flex-shrink: 0;
   cursor: pointer;
+  flex-shrink: 0;
 }
-.music-vol::-webkit-slider-thumb {
+.vibe-vol::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
+  width: 11px; height: 11px;
   border-radius: 50%;
   background: #FF1A8C;
   cursor: pointer;
 }
-.music-player.collapsed .music-vol,
-.music-player.collapsed .music-bars {
+
+/* Picker panel */
+.vibe-picker {
+  background: rgba(13,13,13,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,26,140,0.3);
+  border-radius: 18px;
+  padding: 14px 16px;
   display: none;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,26,140,0.1);
+  animation: vibePickerIn 0.2s var(--ease-out, cubic-bezier(0.16,1,0.3,1));
+}
+.vibe-picker.open { display: flex; }
+@keyframes vibePickerIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.vibe-picker-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+.vibe-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vibe-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, transform 0.15s;
+  touch-action: manipulation;
+  text-align: left;
+}
+.vibe-opt:hover {
+  background: rgba(255,26,140,0.12);
+  border-color: rgba(255,26,140,0.3);
+  transform: translateX(-2px);
+}
+.vibe-opt.active {
+  background: rgba(255,26,140,0.18);
+  border-color: rgba(255,26,140,0.5);
+}
+.vibe-opt-emoji { font-size: 18px; flex-shrink: 0; }
+.vibe-opt-label {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+}
+.vibe-opt.active .vibe-opt-label { color: #FF1A8C; font-weight: 700; }
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .vibe-player { bottom: 16px; right: 12px; }
+  .vibe-info   { display: none; }
+  .vibe-vol    { width: 44px; }
 }

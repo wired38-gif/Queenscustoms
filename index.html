@@ -163,7 +163,7 @@
 <!-- ── HEADER ───────────────────────────────────────── -->
 <header class="site-header" id="site-header">
   <div class="header-inner">
-    <button class="ham-btn" id="ham-btn" aria-label="Open menu">
+    <button class="ham-btn" id="ham-btn" aria-label="Open menu" onclick="(function(){var n=document.getElementById('mob-nav'),o=document.getElementById('mob-overlay');if(n){n.classList.toggle('open');if(o)o.classList.toggle('open');document.body.style.overflow=n.classList.contains('open')?'hidden':'';}})();">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <a href="#" class="logo-wrap"><img src="assets/logo-standalone.jpeg" alt="Queens Custom Creations" class="site-logo"/></a>
@@ -1157,30 +1157,6 @@
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
-
-<!-- ── Music Player ─────────────────────────────────────── -->
-<div class="music-player paused" id="music-player">
-  <button class="music-toggle-btn" id="music-toggle-btn" aria-label="Play/Pause music">
-    <!-- Play icon (shown when paused) -->
-    <svg id="music-play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-    <!-- Pause icon (hidden when paused) -->
-    <svg id="music-pause-icon" viewBox="0 0 24 24" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-  </button>
-  <div class="music-info">
-    <span class="music-label">Vibe Mode</span>
-    <span class="music-title">Chill &amp; Create ✨</span>
-  </div>
-  <div class="music-bars">
-    <div class="music-bar"></div>
-    <div class="music-bar"></div>
-    <div class="music-bar"></div>
-    <div class="music-bar"></div>
-  </div>
-  <input type="range" class="music-vol" id="music-vol" min="0" max="1" step="0.05" value="0.15" aria-label="Volume">
-</div>
-<audio id="bg-music" loop preload="none">
-  <source src="assets/vibe-music.mp3" type="audio/mpeg">
-</audio>
 
 <script src="app.js"></script>
 <script src="builder.js"></script>

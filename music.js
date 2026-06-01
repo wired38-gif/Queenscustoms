@@ -1,79 +1,175 @@
-/* Queens Custom Creations — Background Music Player */
+/* Queens Custom Creations — Vibe Selector Music Player */
 (function () {
-  const audio     = document.getElementById('bg-music');
-  const player    = document.getElementById('music-player');
-  const toggleBtn = document.getElementById('music-toggle-btn');
-  const playIcon  = document.getElementById('music-play-icon');
-  const pauseIcon = document.getElementById('music-pause-icon');
-  const volSlider = document.getElementById('music-vol');
 
-  if (!audio || !player || !toggleBtn) return;
+  const VIBES = [
+    { id: 'chill',   label: 'Chill',        emoji: '✨', src: 'assets/vibe-music.mp3',   desc: 'Lo-fi chill' },
+    { id: 'jazz',    label: 'Smooth Jazz',   emoji: '🎷', src: 'assets/vibe-jazz.mp3',    desc: 'Smooth jazz' },
+    { id: 'cafe',    label: 'French Café',   emoji: '☕', src: 'assets/vibe-jazz.mp3',    desc: 'French café' },
+    { id: 'upbeat',  label: 'Upbeat',        emoji: '⚡', src: 'assets/vibe-upbeat.mp3',  desc: 'Upbeat energy' },
+    { id: 'pop',     label: 'Pop',           emoji: '🎀', src: 'assets/vibe-upbeat.mp3',  desc: 'Pop vibes' },
+  ];
 
-  // Restore saved volume & state
-  const savedVol     = parseFloat(localStorage.getItem('qcc_music_vol') ?? '0.15');
-  const savedPlaying = localStorage.getItem('qcc_music_playing') === 'true';
+  let currentVibe = localStorage.getItem('qcc_vibe') || 'chill';
+  let isOpen      = false;
+  const DEFAULT_VOL = 0.15;
 
-  audio.volume = savedVol;
+  /* ── Build HTML ───────────────────────────────────────── */
+  const playerHTML = `
+<div class="vibe-player" id="vibe-player">
+
+  <!-- Main pill -->
+  <div class="vibe-pill" id="vibe-pill">
+    <button class="vibe-toggle-btn" id="vibe-toggle-btn" aria-label="Play/Pause">
+      <svg class="vibe-icon-play" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg class="vibe-icon-pause" viewBox="0 0 24 24" fill="white" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    </button>
+    <div class="vibe-bars" id="vibe-bars">
+      <div class="vibe-bar"></div>
+      <div class="vibe-bar"></div>
+      <div class="vibe-bar"></div>
+      <div class="vibe-bar"></div>
+    </div>
+    <div class="vibe-info">
+      <span class="vibe-label-top">Vibe Mode</span>
+      <span class="vibe-label-name" id="vibe-label-name">Chill ✨</span>
+    </div>
+    <button class="vibe-pick-btn" id="vibe-pick-btn" aria-label="Pick your vibe">
+      🎵
+    </button>
+    <input type="range" class="vibe-vol" id="vibe-vol" min="0" max="1" step="0.05" value="${DEFAULT_VOL}" aria-label="Volume">
+  </div>
+
+  <!-- Vibe picker panel -->
+  <div class="vibe-picker" id="vibe-picker">
+    <p class="vibe-picker-title">Pick Your Vibe</p>
+    <div class="vibe-options" id="vibe-options">
+      ${VIBES.map(v => `
+      <button class="vibe-opt${v.id === currentVibe ? ' active' : ''}" data-vibe="${v.id}" aria-label="${v.label}">
+        <span class="vibe-opt-emoji">${v.emoji}</span>
+        <span class="vibe-opt-label">${v.label}</span>
+      </button>`).join('')}
+    </div>
+  </div>
+
+</div>`;
+
+  /* ── Inject into page ─────────────────────────────────── */
+  document.body.insertAdjacentHTML('beforeend', playerHTML);
+
+  const audio      = document.createElement('audio');
+  audio.loop       = true;
+  audio.preload    = 'none';
+  document.body.appendChild(audio);
+
+  /* ── Get elements ─────────────────────────────────────── */
+  const player     = document.getElementById('vibe-player');
+  const toggleBtn  = document.getElementById('vibe-toggle-btn');
+  const pickBtn    = document.getElementById('vibe-pick-btn');
+  const picker     = document.getElementById('vibe-picker');
+  const labelName  = document.getElementById('vibe-label-name');
+  const bars       = document.getElementById('vibe-bars');
+  const volSlider  = document.getElementById('vibe-vol');
+  const opts       = document.querySelectorAll('.vibe-opt');
+
+  /* ── State ────────────────────────────────────────────── */
+  const savedVol = parseFloat(localStorage.getItem('qcc_music_vol') || DEFAULT_VOL);
+  audio.volume   = savedVol;
   if (volSlider) volSlider.value = savedVol;
-  audio.loop = true; // always loop
+
+  function getVibe(id) {
+    return VIBES.find(v => v.id === id) || VIBES[0];
+  }
+
+  function loadVibe(id, autoplay) {
+    const vibe = getVibe(id);
+    currentVibe = id;
+    localStorage.setItem('qcc_vibe', id);
+
+    // Update source only if changed
+    if (audio.src !== new URL(vibe.src, location.href).href) {
+      const wasPlaying = !audio.paused;
+      audio.src = vibe.src;
+      audio.load();
+      if (wasPlaying || autoplay) {
+        audio.play().catch(() => {});
+      }
+    }
+
+    // Update label
+    if (labelName) labelName.textContent = `${vibe.label} ${vibe.emoji}`;
+
+    // Update active button
+    opts.forEach(o => o.classList.toggle('active', o.dataset.vibe === id));
+  }
 
   function setPlayState(playing) {
     if (playing) {
+      if (!audio.src) loadVibe(currentVibe, true);
       audio.play().catch(() => {});
-      player.classList.remove('paused');
-      playIcon.style.display  = 'none';
-      pauseIcon.style.display = '';
+      bars.classList.remove('paused');
+      toggleBtn.querySelector('.vibe-icon-play').style.display  = 'none';
+      toggleBtn.querySelector('.vibe-icon-pause').style.display = '';
     } else {
       audio.pause();
-      player.classList.add('paused');
-      playIcon.style.display  = '';
-      pauseIcon.style.display = 'none';
+      bars.classList.add('paused');
+      toggleBtn.querySelector('.vibe-icon-play').style.display  = '';
+      toggleBtn.querySelector('.vibe-icon-pause').style.display = 'none';
     }
     localStorage.setItem('qcc_music_playing', playing);
   }
 
-  // Toggle on button click
-  toggleBtn.addEventListener('click', () => {
-    const isPlaying = !audio.paused;
-    setPlayState(!isPlaying);
+  /* ── Events ───────────────────────────────────────────── */
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setPlayState(audio.paused);
   });
 
-  // Volume slider
-  if (volSlider) {
-    volSlider.addEventListener('input', () => {
-      audio.volume = parseFloat(volSlider.value);
-      localStorage.setItem('qcc_music_vol', volSlider.value);
+  pickBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isOpen = !isOpen;
+    picker.classList.toggle('open', isOpen);
+    pickBtn.classList.toggle('active', isOpen);
+  });
+
+  // Close picker when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!player.contains(e.target)) {
+      isOpen = false;
+      picker.classList.remove('open');
+      pickBtn.classList.remove('active');
+    }
+  });
+
+  // Vibe option click
+  opts.forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      loadVibe(opt.dataset.vibe, true);
+      isOpen = false;
+      picker.classList.remove('open');
+      pickBtn.classList.remove('active');
     });
-  }
-
-  // Collapse/expand on player click (anywhere except button & slider)
-  player.addEventListener('click', (e) => {
-    if (e.target === toggleBtn || toggleBtn.contains(e.target)) return;
-    if (e.target === volSlider) return;
-    player.classList.toggle('collapsed');
   });
 
-  // Auto-play on first user interaction with page (browser policy)
-  let hasAutoPlayed = false;
+  // Volume
+  volSlider.addEventListener('input', () => {
+    audio.volume = parseFloat(volSlider.value);
+    localStorage.setItem('qcc_music_vol', volSlider.value);
+  });
+
+  /* ── Auto-play on first interaction ───────────────────── */
+  loadVibe(currentVibe, false);
+
+  let autoPlayed = false;
   function tryAutoPlay() {
-    if (hasAutoPlayed) return;
-    hasAutoPlayed = true;
-    // Only auto-play if user hasn't explicitly turned it off
+    if (autoPlayed) return;
+    autoPlayed = true;
     if (localStorage.getItem('qcc_music_playing') !== 'false') {
       setPlayState(true);
     }
-    document.removeEventListener('click', tryAutoPlay);
-    document.removeEventListener('scroll', tryAutoPlay);
-    document.removeEventListener('touchstart', tryAutoPlay);
   }
-
-  document.addEventListener('click', tryAutoPlay, { once: true });
-  document.addEventListener('scroll', tryAutoPlay, { once: true });
+  document.addEventListener('click',      tryAutoPlay, { once: true });
+  document.addEventListener('scroll',     tryAutoPlay, { once: true });
   document.addEventListener('touchstart', tryAutoPlay, { once: true });
 
-  // Restore previous play state
-  if (savedPlaying) {
-    // Will be handled by first interaction due to browser autoplay policy
-    // Show as "should be playing" so first interaction triggers it
-  }
 })();
