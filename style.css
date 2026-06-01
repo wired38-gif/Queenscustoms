@@ -3366,3 +3366,23 @@ button.quick-add {
 @media (max-width: 380px) {
   .qs-grid { grid-template-columns: 1fr; }
 }
+
+/* ---------- Studio nav link ---------- */
+.nav-studio-link {
+  color: var(--pink) !important;
+  font-weight: 600 !important;
+  position: relative;
+}
+.nav-studio-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 2px;
+  background: var(--pink);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+.nav-studio-link:hover {
+  color: #fff !important;
+  text-shadow: 0 0 12px rgba(255,26,140,0.8);
+}
