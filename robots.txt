@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://queenscustoms.com/sitemap.xml
+
+# Crawl-delay (be polite to bots)
+Crawl-delay: 1
+
+# Block private/utility paths
+Disallow: /assets/videos/

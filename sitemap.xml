@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://queenscustoms.com/</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/hero.jpeg</image:loc>
+      <image:title>Queens Custom Creations — The Vibe Queen</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/artist.jpg</image:loc>
+      <image:title>The Vibe Queen — Custom Tumbler Artist Houston TX</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/fairy-moon.jpg</image:loc>
+      <image:title>Fairy Moon Custom Glitter Tumbler</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/wolf-glow.jpg</image:loc>
+      <image:title>Wolf Glow Custom Epoxy Tumbler</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://queenscustoms.com/assets/products/tropical-hibiscus.jpg</image:loc>
+      <image:title>Tropical Hibiscus Custom Tumbler</image:title>
+    </image:image>
+  </url>
+
+</urlset>
