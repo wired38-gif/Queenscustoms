@@ -898,3 +898,133 @@
   }
 
 })();
+
+/* ── DIY Kit Add to Cart ─────────────────────────────── */
+window.addDIYKit = function() {
+  const item = {
+    id: 'diy-kit-10',
+    name: 'Custom DIY Shopping List & Instruction Kit',
+    price: 10,
+    emoji: '📋',
+    qty: 1,
+  };
+  if (typeof addToCart === 'function') {
+    addToCart(item);
+    showToast('DIY Kit added to cart — DM us your design vision after checkout!', 'success');
+  } else {
+    window.addToCart && window.addToCart(item);
+    window.showToast && window.showToast('DIY Kit added to cart!', 'success');
+  }
+};
+
+/* ══════════════════════════════════════════════════════════
+   WISHLIST / PRODUCT VOTE
+   ══════════════════════════════════════════════════════════ */
+(function() {
+  const WISH_KEY = 'qcc_wishes';
+  const VOTED_KEY = 'qcc_voted';
+
+  function loadWishes() {
+    try { return JSON.parse(localStorage.getItem(WISH_KEY)) || {}; } catch(_) { return {}; }
+  }
+
+  function saveWishes(w) {
+    try { localStorage.setItem(WISH_KEY, JSON.stringify(w)); } catch(_) {}
+  }
+
+  function loadVoted() {
+    try { return JSON.parse(localStorage.getItem(VOTED_KEY)) || []; } catch(_) { return []; }
+  }
+
+  function saveVoted(v) {
+    try { localStorage.setItem(VOTED_KEY, JSON.stringify(v)); } catch(_) {}
+  }
+
+  function renderCounts() {
+    const wishes = loadWishes();
+    document.querySelectorAll('.wish-item[data-item]').forEach(btn => {
+      const key = btn.dataset.item;
+      if (key === 'custom') return;
+      const count = wishes[key] || 0;
+      const countEl = btn.querySelector('.wish-count');
+      if (countEl) countEl.textContent = count;
+      const voted = loadVoted();
+      if (voted.includes(key)) {
+        btn.classList.add('wish-item--voted');
+        const vb = btn.querySelector('.wish-vote-btn');
+        if (vb) vb.textContent = 'Voted ♥';
+      }
+    });
+    renderLeaderboard(wishes);
+  }
+
+  function renderLeaderboard(wishes) {
+    const lb = document.getElementById('wishlist-leaderboard');
+    if (!lb) return;
+    const sorted = Object.entries(wishes)
+      .filter(([,v]) => v > 0)
+      .sort((a,b) => b[1] - a[1])
+      .slice(0, 5);
+    if (sorted.length === 0) {
+      lb.innerHTML = '<p class="board-empty">Be the first to vote! Every vote tells The Vibe Queen what to make next.</p>';
+      return;
+    }
+    lb.innerHTML = sorted.map(([name, count], i) => `
+      <div class="board-row">
+        <span class="board-rank">${['👑','✨','🔥','⭐','💫'][i] || (i+1)}</span>
+        <span class="board-name">${name}</span>
+        <span class="board-count">${count} vote${count !== 1 ? 's' : ''}</span>
+      </div>
+    `).join('');
+  }
+
+  window.voteWish = function(btn) {
+    const key = btn.dataset.item;
+    if (!key || key === 'custom') return;
+    const voted = loadVoted();
+    if (voted.includes(key)) {
+      window.showToast && window.showToast('You already voted for this one! 👑', 'info');
+      return;
+    }
+    const wishes = loadWishes();
+    wishes[key] = (wishes[key] || 0) + 1;
+    saveWishes(wishes);
+    voted.push(key);
+    saveVoted(voted);
+    renderCounts();
+    window.showToast && window.showToast(`Vote cast for "${key}"! 🗳️`, 'success');
+  };
+
+  window.openSuggest = function() {
+    const bar = document.getElementById('suggest-bar');
+    if (bar) { bar.style.display = 'block'; bar.querySelector('input')?.focus(); }
+  };
+
+  window.closeSuggest = function() {
+    const bar = document.getElementById('suggest-bar');
+    if (bar) bar.style.display = 'none';
+  };
+
+  window.submitSuggest = function() {
+    const input = document.getElementById('suggest-input');
+    const val = input?.value?.trim();
+    if (!val) return;
+    const wishes = loadWishes();
+    wishes[val] = (wishes[val] || 0) + 1;
+    const voted = loadVoted();
+    voted.push(val);
+    saveWishes(wishes);
+    saveVoted(voted);
+    input.value = '';
+    window.closeSuggest();
+    renderCounts();
+    window.showToast && window.showToast(`"${val}" submitted! The Vibe Queen will see it. 👑`, 'success');
+  };
+
+  // Init on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderCounts);
+  } else {
+    renderCounts();
+  }
+})();
