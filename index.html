@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Queens Custom Creations — Hand-Crafted Custom Tumblers</title>
+  <meta name="description" content="Luxury hand-crafted custom epoxy glitter tumblers by The Vibe Queen. 13K+ TikTok followers. Shop, configure your dream tumbler, or request a fully custom piece. Queenscustoms.com"/>
+  <meta property="og:title" content="Queens Custom Creations — Custom Tumblers &amp; Drinkware"/>
+  <meta property="og:description" content="Design your custom tumbler — choose your cup, colors, glitter, and theme. Made by The Vibe Queen."/>
+  <meta property="og:image" content="assets/hero.jpeg"/>
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ── ANNOUNCEMENT BAR ─────────────────────────────── -->
+<div class="announce-bar">
+  <div class="announce-track">
+    <span>👑 FREE SHIPPING on orders over $75 — code <strong>QUEEN75</strong></span>
+    <span>✨ Custom orders from <strong>$40</strong> — DM <strong>@the_vibe_queen_hbic</strong> on TikTok</span>
+    <span>🎀 Ready-to-ship tumblers — each handcrafted piece is one-of-a-kind</span>
+    <span>💅 New drops every week — follow on TikTok &amp; TikTok Shop</span>
+    <span>👑 FREE SHIPPING on orders over $75 — code <strong>QUEEN75</strong></span>
+    <span>✨ Custom orders from <strong>$40</strong> — DM <strong>@the_vibe_queen_hbic</strong> on TikTok</span>
+    <span>🎀 Ready-to-ship tumblers — each handcrafted piece is one-of-a-kind</span>
+    <span>💅 New drops every week — follow on TikTok &amp; TikTok Shop</span>
+  </div>
+</div>
+
+<!-- ── HEADER ───────────────────────────────────────── -->
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <button class="ham-btn" id="ham-btn" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="#" class="logo-wrap"><img src="assets/logo-standalone.jpeg" alt="Queens Custom Creations" class="site-logo"/></a>
+    <nav class="main-nav">
+      <a href="#shop">Shop</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#builder">Design Yours</a>
+      <a href="#collections">Collections</a>
+      <a href="#tiktok">TikTok</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="hdr-actions">
+      <button class="icon-btn" id="search-btn" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+      <button class="icon-btn user-btn" id="user-btn" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="user-name-badge" id="user-name-badge"></span>
+      </button>
+      <button class="icon-btn cart-btn" id="cart-btn" aria-label="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+      <button class="icon-btn" id="theme-btn" data-theme-toggle aria-label="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="search-bar" id="search-bar">
+    <div class="search-bar-inner">
+      <input type="search" id="search-input" placeholder="Search tumblers, glitter cups, custom orders…"/>
+      <button id="search-close" aria-label="Close search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav overlay + drawer -->
+<div class="mob-overlay" id="mob-overlay"></div>
+<nav class="mob-nav" id="mob-nav">
+  <button class="mob-close" id="mob-close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  <a href="#shop" class="mob-link">Shop</a>
+  <a href="#gallery" class="mob-link">Gallery</a>
+  <a href="#builder" class="mob-link">Design Your Tumbler</a>
+  <a href="#collections" class="mob-link">Collections</a>
+  <a href="#tiktok" class="mob-link">TikTok</a>
+  <a href="#about" class="mob-link">About</a>
+  <a href="#contact" class="mob-link">Contact</a>
+  <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="mob-tiktok-link">Follow @the_vibe_queen_hbic 👑</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-bg"><img src="assets/hero.jpeg" alt="The Vibe Queen" class="hero-img"/><div class="hero-overlay"></div></div>
+  <div class="hero-body">
+    <p class="eyebrow">Handcrafted Luxury</p>
+    <h1 class="hero-title">Reign in<br/><em>Your</em>&nbsp;Style</h1>
+    <p class="hero-sub">Custom epoxy glitter tumblers — each a one-of-a-kind masterpiece. Made by The Vibe Queen.</p>
+    <div class="hero-ctas">
+      <a href="#builder" class="btn btn-pink">Design Your Tumbler 👑</a>
+      <a href="#shop" class="btn btn-ghost-white">Shop Ready-to-Ship</a>
+    </div>
+    <div class="proof-row">
+      <span class="proof-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.25 8.25 0 0 0 4.83 1.56V6.86a4.85 4.85 0 0 1-1.06-.17z"/></svg>13K+ Followers</span>
+      <span class="proof-pill">👑 Est. 2022</span>
+      <span class="proof-pill">✨ 100% Handcrafted</span>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m19 9-7 7-7-7"/></svg></div>
+</section>
+
+<!-- ── PROMO BANNER ─────────────────────────────────── -->
+<section class="promo-band">
+  <div class="promo-inner">
+    <span class="promo-crown">👑</span>
+    <div><h2 class="promo-title">Royal Debut Sale</h2><p>Use code <strong class="coupon-pill" id="coupon-text">QUEEN20</strong> for 20% off your first order</p></div>
+    <div class="promo-btns">
+      <button class="btn btn-white copy-btn" id="copy-btn" data-code="QUEEN20">Copy Code</button>
+      <a href="#builder" class="btn btn-ghost-white-sm">Design Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLLECTIONS GRID ─────────────────────────────── -->
+<section class="section bg-surface" id="collections">
+  <div class="section-hdr"><span class="eyebrow-pink">Browse by Vibe</span><h2 class="section-title">The Collections</h2></div>
+  <div class="collections-grid">
+    <a href="#shop" class="col-tile tile-1"><div class="tile-body"><span class="tile-ico">✨</span><h3>Glitter Queens</h3><p>Chunky, opal &amp; holographic glitter works</p><span class="tile-arrow">Shop →</span></div></a>
+    <a href="#shop" class="col-tile tile-2"><div class="tile-body"><span class="tile-ico">👑</span><h3>Custom Royalty</h3><p>Personalized with your name, colors &amp; vibe</p><span class="tile-arrow">Order →</span></div></a>
+    <a href="#shop" class="col-tile tile-3"><div class="tile-body"><span class="tile-ico">📦</span><h3>Ready to Ship</h3><p>In-stock pieces shipping within 5 days</p><span class="tile-arrow">Shop →</span></div></a>
+    <a href="#shop" class="col-tile tile-4"><div class="tile-body"><span class="tile-ico">🎀</span><h3>Seasonal Drops</h3><p>Holiday &amp; limited edition releases</p><span class="tile-arrow">Shop →</span></div></a>
+    <a href="#shop" class="col-tile tile-5"><div class="tile-body"><span class="tile-ico">🎁</span><h3>Gift Sets</h3><p>Curated sets — perfect for any occasion</p><span class="tile-arrow">Shop →</span></div></a>
+    <a href="#tiktok" class="col-tile tile-6"><div class="tile-body"><span class="tile-ico">🔴</span><h3>Live Drops</h3><p>Exclusive TikTok Live event pieces</p><span class="tile-arrow">Watch →</span></div></a>
+  </div>
+</section>
+
+<!-- ── SHOP GRID ────────────────────────────────────── -->
+<section class="section bg-white" id="shop">
+  <div class="section-hdr"><span class="eyebrow-pink">Ready to Ship</span><h2 class="section-title">Shop the Crown Collection</h2><p class="section-sub">Every piece is hand-crafted. No two are exactly alike. Each tumbler starts at $40.</p></div>
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="glitter">Glitter</button>
+    <button class="filter-btn" data-filter="custom">Custom</button>
+    <button class="filter-btn" data-filter="seasonal">Seasonal</button>
+    <button class="filter-btn" data-filter="sets">Sets</button>
+  </div>
+  <div class="product-grid" id="product-grid">
+    <article class="p-card fade-in" data-cat="glitter"><div class="p-img pi-pink"><span class="pi-ico">✨</span><span class="pi-lbl">Pink Glitter Queen</span><span class="p-badge new">New</span><span class="p-urgency">🔥 Only 1 Left!</span><button class="quick-add" data-id="1" data-name="Pink Glitter Queen Tumbler" data-price="40">+ Quick Add</button></div><div class="p-info"><h3 class="p-name">Pink Glitter Queen Tumbler</h3><p class="p-desc">Chunky pink &amp; holographic glitter. 30oz Stanley-style.</p><div class="p-footer"><span class="p-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="1" data-name="Pink Glitter Queen Tumbler" data-price="40">Add to Cart</button></div></div></article>
+    <article class="p-card fade-in" data-cat="glitter"><div class="p-img pi-black"><span class="pi-ico">💎</span><span class="pi-lbl">Midnight Noir</span><span class="p-badge hot">Hot</span><button class="quick-add" data-id="2" data-name="Midnight Noir Tumbler" data-price="40">+ Quick Add</button></div><div class="p-info"><h3 class="p-name">Midnight Noir Tumbler</h3><p class="p-desc">Black epoxy with silver micro-glitter &amp; crystal accents.</p><div class="p-footer"><span class="p-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="2" data-name="Midnight Noir Tumbler" data-price="40">Add to Cart</button></div></div></article>
+    <article class="p-card fade-in" data-cat="seasonal"><div class="p-img pi-rose"><span class="pi-ico">🌸</span><span class="pi-lbl">Rose Gold Royale</span><span class="p-urgency">⚡ Only 1 Left!</span><button class="quick-add" data-id="3" data-name="Rose Gold Royale Tumbler" data-price="40">+ Quick Add</button></div><div class="p-info"><h3 class="p-name">Rose Gold Royale Tumbler</h3><p class="p-desc">Rose gold &amp; champagne glitter in a dreamy ombre pour.</p><div class="p-footer"><span class="p-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="3" data-name="Rose Gold Royale Tumbler" data-price="40">Add to Cart</button></div></div></article>
+    <article class="p-card fade-in" data-cat="glitter"><div class="p-img pi-purple"><span class="pi-ico">👑</span><span class="pi-lbl">Purple Reign</span><span class="p-badge hot">Hot</span><button class="quick-add" data-id="4" data-name="Purple Reign Tumbler" data-price="40">+ Quick Add</button></div><div class="p-info"><h3 class="p-name">Purple Reign Tumbler</h3><p class="p-desc">Deep purple with galaxy glitter. Queen energy only.</p><div class="p-footer"><span class="p-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="4" data-name="Purple Reign Tumbler" data-price="40">Add to Cart</button></div></div></article>
+    <article class="p-card fade-in" data-cat="sets"><div class="p-img pi-gold"><span class="pi-ico">🎁</span><span class="pi-lbl">Queen's Duo Set</span><span class="p-badge sale">Save $20</span><button class="quick-add" data-id="5" data-name="Queen's Duo Gift Set" data-price="60">+ Quick Add</button></div><div class="p-info"><h3 class="p-name">Queen's Duo Gift Set</h3><p class="p-desc">Two matching 20oz tumblers — perfect for gifting.</p><div class="p-footer"><div><span class="p-price">$60.00</span><span class="p-orig">$80.00</span></div><button class="btn btn-pink btn-xs add-to-cart" data-id="5" data-name="Queen's Duo Gift Set" data-price="60">Add to Cart</button></div></div></article>
+    <article class="p-card fade-in" data-cat="seasonal"><div class="p-img pi-teal"><span class="pi-ico">💙</span><span class="pi-lbl">Ocean Drip</span><span class="p-urgency">🔥 Only 1 Left!</span><button class="quick-add" data-id="6" data-name="Ocean Drip Tumbler" data-price="40">+ Quick Add</button></div><div class="p-info"><h3 class="p-name">Ocean Drip Tumbler</h3><p class="p-desc">Teal &amp; aqua resin pour with silver flake accents.</p><div class="p-footer"><span class="p-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="6" data-name="Ocean Drip Tumbler" data-price="40">Add to Cart</button></div></div></article>
+    <article class="p-card fade-in" data-cat="glitter"><div class="p-img pi-fire"><span class="pi-ico">🔥</span><span class="pi-lbl">Fire &amp; Ice</span><span class="p-badge new">New</span><button class="quick-add" data-id="7" data-name="Fire & Ice Tumbler" data-price="40">+ Quick Add</button></div><div class="p-info"><h3 class="p-name">Fire &amp; Ice Tumbler</h3><p class="p-desc">Red-to-icy-blue ombre glitter with chrome finish.</p><div class="p-footer"><span class="p-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="7" data-name="Fire & Ice Tumbler" data-price="40">Add to Cart</button></div></div></article>
+    <article class="p-card fade-in" data-cat="custom"><div class="p-img pi-custom"><span class="pi-ico">🖋️</span><span class="pi-lbl">Make It Yours</span><button class="quick-add" data-id="8" data-name="Custom Order" data-price="40">+ Quick Add</button></div><div class="p-info"><h3 class="p-name">Custom Order Tumbler</h3><p class="p-desc">You pick the colors, theme &amp; vibe. We make the magic.</p><div class="p-footer"><span class="p-price">From $40.00</span><a href="#builder" class="btn btn-pink btn-xs">Design It</a></div></div></article>
+  </div>
+</section>
+
+<!-- ── READY-TO-SHIP GALLERY ────────────────────────── -->
+<section class="section bg-surface" id="gallery">
+  <div class="section-hdr">
+    <span class="eyebrow-pink">Ships in 3–5 Days</span>
+    <h2 class="section-title">Ready-to-Ship Gallery</h2>
+    <p class="section-sub">These one-of-a-kind pieces are finished, photographed, and ready for their queen. Each is truly unique — once it's gone, it's gone.</p>
+  </div>
+  <div class="gallery-strip">
+    <div class="gallery-item" data-label="Pink Holographic Stunner" data-price="$40">
+      <div class="gallery-img gi-1"><span class="gi-emoji">✨</span><span class="gallery-sold-badge">🔥 Only 1 Left!</span></div>
+      <div class="gallery-caption"><span class="gc-name">Pink Holographic Stunner</span><span class="gc-size">30oz Quencher</span><span class="gc-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="g1" data-name="Pink Holographic Stunner" data-price="40">Add to Cart</button></div>
+    </div>
+    <div class="gallery-item" data-label="Black Chrome Royale" data-price="$40">
+      <div class="gallery-img gi-2"><span class="gi-emoji">🖤</span></div>
+      <div class="gallery-caption"><span class="gc-name">Black Chrome Royale</span><span class="gc-size">40oz Mega</span><span class="gc-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="g2" data-name="Black Chrome Royale" data-price="40">Add to Cart</button></div>
+    </div>
+    <div class="gallery-item" data-label="Mermaid Dreams" data-price="$40">
+      <div class="gallery-img gi-3"><span class="gi-emoji">🧜</span><span class="gallery-sold-badge">⚡ Only 1 Left!</span></div>
+      <div class="gallery-caption"><span class="gc-name">Mermaid Dreams</span><span class="gc-size">20oz Skinny</span><span class="gc-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="g3" data-name="Mermaid Dreams Tumbler" data-price="40">Add to Cart</button></div>
+    </div>
+    <div class="gallery-item" data-label="Galaxy Queen" data-price="$40">
+      <div class="gallery-img gi-4"><span class="gi-emoji">🌌</span></div>
+      <div class="gallery-caption"><span class="gc-name">Galaxy Queen</span><span class="gc-size">30oz Quencher</span><span class="gc-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="g4" data-name="Galaxy Queen Tumbler" data-price="40">Add to Cart</button></div>
+    </div>
+    <div class="gallery-item" data-label="Rose Gold Ombré" data-price="$40">
+      <div class="gallery-img gi-5"><span class="gi-emoji">🌹</span><span class="gallery-sold-badge">🔥 Only 1 Left!</span></div>
+      <div class="gallery-caption"><span class="gc-name">Rose Gold Ombré</span><span class="gc-size">20oz Wine Glass</span><span class="gc-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="g5" data-name="Rose Gold Ombré Tumbler" data-price="40">Add to Cart</button></div>
+    </div>
+    <div class="gallery-item" data-label="Lavender Luxe" data-price="$40">
+      <div class="gallery-img gi-6"><span class="gi-emoji">💜</span></div>
+      <div class="gallery-caption"><span class="gc-name">Lavender Luxe</span><span class="gc-size">16oz Pint</span><span class="gc-price">$40.00</span><button class="btn btn-pink btn-xs add-to-cart" data-id="g6" data-name="Lavender Luxe Tumbler" data-price="40">Add to Cart</button></div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:32px;">
+    <p style="font-size:0.84rem;color:var(--text-3);margin-bottom:16px;">New pieces drop every week. Follow <strong style="color:var(--pink);">@the_vibe_queen_hbic</strong> on TikTok to get notified first.</p>
+    <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="btn btn-outline-pink">Follow for New Drops 👑</a>
+  </div>
+</section>
+
+<!-- ── TUMBLER BUILDER ───────────────────────────────── -->
+<section class="section bg-dark" id="builder">
+  <div class="section-hdr light"><span class="eyebrow-pink">Interactive Configurator</span><h2 class="section-title white">Design Your Dream Tumbler</h2><p class="section-sub muted">Choose your cup, colors, glitter type, and theme — then preview your creation before ordering.</p></div>
+  <div class="builder-wrap">
+    <!-- LEFT: Steps -->
+    <div class="builder-steps" id="builder-steps">
+
+      <!-- Step 1: Cup Style -->
+      <div class="build-step" id="step-1">
+        <h3 class="step-title"><span class="step-num">01</span>Choose Your Cup</h3>
+        <div class="cup-grid">
+          <button class="cup-btn" data-cup="skinny20" data-label="20oz Skinny">
+            <svg class="cup-svg" viewBox="0 0 60 120" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8 L14 112 Q14 116 30 116 Q46 116 46 112 L42 8 Z" stroke="currentColor" stroke-width="2" fill="rgba(255,26,140,0.15)"/><line x1="15" y1="8" x2="45" y2="8" stroke="currentColor" stroke-width="2"/></svg>
+            <span>20oz Skinny</span>
+          </button>
+          <button class="cup-btn" data-cup="stanley30" data-label="30oz Quencher">
+            <svg class="cup-svg" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 10 L8 105 Q8 114 40 114 Q72 114 72 105 L68 10 Z" stroke="currentColor" stroke-width="2" fill="rgba(255,26,140,0.15)"/><line x1="12" y1="10" x2="68" y2="10" stroke="currentColor" stroke-width="2"/><path d="M68 40 Q82 40 82 55 Q82 70 68 70" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            <span>30oz Quencher</span>
+          </button>
+          <button class="cup-btn" data-cup="mega40" data-label="40oz Mega">
+            <svg class="cup-svg" viewBox="0 0 60 140" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 6 L10 132 Q10 136 30 136 Q50 136 50 132 L46 6 Z" stroke="currentColor" stroke-width="2" fill="rgba(255,26,140,0.15)"/><line x1="14" y1="6" x2="46" y2="6" stroke="currentColor" stroke-width="2"/></svg>
+            <span>40oz Mega</span>
+          </button>
+          <button class="cup-btn" data-cup="wine20" data-label="20oz Wine">
+            <svg class="cup-svg" viewBox="0 0 60 120" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 8 Q14 40 22 60 Q14 80 16 112 Q16 116 30 116 Q44 116 44 112 Q46 80 38 60 Q46 40 46 8 Z" stroke="currentColor" stroke-width="2" fill="rgba(255,26,140,0.15)"/><line x1="14" y1="8" x2="46" y2="8" stroke="currentColor" stroke-width="2"/></svg>
+            <span>20oz Wine</span>
+          </button>
+          <button class="cup-btn" data-cup="pint16" data-label="16oz Pint">
+            <svg class="cup-svg" viewBox="0 0 70 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 10 L16 92 Q16 96 35 96 Q54 96 54 92 L60 10 Z" stroke="currentColor" stroke-width="2" fill="rgba(255,26,140,0.15)"/><line x1="10" y1="10" x2="60" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+            <span>16oz Pint</span>
+          </button>
+          <button class="cup-btn" data-cup="mini12" data-label="12oz Kids">
+            <svg class="cup-svg" viewBox="0 0 55 90" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 8 L12 82 Q12 86 27 86 Q43 86 43 82 L41 8 Z" stroke="currentColor" stroke-width="2" fill="rgba(255,26,140,0.15)"/><line x1="14" y1="8" x2="41" y2="8" stroke="currentColor" stroke-width="2"/></svg>
+            <span>12oz Kids</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Quantity -->
+      <div class="build-step" id="step-2">
+        <h3 class="step-title"><span class="step-num">02</span>Quantity &amp; Pricing</h3>
+        <div class="qty-grid">
+          <button class="qty-btn" data-qty="1" data-tier="$40/ea">1<span>$40 each</span></button>
+          <button class="qty-btn" data-qty="2" data-tier="$40/ea">2<span>$40 each</span></button>
+          <button class="qty-btn" data-qty="4" data-tier="$38/ea">4<span>$38 each</span></button>
+          <button class="qty-btn" data-qty="6" data-tier="$38/ea">6<span>$38 each</span></button>
+          <button class="qty-btn" data-qty="12" data-tier="$35/ea">12<span>$35 each 🔥</span></button>
+          <button class="qty-btn qty-custom" data-qty="custom" data-tier="custom">12+<span>Contact for quote</span></button>
+        </div>
+        <p class="bulk-note">💡 Bulk pricing: 1–3 = $40/ea · 4–11 = $38/ea · 12+ = $35/ea</p>
+      </div>
+
+      <!-- Step 3: Base Color -->
+      <div class="build-step" id="step-3">
+        <h3 class="step-title"><span class="step-num">03</span>Base Color / Style</h3>
+        <p class="step-sub">Glitter Colors</p>
+        <div class="color-grid" id="color-grid-glitter">
+          <button class="color-swatch" data-color="#FF69B4" data-label="Pink Glitter" style="background:linear-gradient(135deg,#FF69B4,#FF1A8C)"><span>Pink</span></button>
+          <button class="color-swatch" data-color="#1a1a1a" data-label="Black Glitter" style="background:linear-gradient(135deg,#1a1a1a,#3d3d3d)"><span>Black</span></button>
+          <button class="color-swatch" data-color="#C89B3C" data-label="Gold Glitter" style="background:linear-gradient(135deg,#C89B3C,#E8C06A)"><span>Gold</span></button>
+          <button class="color-swatch" data-color="#C0C0C0" data-label="Silver Glitter" style="background:linear-gradient(135deg,#888,#e0e0e0)"><span>Silver</span></button>
+          <button class="color-swatch" data-color="#6a0dad" data-label="Purple Glitter" style="background:linear-gradient(135deg,#6a0dad,#9b30ff)"><span>Purple</span></button>
+          <button class="color-swatch" data-color="#cc0000" data-label="Red Glitter" style="background:linear-gradient(135deg,#cc0000,#ff4444)"><span>Red</span></button>
+          <button class="color-swatch" data-color="#006494" data-label="Blue Glitter" style="background:linear-gradient(135deg,#006494,#00b4d8)"><span>Blue</span></button>
+          <button class="color-swatch" data-color="#f5f5f5" data-label="White Glitter" style="background:linear-gradient(135deg,#ddd,#fff);border:1px solid #ccc"><span style="color:#333">White</span></button>
+          <button class="color-swatch rainbow-swatch" data-color="rainbow" data-label="Rainbow Glitter"><span>Rainbow</span></button>
+          <button class="color-swatch" data-color="#E8C0B0" data-label="Rose Gold Glitter" style="background:linear-gradient(135deg,#c8687a,#e8b4b8)"><span>Rose Gold</span></button>
+        </div>
+        <p class="step-sub">Solid Base</p>
+        <div class="color-grid" id="color-grid-solid">
+          <button class="color-swatch" data-color="#FF1A8C" data-label="Hot Pink" style="background:#FF1A8C"><span>Hot Pink</span></button>
+          <button class="color-swatch" data-color="#0d0d0d" data-label="Midnight Black" style="background:#0d0d0d"><span>Midnight</span></button>
+          <button class="color-swatch" data-color="#F8F8F8" data-label="Pearl White" style="background:#F8F8F8;border:1px solid #ddd"><span style="color:#333">Pearl</span></button>
+          <button class="color-swatch" data-color="#87CEEB" data-label="Sky Blue" style="background:#87CEEB"><span>Sky Blue</span></button>
+          <button class="color-swatch" data-color="#4B0082" data-label="Deep Purple" style="background:#4B0082"><span>Deep Purple</span></button>
+          <button class="color-swatch" data-color="#CC5500" data-label="Burnt Orange" style="background:#CC5500"><span>Burnt Org</span></button>
+          <button class="color-swatch" data-color="#228B22" data-label="Forest Green" style="background:#228B22"><span>Forest</span></button>
+          <button class="color-swatch" data-color="#D4AF37" data-label="Champagne Gold" style="background:#D4AF37"><span>Champagne</span></button>
+        </div>
+        <p class="step-sub">Ombre / Gradient</p>
+        <div class="color-grid" id="color-grid-ombre">
+          <button class="color-swatch" data-color="linear-gradient(to bottom,#FF69B4,#6a0dad)" data-label="Pink-to-Purple" style="background:linear-gradient(to bottom,#FF69B4,#6a0dad)"><span>Pink→Purple</span></button>
+          <button class="color-swatch" data-color="linear-gradient(to bottom,#0d0d0d,#C89B3C)" data-label="Black-to-Gold" style="background:linear-gradient(to bottom,#0d0d0d,#C89B3C)"><span>Black→Gold</span></button>
+          <button class="color-swatch" data-color="linear-gradient(to bottom,#006494,#00b4d8)" data-label="Blue-to-Teal" style="background:linear-gradient(to bottom,#006494,#00b4d8)"><span>Blue→Teal</span></button>
+          <button class="color-swatch" data-color="linear-gradient(to bottom,#E8C0B0,#fff)" data-label="Rose-to-White" style="background:linear-gradient(to bottom,#E8C0B0,#fff)"><span>Rose→White</span></button>
+        </div>
+      </div>
+
+      <!-- Step 4: Glitter Type -->
+      <div class="build-step" id="step-4">
+        <h3 class="step-title"><span class="step-num">04</span>Glitter Type / Finish</h3>
+        <div class="glitter-grid">
+          <button class="glitter-btn" data-glitter="Chunky Glitter" data-effect="chunky"><span class="gl-ico">✨</span><span class="gl-name">Chunky Glitter</span><span class="gl-desc">Bold, textured sparkle</span></button>
+          <button class="glitter-btn" data-glitter="Fine Glitter" data-effect="fine"><span class="gl-ico">💫</span><span class="gl-name">Fine Glitter</span><span class="gl-desc">Smooth shimmer finish</span></button>
+          <button class="glitter-btn" data-glitter="Holographic" data-effect="holo"><span class="gl-ico">🌈</span><span class="gl-name">Holographic</span><span class="gl-desc">Rainbow color-shift</span></button>
+          <button class="glitter-btn" data-glitter="Metallic Flake" data-effect="metallic"><span class="gl-ico">🪙</span><span class="gl-name">Metallic Flake</span><span class="gl-desc">Foil-like mirror shine</span></button>
+          <button class="glitter-btn" data-glitter="Opal / Iridescent" data-effect="opal"><span class="gl-ico">🦋</span><span class="gl-name">Opal / Iridescent</span><span class="gl-desc">Multi-color shift magic</span></button>
+          <button class="glitter-btn" data-glitter="Glow in the Dark" data-effect="glow"><span class="gl-ico">🌟</span><span class="gl-name">Glow in the Dark</span><span class="gl-desc">Lights up at night</span></button>
+          <button class="glitter-btn" data-glitter="Chrome Mirror" data-effect="chrome"><span class="gl-ico">🪞</span><span class="gl-name">Chrome Mirror</span><span class="gl-desc">Ultra-reflective finish</span></button>
+          <button class="glitter-btn" data-glitter="Surprise Mix" data-effect="mixed"><span class="gl-ico">🎲</span><span class="gl-name">Surprise Mix</span><span class="gl-desc">Artist's choice combo</span></button>
+        </div>
+      </div>
+
+      <!-- Step 5: Design Theme -->
+      <div class="build-step" id="step-5">
+        <h3 class="step-title"><span class="step-num">05</span>Design Theme</h3>
+        <div class="theme-grid">
+          <button class="theme-btn" data-theme="Plain Glitter"><span>✨</span>Plain Glitter</button>
+          <button class="theme-btn" data-theme="Floral &amp; Botanical"><span>🌸</span>Floral</button>
+          <button class="theme-btn" data-theme="Crown &amp; Royal"><span>👑</span>Crown &amp; Royal</button>
+          <button class="theme-btn" data-theme="Galaxy / Space"><span>🌌</span>Galaxy</button>
+          <button class="theme-btn" data-theme="Animal Print"><span>🐆</span>Animal Print</button>
+          <button class="theme-btn" data-theme="Tie-Dye / Pour Art"><span>🎨</span>Tie-Dye</button>
+          <button class="theme-btn" data-theme="Monogram / Name"><span>🖋️</span>Monogram</button>
+          <button class="theme-btn" data-theme="Sports Fan"><span>🏈</span>Sports Fan</button>
+          <button class="theme-btn" data-theme="Seasonal / Holiday"><span>🎄</span>Seasonal</button>
+          <button class="theme-btn" data-theme="Custom Upload"><span>📷</span>Custom Upload</button>
+        </div>
+      </div>
+
+      <!-- Step 6: Personalization -->
+      <div class="build-step" id="step-6">
+        <h3 class="step-title"><span class="step-num">06</span>Personalization</h3>
+        <div class="personal-fields">
+          <div class="field-group">
+            <label for="custom-name">Add Your Name or Text <span class="field-note">(+$5)</span></label>
+            <input type="text" id="custom-name" placeholder="e.g. Mama, Boss Queen, Your Name…" maxlength="30" />
+          </div>
+          <div class="field-group">
+            <label for="special-notes">Special Instructions or Notes</label>
+            <textarea id="special-notes" rows="3" placeholder="Tell us anything extra — favorite colors, occasion, vibe, inspiration…"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Live Preview -->
+    <div class="builder-preview">
+      <div class="preview-card">
+        <h3 class="preview-title">Your Tumbler Preview</h3>
+        <div class="preview-canvas" id="preview-canvas">
+          <div class="tumbler-preview" id="tumbler-preview">
+            <svg id="preview-svg" viewBox="0 0 80 160" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="cup-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#FF69B4;stop-opacity:1"/>
+                  <stop offset="100%" style="stop-color:#FF1A8C;stop-opacity:1"/>
+                </linearGradient>
+                <filter id="glitter-filter">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+                  <feColorMatrix type="saturate" values="3" in="noise" result="colorNoise"/>
+                  <feBlend in="SourceGraphic" in2="colorNoise" mode="overlay"/>
+                </filter>
+              </defs>
+              <path id="cup-path" d="M16 10 L12 148 Q12 156 40 156 Q68 156 68 148 L64 10 Z" fill="url(#cup-gradient)" filter="url(#glitter-filter)"/>
+              <path id="cup-outline" d="M16 10 L12 148 Q12 156 40 156 Q68 156 68 148 L64 10 Z" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+              <line x1="16" y1="10" x2="64" y2="10" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+              <text id="preview-theme-text" x="40" y="85" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.85)" font-family="Clash Display, sans-serif" font-weight="600">✨ Glitter Queen</text>
+              <text id="preview-name-text" x="40" y="100" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.7)" font-family="Satoshi, sans-serif"></text>
+            </svg>
+            <div class="glitter-overlay" id="glitter-overlay"></div>
+          </div>
+        </div>
+        <div class="preview-summary" id="preview-summary">
+          <div class="summary-row"><span>Cup</span><span id="sum-cup">Select a cup style</span></div>
+          <div class="summary-row"><span>Quantity</span><span id="sum-qty">—</span></div>
+          <div class="summary-row"><span>Color</span><span id="sum-color">—</span></div>
+          <div class="summary-row"><span>Glitter</span><span id="sum-glitter">—</span></div>
+          <div class="summary-row"><span>Theme</span><span id="sum-theme">—</span></div>
+          <div class="summary-row"><span>Name add-on</span><span id="sum-name">—</span></div>
+          <div class="summary-divider"></div>
+          <div class="summary-row total-row"><span>Estimated Total</span><span id="sum-total" class="sum-total-val">$0.00</span></div>
+        </div>
+        <button class="btn btn-pink btn-full" id="add-build-to-cart">Add Custom Order to Cart 👑</button>
+        <p class="preview-note">Final design confirmed after order — DM for revisions</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INSPIRATION UPLOAD ────────────────────────────── -->
+<section class="section bg-surface" id="inspiration">
+  <div class="section-hdr"><span class="eyebrow-pink">Your Vision</span><h2 class="section-title">Share Your Inspiration</h2><p class="section-sub">Upload reference images from TikTok, Pinterest, or anywhere. The Vibe Queen will bring your vision to life.</p></div>
+  <div class="inspo-wrap">
+    <div class="inspo-left">
+      <!-- Upload Zone -->
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
+        <div class="upload-icon">📸</div>
+        <p class="upload-title">Drag &amp; drop your inspiration</p>
+        <p class="upload-sub">or click to browse — up to 3 images (PNG, JPG, WEBP)</p>
+        <button class="btn btn-outline-pink" onclick="document.getElementById('file-input').click()">Choose Files</button>
+      </div>
+      <div class="upload-previews" id="upload-previews"></div>
+
+      <!-- Mood Palette -->
+      <div class="mood-section">
+        <h4 class="mood-title">Choose a Color Mood</h4>
+        <div class="mood-grid">
+          <button class="mood-btn" data-mood="Girly &amp; Pink" style="background:linear-gradient(135deg,#FF69B4,#FF1A8C)">Girly &amp; Pink</button>
+          <button class="mood-btn" data-mood="Bold &amp; Black" style="background:linear-gradient(135deg,#1a1a1a,#3d3d3d)">Bold &amp; Black</button>
+          <button class="mood-btn" data-mood="Earthy Tones" style="background:linear-gradient(135deg,#8B4513,#D2691E)">Earthy Tones</button>
+          <button class="mood-btn" data-mood="Cool Blues" style="background:linear-gradient(135deg,#006494,#00b4d8)">Cool Blues</button>
+          <button class="mood-btn" data-mood="Rainbow" style="background:linear-gradient(135deg,#FF0000,#FF7F00,#FFFF00,#00FF00,#0000FF,#8B00FF)">Rainbow</button>
+          <button class="mood-btn" data-mood="Neon Pop" style="background:linear-gradient(135deg,#39FF14,#FF1493)">Neon Pop</button>
+          <button class="mood-btn" data-mood="Pastel Dreams" style="background:linear-gradient(135deg,#FFD1DC,#AEC6CF)">Pastel Dreams</button>
+          <button class="mood-btn" data-mood="Classic Gold" style="background:linear-gradient(135deg,#C89B3C,#E8C06A)">Classic Gold</button>
+        </div>
+      </div>
+
+      <!-- Vision text -->
+      <div class="field-group mt-6">
+        <label for="inspo-text">Describe Your Vision</label>
+        <textarea id="inspo-text" rows="4" placeholder="Tell us your dream tumbler — colors, theme, occasion, anything that inspires you…"></textarea>
+      </div>
+      <button class="btn btn-pink mt-4" id="send-inspo-btn">Send Inspiration to The Vibe Queen 👑</button>
+      <div class="inspo-success" id="inspo-success"></div>
+    </div>
+    <div class="inspo-right">
+      <div class="inspo-info-card">
+        <div class="inspo-icon">🎨</div>
+        <h3>How It Works</h3>
+        <ol class="inspo-steps">
+          <li><span>01</span>Upload your inspiration images or describe your vision</li>
+          <li><span>02</span>The Vibe Queen reviews your submission within 24 hrs</li>
+          <li><span>03</span>We send a design concept &amp; quote for your approval</li>
+          <li><span>04</span>Once approved, we craft your one-of-a-kind piece</li>
+          <li><span>05</span>Ships to your door within 7–10 business days</li>
+        </ol>
+        <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="btn btn-pink mt-4">Or DM on TikTok</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CUSTOM ORDER DARK SECTION ─────────────────────── -->
+<section class="section bg-dark-queen" id="custom">
+  <div class="custom-inner">
+    <div class="custom-text">
+      <span class="eyebrow-pink">Your Vision</span>
+      <h2 class="section-title white">Can't Find Your Vibe?<br/>Let's Create It.</h2>
+      <p class="muted-text">Every piece is made to order. Tell us your colors, theme, occasion — and The Vibe Queen handles the rest.</p>
+      <ul class="custom-steps">
+        <li><span class="sn">01</span><span>DM us on TikTok with your vision</span></li>
+        <li><span class="sn">02</span><span>We send a design quote &amp; confirm details</span></li>
+        <li><span class="sn">03</span><span>Pay &amp; we craft your royal piece</span></li>
+        <li><span class="sn">04</span><span>Ships to your door in 7–10 business days</span></li>
+      </ul>
+      <div class="custom-btns">
+        <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="btn btn-white">DM on TikTok</a>
+        <a href="#inspiration" class="btn btn-ghost-white">Upload Inspiration</a>
+      </div>
+    </div>
+    <div class="custom-card-wrap">
+      <div class="custom-price-card">
+        <div class="cpc-icon">👑</div>
+        <p class="cpc-label">Custom orders start at</p>
+        <p class="cpc-price">$40</p>
+        <p class="cpc-note">Each piece is one-of-a-kind</p>
+        <div class="cpc-features">
+          <span>✓ Your colors</span><span>✓ Your theme</span>
+          <span>✓ Your name</span><span>✓ Handcrafted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TIKTOK SECTION ───────────────────────────────── -->
+<section class="section bg-surface" id="tiktok">
+  <div class="section-hdr"><span class="eyebrow-pink">Follow Along</span><h2 class="section-title">Catch Us on TikTok</h2><p class="section-sub">13K+ followers watch The Vibe Queen work her magic live. Follow for drops, giveaways &amp; behind-the-scenes.</p></div>
+  <div class="tt-grid">
+    <div class="tt-card"><div class="tt-play">▶</div><p class="tt-lbl">Latest Drop 👑</p><p class="tt-handle">@the_vibe_queen_hbic</p></div>
+    <div class="tt-card"><div class="tt-play">▶</div><p class="tt-lbl">Glitter Pour Process ✨</p><p class="tt-handle">@the_vibe_queen_hbic</p></div>
+    <div class="tt-card"><div class="tt-play">▶</div><p class="tt-lbl">Custom Order Reveal 🎀</p><p class="tt-handle">@the_vibe_queen_hbic</p></div>
+  </div>
+  <div class="tt-cta">
+    <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="btn btn-black"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.25 8.25 0 0 0 4.83 1.56V6.86a4.85 4.85 0 0 1-1.06-.17z"/></svg>Follow @the_vibe_queen_hbic</a>
+    <p class="tt-sub">13,000+ followers and growing 👑</p>
+  </div>
+</section>
+
+<!-- ── MARKETPLACE INTEGRATIONS ─────────────────────── -->
+<section class="section bg-dark" id="marketplace">
+  <div class="section-hdr light"><span class="eyebrow-pink">Shop Everywhere</span><h2 class="section-title white">Find Us on Your Favorite Platform</h2><p class="section-sub muted">Shop Queens Custom Creations wherever you spend your time.</p></div>
+  <div class="market-grid">
+    <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="market-card">
+      <div class="market-logo tiktok-logo"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.25 8.25 0 0 0 4.83 1.56V6.86a4.85 4.85 0 0 1-1.06-.17z"/></svg></div>
+      <h3>TikTok Shop</h3>
+      <p>Shop during our LIVE drops &amp; exclusive releases</p>
+      <span class="market-cta">Shop on TikTok →</span>
+    </a>
+    <a href="#amazon" class="market-card">
+      <div class="market-logo amazon-logo"><svg width="32" height="32" viewBox="0 0 24 24" fill="#FF9900"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.493.124.104.17.04.33-.18.477-.218.152-.546.344-.983.577C18.093 22.266 14.966 23 11.67 23c-3.946 0-7.564-1.003-10.855-3.008-.34-.2-.49-.4-.77-.9z"/><path d="M20.96 14.408c-.265-.337-.694-.438-1.288-.303l-.11.026c-1.01.228-1.842.358-2.485.384-1.18.05-2.057-.118-2.59-.5-1.08-.77-1.55-2.07-1.41-3.91.14-1.83.71-3.31 1.72-4.43 1.01-1.12 2.23-1.68 3.66-1.68.99 0 1.85.25 2.57.76.72.5 1.21 1.22 1.47 2.14.08.25.2.43.36.52.17.1.36.1.56.01.21-.08.35-.22.44-.42.09-.2.09-.4.01-.6-.37-1.26-1.07-2.26-2.1-3.01-1.03-.75-2.24-1.12-3.63-1.12-1.88 0-3.47.67-4.77 2.02-1.29 1.35-2.01 3.13-2.16 5.34-.14 2.17.38 3.86 1.56 5.06 1.17 1.2 2.77 1.7 4.8 1.5.85-.09 1.77-.27 2.77-.55.33-.09.59-.25.78-.47z"/></svg></div>
+      <h3>Amazon Storefront</h3>
+      <p>Find our curated selection on Amazon</p>
+      <span class="market-cta">Shop on Amazon →</span>
+    </a>
+    <a href="#shopify" class="market-card">
+      <div class="market-logo shopify-logo"><svg width="32" height="32" viewBox="0 0 109.5 124.5" fill="#96BF48"><path d="M74.7 14.8s-.1-.7-.6-1c-.5-.3-1.4-.3-1.4-.3s-9.6-1-14.5-1.4c-4.9-.4-10.3 2.4-12.7 7.3l-.2.3-3.5 9.7H26.9s-2.5 9.7-5.9 23.6l-.9 3.7-2.7 10.9c-3.4 13.5-5.4 24-5.4 24h73.5s2.1-15.6 4.3-29.3c2.2-13.7 3.9-29 3.9-29L74.7 14.8zm-25.5 6.1c1.6-4.7 5.6-7.9 10.1-7.7l10.7.8 2.8 23.6H46.3l2.9-16.7zm0 0"/></svg></div>
+      <h3>Shopify Store</h3>
+      <p>Browse the full catalog &amp; easy checkout</p>
+      <span class="market-cta">Shop on Shopify →</span>
+    </a>
+    <a href="#etsy" class="market-card">
+      <div class="market-logo etsy-logo"><svg width="32" height="32" viewBox="0 0 24 24" fill="#F56400"><path d="M11.993 0C5.372 0 0 5.372 0 11.993s5.372 11.993 11.993 11.993c6.622 0 11.994-5.372 11.994-11.993S18.614 0 11.993 0zm4.683 7.41c-.173.606-.303 1.558-.346 2.424l-.043.13h-3.54l-.086.346h3.455c-.173.865-.346 1.817-.476 2.64l-.044.13H12.1l-.087.345h3.37c-.26 1.472-.476 2.77-.65 4.023a15.99 15.99 0 0 1-1.039 3.937c-.52 1.082-1.559 1.69-2.64 1.69a3.37 3.37 0 0 1-1.904-.606l-.26-.173-.346 1.083-.433-.217a5.23 5.23 0 0 1-1.47-1.17l.736-.952c.52.52 1.039.952 1.645 1.126.216.087.433.087.65.087.78 0 1.514-.476 1.904-1.256.304-.606.477-1.386.65-2.38l.087-.606c.173-1.126.39-2.38.65-3.81h-3.37l.087-.346h3.37c.173-.994.303-1.991.476-2.77h-3.67l.087-.345h3.626c.087-.736.217-1.387.433-2.036.476-1.6 1.56-2.423 3.03-2.423.778 0 1.47.26 2.12.78l-.26.95z"/></svg></div>
+      <h3>Etsy Shop</h3>
+      <p>Custom &amp; personalized orders on Etsy</p>
+      <span class="market-cta">Shop on Etsy →</span>
+    </a>
+  </div>
+</section>
+
+<!-- ── ABOUT ─────────────────────────────────────────── -->
+<section class="section bg-white" id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap">
+      <img src="assets/hero.jpeg" alt="The Vibe Queen" class="about-img"/>
+      <div class="about-badge">👑 The Vibe Queen</div>
+    </div>
+    <div class="about-body">
+      <span class="eyebrow-pink">The Story</span>
+      <h2 class="about-title">Crafted with Crown Energy</h2>
+      <p>Queens Custom Creations was born from a passion for color, creativity, and self-expression. Every tumbler that leaves our studio is a wearable piece of art — no two alike, each made with intention and love.</p>
+      <p>As The Vibe Queen, I've built a community of 13K+ TikTok followers who watch every pour, every glitter application, every custom reveal. This shop is where that creativity meets your everyday life.</p>
+      <p>Whether you're treating yourself or gifting someone special — you deserve a cup that reflects your royalty.</p>
+      <div class="about-stats">
+        <div class="stat"><span class="stat-n">13K+</span><span class="stat-l">TikTok Followers</span></div>
+        <div class="stat"><span class="stat-n">Est. 2022</span><span class="stat-l">In Business</span></div>
+        <div class="stat"><span class="stat-n">100%</span><span class="stat-l">Handcrafted</span></div>
+      </div>
+      <a href="#contact" class="btn btn-pink">Work with The Vibe Queen</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ─────────────────────────────────────── -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><strong>Secure Checkout</strong><span>SSL encrypted</span></div></div>
+    <div class="trust-item"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg><div><strong>Fast Shipping</strong><span>5–10 business days</span></div></div>
+    <div class="trust-item"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><div><strong>Made with Love</strong><span>100% handcrafted</span></div></div>
+    <div class="trust-item"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><div><strong>Custom Orders</strong><span>DM your vision</span></div></div>
+  </div>
+</div>
+
+<!-- ── CONTACT ───────────────────────────────────────── -->
+<section class="section bg-surface" id="contact">
+  <div class="contact-inner">
+    <div class="contact-text">
+      <span class="eyebrow-pink">Get in Touch</span>
+      <h2 class="contact-title">Let's Make Something Royal</h2>
+      <p>Ready to place an order, ask a question, or just say hi? Fill out the form or DM on TikTok — The Vibe Queen responds within 24 hours.</p>
+      <div class="contact-channels">
+        <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="ch-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.25 8.25 0 0 0 4.83 1.56V6.86a4.85 4.85 0 0 1-1.06-.17z"/></svg>DM on TikTok</a>
+        <a href="mailto:hello@queenscustoms.com" class="ch-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>hello@queenscustoms.com</a>
+      </div>
+    </div>
+    <form class="contact-form" id="contact-form" novalidate>
+      <div class="form-row">
+        <div class="fg"><label for="c-name">Your Name</label><input type="text" id="c-name" placeholder="Queen's name here…" required/></div>
+        <div class="fg"><label for="c-email">Email</label><input type="email" id="c-email" placeholder="your@email.com" required/></div>
+      </div>
+      <div class="fg"><label for="c-subj">Topic</label><select id="c-subj"><option value="">Select…</option><option>Custom Order Request</option><option>Ready-to-Ship Question</option><option>Shipping &amp; Tracking</option><option>Wholesale Inquiry</option><option>Other</option></select></div>
+      <div class="fg"><label for="c-msg">Message</label><textarea id="c-msg" rows="5" placeholder="Tell us your vision 👑"></textarea></div>
+      <button type="submit" class="btn btn-pink btn-full">Send Message 👑</button>
+      <div class="form-success" id="form-success"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ── NEWSLETTER ────────────────────────────────────── -->
+<section class="newsletter-sec">
+  <div class="nl-inner">
+    <div><h2 class="nl-title">Join the Royal Court</h2><p>Early access to drops, exclusive codes &amp; behind-the-scenes content.</p></div>
+    <form class="nl-form" id="nl-form" novalidate><input type="email" placeholder="your@email.com" required/><button type="submit" class="btn btn-white">Subscribe 👑</button></form>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo-standalone.jpeg" alt="Queens Custom Creations" class="footer-logo"/>
+      <p>Hand-crafted epoxy glitter tumblers by The Vibe Queen. Houston, TX 👑</p>
+      <div class="footer-social"><a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="soc-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.25 8.25 0 0 0 4.83 1.56V6.86a4.85 4.85 0 0 1-1.06-.17z"/></svg></a></div>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><a href="#shop">All Products</a><a href="#builder">Design Yours</a><a href="#collections">Collections</a><a href="#custom">Custom Orders</a></div>
+    <div class="footer-col"><h4>Platforms</h4><a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank">TikTok Shop</a><a href="#amazon">Amazon Storefront</a><a href="#shopify">Shopify Store</a><a href="#etsy">Etsy Shop</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#about">About</a><a href="#contact">Contact</a><a href="#">FAQ</a><a href="#">Shipping Policy</a><a href="#">Returns</a><a href="#">Privacy Policy</a></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2024 Queens Custom Creations. All rights reserved. Handcrafted in Houston, TX 👑</p></div>
+</footer>
+
+<!-- ── CART DRAWER ────────────────────────────────────── -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+<aside class="cart-drawer" id="cart-drawer">
+  <div class="drawer-hdr"><h2>Your Cart 👑</h2><button class="icon-btn" id="cart-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <div class="cart-items" id="cart-items"><div class="cart-empty" id="cart-empty"><span>👑</span><p>Your cart is empty</p><a href="#shop" class="btn btn-pink" id="cart-shop-link">Shop Now</a></div></div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-sub"><span>Subtotal</span><span id="cart-total">$0.00</span></div>
+    <div class="coupon-row"><input type="text" class="coupon-in" id="coupon-in" placeholder="Coupon code"/><button class="btn btn-outline-pink btn-xs" id="apply-coupon">Apply</button></div>
+    <div class="coupon-msg" id="coupon-msg"></div>
+    <button class="btn btn-pink btn-full" id="checkout-btn">Proceed to Checkout</button>
+    <p class="cart-note">Free shipping on orders over $75 with QUEEN75</p>
+  </div>
+</aside>
+
+<!-- ── AUTH MODAL ─────────────────────────────────────── -->
+<div class="modal-overlay" id="auth-overlay"></div>
+<div class="auth-modal" id="auth-modal" role="dialog" aria-label="Account">
+  <button class="modal-close" id="auth-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  <div class="auth-tabs" id="auth-tabs">
+    <button class="auth-tab active" data-tab="login">Sign In</button>
+    <button class="auth-tab" data-tab="signup">Create Account</button>
+  </div>
+  <!-- Login -->
+  <div class="auth-panel active" id="panel-login">
+    <div class="auth-logo">👑</div>
+    <h2 class="auth-title">Welcome Back, Queen</h2>
+    <form id="login-form" novalidate>
+      <div class="fg"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" required/></div>
+      <div class="fg"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••" required/></div>
+      <button type="submit" class="btn btn-pink btn-full">Sign In</button>
+      <p class="auth-link"><a href="#">Forgot password?</a></p>
+      <div class="auth-msg" id="login-msg"></div>
+    </form>
+  </div>
+  <!-- Sign Up -->
+  <div class="auth-panel" id="panel-signup">
+    <div class="auth-logo">👑</div>
+    <h2 class="auth-title">Join the Royal Court</h2>
+    <form id="signup-form" novalidate>
+      <div class="fg"><label>Full Name</label><input type="text" id="su-name" placeholder="Your name" required/></div>
+      <div class="fg"><label>Email</label><input type="email" id="su-email" placeholder="your@email.com" required/></div>
+      <div class="fg"><label>Password</label><input type="password" id="su-pass" placeholder="Create a password" required/></div>
+      <div class="fg"><label>Confirm Password</label><input type="password" id="su-confirm" placeholder="Repeat password" required/></div>
+      <button type="submit" class="btn btn-pink btn-full">Create Account 👑</button>
+      <div class="auth-msg" id="signup-msg"></div>
+    </form>
+  </div>
+  <!-- Account Dashboard (shown when logged in) -->
+  <div class="auth-panel" id="panel-account">
+    <div class="auth-logo">👑</div>
+    <h2 class="auth-title" id="account-welcome">Welcome back!</h2>
+    <div class="account-tabs">
+      <button class="acc-tab active" data-acc="orders">Order History</button>
+      <button class="acc-tab" data-acc="addresses">Saved Addresses</button>
+      <button class="acc-tab" data-acc="wishlist">Wishlist</button>
+    </div>
+    <div class="acc-panel active" id="acc-orders">
+      <div class="order-item"><div class="order-ico">🎀</div><div><strong>Pink Glitter Queen Tumbler</strong><p>Order #QCC-2024-001 · $40.00 · Delivered</p></div></div>
+      <div class="order-item"><div class="order-ico">👑</div><div><strong>Purple Reign Tumbler</strong><p>Order #QCC-2024-002 · $40.00 · In Progress</p></div></div>
+    </div>
+    <div class="acc-panel" id="acc-addresses"><p class="acc-empty">No saved addresses yet.</p></div>
+    <div class="acc-panel" id="acc-wishlist"><p class="acc-empty">Your wishlist is empty. Start shopping! 👑</p></div>
+    <button class="btn btn-outline-pink btn-full mt-4" id="logout-btn">Sign Out</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script src="builder.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>
