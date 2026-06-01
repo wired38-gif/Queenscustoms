@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Queens Custom Studio | Design Your Tumbler | queenscustoms.shop</title>
+  <meta name="description" content="Design your custom epoxy glitter tumbler in real-time. Pick colors, glitter, patterns, upload your logo — see it build live. By The Vibe Queen."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://queenscustoms.shop/"/>
+  <meta property="og:title" content="Queens Custom Studio — Design Your Tumbler Live"/>
+  <meta property="og:description" content="Canva-style tumbler builder. Pick colors, glitter, patterns, upload images. See your custom tumbler build in real-time."/>
+  <meta property="og:image" content="https://queenscustoms.com/assets/hero.jpeg"/>
+  <meta property="og:url" content="https://queenscustoms.shop/"/>
+  <meta name="theme-color" content="#FF1A8C"/>
+  <link rel="icon" type="image/jpeg" href="assets/logo-circle.jpeg"/>
+  <link rel="apple-touch-icon" href="assets/logo-circle.jpeg"/>
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shop.css"/>
+</head>
+<body>
+
+<!-- ── AUTH GATE OVERLAY ─────────────────────────────── -->
+<div class="auth-gate" id="auth-gate">
+  <div class="auth-gate-inner">
+    <img src="assets/logo-circle.jpeg" alt="Queens Custom Creations" class="gate-logo"/>
+    <h1 class="gate-title">Queens Custom Studio</h1>
+    <p class="gate-sub">Sign in to design your tumbler & track your orders</p>
+
+    <div class="gate-tabs">
+      <button class="gate-tab active" data-tab="login">Sign In</button>
+      <button class="gate-tab" data-tab="signup">Create Account</button>
+    </div>
+
+    <!-- Login -->
+    <form class="gate-form" id="gate-login-form">
+      <div class="gate-field">
+        <label>Email</label>
+        <input type="email" id="gate-email" placeholder="queen@example.com" required/>
+      </div>
+      <div class="gate-field">
+        <label>Password</label>
+        <input type="password" id="gate-pass" placeholder="••••••••" required/>
+      </div>
+      <p class="gate-msg" id="gate-login-msg"></p>
+      <button type="submit" class="btn-gate">Sign In & Start Designing 👑</button>
+      <a href="https://queenscustoms.com" class="gate-back">← Back to main site</a>
+    </form>
+
+    <!-- Signup -->
+    <form class="gate-form hidden" id="gate-signup-form">
+      <div class="gate-field">
+        <label>Full Name</label>
+        <input type="text" id="su-name" placeholder="Your name" required/>
+      </div>
+      <div class="gate-field">
+        <label>Email</label>
+        <input type="email" id="su-email" placeholder="queen@example.com" required/>
+      </div>
+      <div class="gate-field">
+        <label>Password</label>
+        <input type="password" id="su-pass" placeholder="Min 6 characters" required/>
+      </div>
+      <div class="gate-field">
+        <label>TikTok / Instagram Handle <span class="optional">(optional — for exclusive drops)</span></label>
+        <input type="text" id="su-social" placeholder="@yourhandle"/>
+      </div>
+      <div class="gate-field">
+        <label>Phone <span class="optional">(optional — for order updates)</span></label>
+        <input type="tel" id="su-phone" placeholder="(713) 000-0000"/>
+      </div>
+      <p class="gate-msg" id="gate-signup-msg"></p>
+      <button type="submit" class="btn-gate">Create Account & Design 👑</button>
+      <p class="gate-fine">By signing up you agree to receive order updates and occasional exclusive drops from Queens Custom Creations. We never sell your data.</p>
+      <a href="https://queenscustoms.com" class="gate-back">← Back to main site</a>
+    </form>
+  </div>
+</div>
+
+<!-- ── MAIN APP (hidden until logged in) ─────────────── -->
+<div class="shop-app hidden" id="shop-app">
+
+  <!-- Header -->
+  <header class="shop-header">
+    <a href="https://queenscustoms.com" class="shop-logo-wrap">
+      <img src="assets/logo-circle.jpeg" alt="Queens Custom Creations" class="shop-logo"/>
+      <span class="shop-logo-text">Queens Studio</span>
+    </a>
+    <nav class="shop-nav">
+      <a href="#builder" class="shop-nav-link active">🎨 Builder</a>
+      <a href="bulk.html" class="shop-nav-link">👑 Bulk Orders</a>
+      <a href="#orders" class="shop-nav-link" id="nav-orders">📦 My Orders</a>
+    </nav>
+    <div class="shop-hdr-right">
+      <span class="welcome-name" id="welcome-name"></span>
+      <button class="btn-logout" id="btn-logout">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- ── BUILDER SECTION ──────────────────────────────── -->
+  <section class="builder-section" id="builder">
+    <div class="builder-layout">
+
+      <!-- LEFT: Controls panel -->
+      <aside class="controls-panel" id="controls-panel">
+
+        <div class="panel-header">
+          <h2>Design Your Tumbler</h2>
+          <p>Every choice updates your preview live →</p>
+        </div>
+
+        <!-- Step 1: Cup Style -->
+        <div class="ctrl-group" id="ctrl-cup">
+          <h3 class="ctrl-title"><span class="ctrl-num">1</span> Cup Style</h3>
+          <div class="cup-grid">
+            <button class="cup-opt active" data-cup="skinny20" data-h="340" data-w="80">
+              <div class="cup-shape skinny"></div>
+              <span>Skinny 20oz</span>
+            </button>
+            <button class="cup-opt" data-cup="quencher30" data-h="300" data-w="110">
+              <div class="cup-shape quencher"></div>
+              <span>Quencher 30oz</span>
+            </button>
+            <button class="cup-opt" data-cup="mega40" data-h="320" data-w="130">
+              <div class="cup-shape mega"></div>
+              <span>Mega 40oz</span>
+            </button>
+            <button class="cup-opt" data-cup="wine20" data-h="300" data-w="90">
+              <div class="cup-shape wine"></div>
+              <span>Wine 20oz</span>
+            </button>
+            <button class="cup-opt" data-cup="pint16" data-h="260" data-w="100">
+              <div class="cup-shape pint"></div>
+              <span>Pint 16oz</span>
+            </button>
+            <button class="cup-opt" data-cup="mini12" data-h="220" data-w="75">
+              <div class="cup-shape mini"></div>
+              <span>Mini 12oz</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Quantity -->
+        <div class="ctrl-group">
+          <h3 class="ctrl-title"><span class="ctrl-num">2</span> Quantity <span class="qty-badge" id="qty-badge">1 × $29</span></h3>
+          <div class="qty-row">
+            <button class="qty-btn" id="qty-down">−</button>
+            <span class="qty-val" id="qty-val">1</span>
+            <button class="qty-btn" id="qty-up">+</button>
+          </div>
+          <div class="bulk-tiers">
+            <div class="tier" data-min="1" data-max="3">1–3 <strong>$29–$45</strong> ea</div>
+            <div class="tier" data-min="4" data-max="11">4–11 <strong>$38</strong> ea</div>
+            <div class="tier tier-hot" data-min="12" data-max="999">12+ <strong>$35</strong> ea 🔥</div>
+          </div>
+        </div>
+
+        <!-- Step 3: Base Color -->
+        <div class="ctrl-group">
+          <h3 class="ctrl-title"><span class="ctrl-num">3</span> Base Color</h3>
+          <div class="color-grid" id="color-grid">
+            <!-- generated by JS -->
+          </div>
+          <label class="custom-color-row">
+            <span>Custom hex:</span>
+            <input type="color" id="custom-color" value="#FF1A8C"/>
+            <span id="custom-hex">#FF1A8C</span>
+          </label>
+        </div>
+
+        <!-- Step 4: Layout / Pattern -->
+        <div class="ctrl-group">
+          <h3 class="ctrl-title"><span class="ctrl-num">4</span> Layout Pattern</h3>
+          <div class="pattern-grid" id="pattern-grid">
+            <button class="pat-opt active" data-pat="solid" title="Solid">
+              <div class="pat-preview solid-preview"></div><span>Solid</span>
+            </button>
+            <button class="pat-opt" data-pat="swirl" title="Swirl">
+              <div class="pat-preview swirl-preview"></div><span>Swirl</span>
+            </button>
+            <button class="pat-opt" data-pat="wave" title="Wave">
+              <div class="pat-preview wave-preview"></div><span>Wave</span>
+            </button>
+            <button class="pat-opt" data-pat="fade" title="Fade">
+              <div class="pat-preview fade-preview"></div><span>Fade</span>
+            </button>
+            <button class="pat-opt" data-pat="multiswirl" title="Multi Swirl">
+              <div class="pat-preview multiswirl-preview"></div><span>Multi Swirl</span>
+            </button>
+            <button class="pat-opt" data-pat="drip" title="Drip">
+              <div class="pat-preview drip-preview"></div><span>Drip</span>
+            </button>
+          </div>
+          <!-- Second color for multi-color patterns -->
+          <div class="second-color-row hidden" id="second-color-row">
+            <label>Second color:</label>
+            <div class="color-grid mini" id="color-grid-2"></div>
+          </div>
+        </div>
+
+        <!-- Step 5: Glitter & Epoxy Style -->
+        <div class="ctrl-group">
+          <h3 class="ctrl-title"><span class="ctrl-num">5</span> Glitter & Epoxy</h3>
+          <div class="glitter-grid" id="glitter-grid">
+            <button class="gltr-opt active" data-glitter="none" data-price="0">
+              <span class="gltr-ico">⬜</span><span>No Glitter</span><span class="gltr-price">+$0</span>
+            </button>
+            <button class="gltr-opt" data-glitter="fine" data-price="3">
+              <span class="gltr-ico">✨</span><span>Fine Glitter</span><span class="gltr-price">+$3</span>
+            </button>
+            <button class="gltr-opt" data-glitter="chunky" data-price="4">
+              <span class="gltr-ico">💎</span><span>Chunky</span><span class="gltr-price">+$4</span>
+            </button>
+            <button class="gltr-opt" data-glitter="opal" data-price="5">
+              <span class="gltr-ico">🫧</span><span>Opal</span><span class="gltr-price">+$5</span>
+            </button>
+            <button class="gltr-opt" data-glitter="holo" data-price="5">
+              <span class="gltr-ico">🌈</span><span>Holographic</span><span class="gltr-price">+$5</span>
+            </button>
+            <button class="gltr-opt" data-glitter="chrome" data-price="6">
+              <span class="gltr-ico">🪞</span><span>Chrome</span><span class="gltr-price">+$6</span>
+            </button>
+            <button class="gltr-opt" data-glitter="glow" data-price="6">
+              <span class="gltr-ico">🌙</span><span>Glow Dark</span><span class="gltr-price">+$6</span>
+            </button>
+            <button class="gltr-opt" data-glitter="chameleon" data-price="7">
+              <span class="gltr-ico">🦎</span><span>Chameleon</span><span class="gltr-price">+$7</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 6: Personalization -->
+        <div class="ctrl-group">
+          <h3 class="ctrl-title"><span class="ctrl-num">6</span> Personalization</h3>
+          <div class="pers-row">
+            <label>Name / Text on cup</label>
+            <input type="text" id="pers-name" placeholder="e.g. Queen Ashley" maxlength="20"/>
+          </div>
+          <div class="pers-row">
+            <label>Font Style</label>
+            <select id="pers-font">
+              <option value="serif">Elegant Serif</option>
+              <option value="script">Flowing Script</option>
+              <option value="bold">Bold Block</option>
+              <option value="minimal">Minimal Sans</option>
+            </select>
+          </div>
+          <div class="pers-row">
+            <label>Text Color</label>
+            <input type="color" id="pers-color" value="#ffffff"/>
+          </div>
+          <div class="pers-row">
+            <label>Special Notes</label>
+            <textarea id="pers-notes" rows="2" placeholder="Any specific design ideas, themes, or references..."></textarea>
+          </div>
+        </div>
+
+        <!-- Step 7: Image Upload (Logo/Wrap) -->
+        <div class="ctrl-group">
+          <h3 class="ctrl-title"><span class="ctrl-num">7</span> Upload Logo or Wrap Image <span class="opt-badge">+$5</span></h3>
+          <div class="upload-zone" id="upload-zone">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Drop image here or <span class="link-pink">browse</span></p>
+            <p class="upload-hint">PNG, JPG, SVG • max 5MB</p>
+            <input type="file" id="img-upload" accept="image/*" class="hidden"/>
+          </div>
+          <div class="upload-controls hidden" id="upload-controls">
+            <img id="upload-preview" src="" alt="Upload preview" class="upload-thumb"/>
+            <div class="upload-sliders">
+              <label>Size <input type="range" id="img-size" min="10" max="90" value="40"/></label>
+              <label>Position <input type="range" id="img-pos" min="5" max="85" value="50"/></label>
+              <label>Opacity <input type="range" id="img-opacity" min="10" max="100" value="90"/></label>
+            </div>
+            <button class="btn-sm-danger" id="img-remove">Remove Image</button>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- RIGHT: Live Preview + Summary -->
+      <div class="preview-panel">
+
+        <div class="preview-sticky">
+          <div class="preview-canvas-wrap">
+            <canvas id="tumbler-canvas" width="320" height="500"></canvas>
+            <div class="preview-label">Live Preview</div>
+          </div>
+
+          <!-- Price meter -->
+          <div class="price-meter">
+            <div class="price-row">
+              <span>Base price</span>
+              <span id="price-base">$29.00</span>
+            </div>
+            <div class="price-row" id="glitter-row" style="display:none">
+              <span>Glitter upgrade</span>
+              <span id="price-glitter">+$0</span>
+            </div>
+            <div class="price-row" id="upload-row" style="display:none">
+              <span>Image upload</span>
+              <span>+$5.00</span>
+            </div>
+            <div class="price-row" id="pers-row" style="display:none">
+              <span>Personalization</span>
+              <span>+$3.00</span>
+            </div>
+            <div class="price-divider"></div>
+            <div class="price-row total-row">
+              <span>Total <span id="qty-label">(×1)</span></span>
+              <span class="total-price" id="total-price">$29.00</span>
+            </div>
+          </div>
+
+          <!-- Supplies estimator -->
+          <div class="supplies-box">
+            <h4>🧪 Supplies Needed (est.)</h4>
+            <div class="supplies-list" id="supplies-list">
+              <!-- Generated by JS -->
+            </div>
+            <p class="supplies-note">Estimates grow as you add complexity — like a pizza 🍕</p>
+          </div>
+
+          <button class="btn-add-cart" id="btn-add-cart">
+            Add to Cart — <span id="cart-total-btn">$29.00</span>
+          </button>
+          <button class="btn-save-design" id="btn-save-design">💾 Save Design</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── BULK ORDERS TEASER ────────────────────────────── -->
+  <section class="bulk-teaser" id="bulk-teaser">
+    <div class="bulk-teaser-inner">
+      <div class="bulk-teaser-text">
+        <span class="bulk-eyebrow">For Groups & Events</span>
+        <h2>Can't-Live-Without Tumblers for Every Occasion</h2>
+        <p>From bridal parties to corporate swag — Queens Custom Creations makes you the hero of every event. Bulk pricing, coordinated designs, fast turnaround.</p>
+        <div class="bulk-cards">
+          <div class="bulk-card">💍 <strong>Bridal & Bachelorette</strong><br/>Be the best bridesmaid ever. Matching sets from $35/ea</div>
+          <div class="bulk-card">🏢 <strong>Corporate Branding</strong><br/>Make your team feel like royalty. Logo wraps, brand colors, bulk discounts</div>
+          <div class="bulk-card">🎉 <strong>Events & Parties</strong><br/>Birthday, baby shower, graduation — custom for every milestone</div>
+          <div class="bulk-card">🏆 <strong>Work Hero Gifts</strong><br/>Be the MVP of the office gift exchange. Guaranteed to impress</div>
+        </div>
+        <a href="bulk.html" class="btn-bulk-cta">See Bulk Pricing & Order →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MY ORDERS ─────────────────────────────────────── -->
+  <section class="orders-section hidden" id="orders">
+    <div class="orders-inner">
+      <h2>My Orders</h2>
+      <div class="orders-list" id="orders-list"></div>
+    </div>
+  </section>
+
+  <!-- Cart toast -->
+  <div class="shop-toast hidden" id="shop-toast"></div>
+
+  <!-- Cart drawer -->
+  <div class="cart-fab" id="cart-fab">
+    🛒 <span id="cart-fab-count">0</span>
+  </div>
+  <div class="cart-drawer-overlay hidden" id="cart-overlay"></div>
+  <div class="cart-drawer hidden" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3>Your Cart</h3>
+      <button id="cart-close">✕</button>
+    </div>
+    <div class="cart-drawer-items" id="cart-items"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-total-row">Total: <strong id="cart-grand-total">$0.00</strong></div>
+      <button class="btn-checkout" id="btn-checkout">Checkout & Order 👑</button>
+    </div>
+  </div>
+
+</div><!-- end shop-app -->
+
+<script src="shop.js"></script>
+</body>
+</html>
