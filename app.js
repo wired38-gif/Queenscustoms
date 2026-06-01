@@ -597,29 +597,36 @@
 
   /* ─── Mobile Nav ─────────────────────────────────────────── */
   function bindMobileNav() {
-    const burger    = document.getElementById('hamburger');
-    const mobileNav = document.getElementById('mobile-nav');
+    const burger    = document.getElementById('ham-btn');
+    const mobileNav = document.getElementById('mob-nav');
+    const overlay   = document.getElementById('mob-overlay');
+    const closeBtn  = document.getElementById('mob-close');
 
     if (!burger || !mobileNav) return;
 
-    burger.addEventListener('click', () => {
-      const isOpen = burger.classList.toggle('open');
-      mobileNav.classList.toggle('open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
+    function openNav() {
+      mobileNav.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeNav() {
+      mobileNav.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    burger.addEventListener('click', openNav);
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    if (overlay) overlay.addEventListener('click', closeNav);
 
     mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        burger.classList.remove('open');
-        mobileNav.classList.remove('open');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', closeNav);
     });
   }
 
   /* ─── Dark Mode ──────────────────────────────────────────── */
   function bindDarkMode() {
-    const btn = document.getElementById('theme-toggle');
+    const btn = document.getElementById('theme-btn');
     if (!btn) return;
 
     const saved = localStorage.getItem('qcc_theme') || 'light';
