@@ -10,11 +10,12 @@
   if (!audio || !player || !toggleBtn) return;
 
   // Restore saved volume & state
-  const savedVol     = parseFloat(localStorage.getItem('qcc_music_vol') ?? '0.3');
+  const savedVol     = parseFloat(localStorage.getItem('qcc_music_vol') ?? '0.15');
   const savedPlaying = localStorage.getItem('qcc_music_playing') === 'true';
 
   audio.volume = savedVol;
   if (volSlider) volSlider.value = savedVol;
+  audio.loop = true; // always loop
 
   function setPlayState(playing) {
     if (playing) {

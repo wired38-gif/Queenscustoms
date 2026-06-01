@@ -602,7 +602,15 @@
     const overlay   = document.getElementById('mob-overlay');
     const closeBtn  = document.getElementById('mob-close');
 
-    if (!burger || !mobileNav) return;
+    if (!burger || !mobileNav) {
+      // Retry once after a short delay in case DOM isn't ready
+      setTimeout(bindMobileNav, 300);
+      return;
+    }
+
+    // Prevent double-binding
+    if (burger.dataset.bound) return;
+    burger.dataset.bound = 'true';
 
     function openNav() {
       mobileNav.classList.add('open');
