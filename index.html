@@ -181,11 +181,11 @@
     </nav>
     <div class="hdr-actions">
       <button class="icon-btn" id="search-btn" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
-      <button class="icon-btn user-btn" id="user-btn" aria-label="Account">
+      <button class="icon-btn user-btn" id="user-btn" data-open-auth="login" aria-label="Account">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <span class="user-name-badge" id="user-name-badge"></span>
       </button>
-      <button class="icon-btn cart-btn" id="cart-btn" aria-label="Cart">
+      <button class="icon-btn cart-btn" id="cart-btn" data-open-cart aria-label="Cart">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="cart-count" id="cart-count">0</span>
       </button>
@@ -751,6 +751,95 @@
   </div>
 </section>
 
+<!-- ── QUEEN APPROVED SUPPLIES ───────────────────────── -->
+<section class="section bg-dark" id="queen-supplies">
+  <div class="section-hdr light">
+    <span class="eyebrow-pink">Queen Approved</span>
+    <h2 class="section-title white">The Queen's DIY Supply List</h2>
+    <p class="section-sub muted">Everything you need to craft your own custom tumbler — hand-picked by The Vibe Queen herself. Shop individual supplies on Amazon and create your masterpiece at home.</p>
+  </div>
+
+  <div class="qs-coming-banner">
+    <div class="qs-coming-inner">
+      <span class="qs-crown">👑</span>
+      <div>
+        <h3>Amazon Shopping List — Coming Soon</h3>
+        <p>The Vibe Queen is curating the exact products she uses. Every resin, glitter, cup, and tool — linked directly so you can shop and create with confidence.</p>
+      </div>
+      <span class="qs-badge">Coming Soon</span>
+    </div>
+  </div>
+
+  <div class="qs-grid">
+
+    <div class="qs-card">
+      <div class="qs-icon">🧪</div>
+      <h4>Epoxy Resin</h4>
+      <p>2-part UV and non-UV resins for crystal-clear, durable tumbler coats</p>
+      <span class="qs-tag coming">Link Coming Soon</span>
+    </div>
+
+    <div class="qs-card">
+      <div class="qs-icon">✨</div>
+      <h4>Glitters & Flakes</h4>
+      <p>Fine, chunky, holographic, opal, and chameleon glitter in every shade</p>
+      <span class="qs-tag coming">Link Coming Soon</span>
+    </div>
+
+    <div class="qs-card">
+      <div class="qs-icon">🥤</div>
+      <h4>Tumbler Cups</h4>
+      <p>Skinny 20oz, Quencher 30oz, Mega 40oz, Wine, Pint, and Mini — blank & ready</p>
+      <span class="qs-tag coming">Link Coming Soon</span>
+    </div>
+
+    <div class="qs-card">
+      <div class="qs-icon">🎨</div>
+      <h4>Pigment Dyes</h4>
+      <p>Opaque and translucent alcohol inks and pigment powders for custom color mixing</p>
+      <span class="qs-tag coming">Link Coming Soon</span>
+    </div>
+
+    <div class="qs-card">
+      <div class="qs-icon">💡</div>
+      <h4>UV Lamps & Curing</h4>
+      <p>Professional UV curing lights and heat guns to set your resin fast and clean</p>
+      <span class="qs-tag coming">Link Coming Soon</span>
+    </div>
+
+    <div class="qs-card">
+      <div class="qs-icon">🔧</div>
+      <h4>Tools & Mixing</h4>
+      <p>Silicone mats, stir sticks, measuring cups, gloves, and everything in between</p>
+      <span class="qs-tag coming">Link Coming Soon</span>
+    </div>
+
+    <div class="qs-card">
+      <div class="qs-icon">🛡️</div>
+      <h4>Safety & PPE</h4>
+      <p>Respirators, nitrile gloves, goggles — stay safe while you create</p>
+      <span class="qs-tag coming">Link Coming Soon</span>
+    </div>
+
+    <div class="qs-card">
+      <div class="qs-icon">🎀</div>
+      <h4>Finishing Touches</h4>
+      <p>Lids, straws, charms, handles, and packaging to complete your creation</p>
+      <span class="qs-tag coming">Link Coming Soon</span>
+    </div>
+
+  </div>
+
+  <div class="qs-notify">
+    <p>Want to be the first to shop the list when it drops?</p>
+    <form class="qs-form" onsubmit="qsNotify(event)">
+      <input type="email" id="qs-email" placeholder="your@email.com" required/>
+      <button type="submit" class="btn btn-pink">Notify Me 👑</button>
+    </form>
+    <p class="qs-sub">No spam. Just a ping when The Queen's list goes live.</p>
+  </div>
+</section>
+
 <!-- ── DIY CUSTOM KIT ─────────────────────────────────── -->
 <section class="section bg-dark" id="diy-kit">
   <div class="section-hdr light">
@@ -1095,18 +1184,21 @@
   <div class="drawer-hdr"><h2>Your Cart 👑</h2><button class="icon-btn" id="cart-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
   <div class="cart-items" id="cart-items"><div class="cart-empty" id="cart-empty"><span>👑</span><p>Your cart is empty</p><a href="#shop" class="btn btn-pink" id="cart-shop-link">Shop Now</a></div></div>
   <div class="cart-footer" id="cart-footer" style="display:none">
-    <div class="cart-sub"><span>Subtotal</span><span id="cart-total">$0.00</span></div>
+    <div class="cart-sub"><span>Subtotal</span><span id="cart-subtotal-val">$0.00</span></div>
+    <div id="cart-discount-row" style="display:none" class="cart-sub"><span>Discount</span><span id="cart-discount-val">-$0.00</span></div>
+    <div class="cart-sub cart-total-row"><span><strong>Total</strong></span><span id="cart-total-val"><strong>$0.00</strong></span></div>
     <div class="coupon-row"><input type="text" class="coupon-in" id="coupon-in" placeholder="Coupon code"/><button class="btn btn-outline-pink btn-xs" id="apply-coupon">Apply</button></div>
     <div class="coupon-msg" id="coupon-msg"></div>
-    <button class="btn btn-pink btn-full" id="checkout-btn">Proceed to Checkout</button>
+    <button class="btn btn-pink btn-full" id="cart-checkout-btn">Proceed to Checkout</button>
     <p class="cart-note">Free shipping on orders over $75 with QUEEN75</p>
   </div>
 </aside>
 
 <!-- ── AUTH MODAL ─────────────────────────────────────── -->
+<div class="cart-overlay" id="cart-overlay"></div>
 <div class="modal-overlay" id="auth-overlay"></div>
 <div class="auth-modal" id="auth-modal" role="dialog" aria-label="Account">
-  <button class="modal-close" id="auth-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  <button class="modal-close" id="auth-modal-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   <div class="auth-tabs" id="auth-tabs">
     <button class="auth-tab active" data-tab="login">Sign In</button>
     <button class="auth-tab" data-tab="signup">Create Account</button>

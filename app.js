@@ -1059,3 +1059,16 @@ window.toggleVid = function(btn) {
     btn.textContent = '▶';
   }
 };
+
+// Queen Supply List — notify me
+function qsNotify(e) {
+  e.preventDefault();
+  const email = document.getElementById('qs-email').value.trim();
+  if (!email) return;
+  const leads = JSON.parse(localStorage.getItem('qcc_supply_leads') || '[]');
+  leads.push({ email, ts: Date.now() });
+  localStorage.setItem('qcc_supply_leads', JSON.stringify(leads));
+  document.getElementById('qs-email').value = '';
+  window.showToast && window.showToast("You're on the list! 👑 We'll notify you when the supply list drops.", 'success');
+}
+window.qsNotify = qsNotify;
