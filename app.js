@@ -1028,3 +1028,19 @@ window.addDIYKit = function() {
     renderCounts();
   }
 })();
+
+/* ── About video toggle ──────────────────────────────── */
+window.toggleVid = function(btn) {
+  const wrap = btn.closest('.about-video-wrap');
+  const video = wrap.querySelector('video');
+  if (!video) return;
+  if (video.paused) {
+    video.play();
+    wrap.classList.add('playing');
+    btn.textContent = '⏸';
+  } else {
+    video.pause();
+    wrap.classList.remove('playing');
+    btn.textContent = '▶';
+  }
+};

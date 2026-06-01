@@ -2937,3 +2937,89 @@ button.quick-add {
   font-weight: 700;
   color: var(--pink);
 }
+
+/* ══════════════════════════════════════════════════════════
+   ABOUT — PROCESS VIDEOS
+   ══════════════════════════════════════════════════════════ */
+
+.about-videos {
+  margin-top: 28px;
+  border-top: 1px solid var(--border-1, #eee);
+  padding-top: 24px;
+}
+
+.about-videos-label {
+  font-family: var(--ff-head);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--pink);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin: 0 0 14px;
+}
+
+.about-video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 540px) {
+  .about-video-grid { grid-template-columns: 1fr; }
+}
+
+.about-video-wrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 9 / 16;
+  background: #111;
+  cursor: pointer;
+}
+
+.about-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  transition: opacity 0.2s;
+}
+
+.about-video-wrap:hover .about-video {
+  opacity: 0.85;
+}
+
+.about-video-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  border: none;
+  cursor: pointer;
+  font-size: 1.8rem;
+  color: #fff;
+  transition: background 0.2s;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.about-video-wrap.playing .about-video-play {
+  background: transparent;
+  opacity: 0;
+}
+
+.about-video-wrap.playing:hover .about-video-play {
+  opacity: 1;
+  background: rgba(0,0,0,0.2);
+}
+
+.about-videos-sub {
+  font-size: 0.76rem;
+  color: var(--text-3);
+  text-align: center;
+  margin: 0;
+}
