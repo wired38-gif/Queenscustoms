@@ -3854,3 +3854,34 @@ body {
   background: linear-gradient(180deg, #0d0d0d 0%, #140008 100%) !important;
 }
 
+
+/* ── SESSION THUMBNAIL IMAGES ─────────────────────────── */
+.session-thumb {
+  width: 100%;
+  height: 160px;
+  border-radius: 1rem 1rem 0 0;
+  overflow: hidden;
+  margin: -1.5rem -1.5rem 1.25rem -1.5rem;
+  width: calc(100% + 3rem);
+}
+.session-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+  filter: brightness(0.88) saturate(1.2);
+}
+.session-card:hover .session-thumb img {
+  transform: scale(1.05);
+}
+
+/* ── LOGO SINGLE CLEAN ────────────────────────────────── */
+.site-logo {
+  height: 58px !important;
+  width: 58px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  box-shadow: 0 0 0 2px #FF1A8C, 0 0 18px rgba(255,26,140,0.35) !important;
+}
+.site-logo-wide { display: none !important; }
+
