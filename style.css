@@ -3506,3 +3506,210 @@ button.quick-add {
   opacity: 0.45;
 }
 
+
+/* ── BG VIDEO — MORE VISIBLE ──────────────────────────── */
+.site-bg-video video {
+  opacity: 0.22 !important;
+}
+
+/* ── VIDEO DIVIDERS ───────────────────────────────────── */
+.vid-divider {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  z-index: 0;
+}
+.vid-divider video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.vid-divider-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13,13,13,0.55) 0%,
+    rgba(13,13,13,0.15) 50%,
+    rgba(13,13,13,0.55) 100%
+  );
+}
+
+/* ── INSPIRATION LUXURY SECTION ──────────────────────── */
+.inspo-luxury {
+  position: relative;
+  padding: 6rem 0;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+.inspo-vid-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.inspo-vid-bg video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.inspo-vid-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.82);
+}
+.inspo-luxury-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.inspo-luxury-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+@media (max-width: 860px) {
+  .inspo-luxury-grid { grid-template-columns: 1fr; }
+}
+
+/* Upload zone */
+.inspo-upload-zone {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  position: relative;
+  height: 260px;
+  cursor: pointer;
+  border: 1.5px solid rgba(255,26,140,0.3);
+  transition: border-color 0.3s;
+}
+.inspo-upload-zone:hover { border-color: #FF1A8C; }
+.inspo-upload-inner { position: relative; height: 100%; }
+.inspo-upload-bg-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.35) saturate(1.3);
+}
+.inspo-upload-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(13,13,13,0.6), rgba(255,26,140,0.08));
+}
+.inspo-upload-content {
+  position: relative; z-index: 1;
+  height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.6rem; padding: 1.5rem; text-align: center;
+}
+.inspo-upload-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.15rem; font-weight: 600;
+  color: #fff; margin: 0;
+}
+.inspo-upload-sub {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  margin: 0;
+}
+
+/* Mood grid */
+.inspo-mood-section { margin-top: 2rem; }
+.inspo-mood-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.85rem;
+}
+.inspo-mood-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 0.6rem;
+}
+@media (max-width: 600px) {
+  .inspo-mood-grid { grid-template-columns: repeat(2,1fr); }
+}
+.inspo-mood-btn {
+  border: none; cursor: pointer;
+  border-radius: 0.6rem;
+  padding: 0.7rem 0.5rem;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 0.75rem; font-weight: 600;
+  color: #fff; text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.inspo-mood-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+.inspo-mood-btn.active { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Vision textarea */
+.inspo-vision-box { margin-top: 2rem; }
+.inspo-vision-label {
+  display: block;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0.6rem;
+}
+.inspo-textarea {
+  width: 100%; box-sizing: border-box;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,26,140,0.25);
+  border-radius: 0.85rem;
+  color: #fff; padding: 1rem 1.2rem;
+  font-family: 'Satoshi', sans-serif; font-size: 0.95rem;
+  resize: vertical; outline: none;
+  transition: border-color 0.2s;
+}
+.inspo-textarea:focus { border-color: #FF1A8C; }
+.inspo-textarea::placeholder { color: rgba(255,255,255,0.28); }
+
+/* How it works card */
+.inspo-how-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,26,140,0.18);
+  border-radius: 1.5rem;
+  padding: 2.5rem 2rem;
+  backdrop-filter: blur(10px);
+  height: 100%;
+  box-sizing: border-box;
+}
+.inspo-how-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.35rem; font-weight: 700;
+  color: #fff; margin-bottom: 2rem;
+}
+.inspo-step-row {
+  display: flex; align-items: flex-start; gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.inspo-step-row:last-of-type { border-bottom: none; }
+.inspo-step-img {
+  width: 64px; height: 64px; flex-shrink: 0;
+  border-radius: 0.75rem;
+  background-size: cover; background-position: center;
+  border: 1.5px solid rgba(255,26,140,0.3);
+}
+.inspo-step-text { flex: 1; }
+.inspo-step-num {
+  display: block;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; color: #FF1A8C;
+  margin-bottom: 0.2rem;
+}
+.inspo-step-text strong {
+  display: block; color: #fff;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 0.95rem; font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.inspo-step-text p {
+  color: rgba(255,255,255,0.45);
+  font-size: 0.82rem; margin: 0; line-height: 1.5;
+}

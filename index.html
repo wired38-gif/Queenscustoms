@@ -538,59 +538,111 @@
 </section>
 
 <!-- ── INSPIRATION UPLOAD ────────────────────────────── -->
-<section class="section bg-surface" id="inspiration">
-  <div class="section-hdr"><span class="eyebrow-pink">Your Vision</span><h2 class="section-title">Share Your Inspiration</h2><p class="section-sub">Upload reference images from TikTok, Pinterest, or anywhere. The Vibe Queen will bring your vision to life.</p></div>
-  <div class="inspo-wrap">
-    <div class="inspo-left">
-      <!-- Upload Zone -->
-      <div class="upload-zone" id="upload-zone">
-        <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
-        <div class="upload-icon">📸</div>
-        <p class="upload-title">Drag &amp; drop your inspiration</p>
-        <p class="upload-sub">or click to browse — up to 3 images (PNG, JPG, WEBP)</p>
-        <button class="btn btn-outline-pink" onclick="document.getElementById('file-input').click()">Choose Files</button>
-      </div>
-      <div class="upload-previews" id="upload-previews"></div>
+<section class="section inspo-luxury" id="inspiration">
+  <!-- Epoxy video background for this section -->
+  <div class="inspo-vid-bg">
+    <video autoplay muted loop playsinline><source src="assets/bg-paint.mp4" type="video/mp4"/></video>
+    <div class="inspo-vid-overlay"></div>
+  </div>
 
-      <!-- Mood Palette -->
-      <div class="mood-section">
-        <h4 class="mood-title">Choose a Color Mood</h4>
-        <div class="mood-grid">
-          <button class="mood-btn" data-mood="Girly &amp; Pink" style="background:linear-gradient(135deg,#FF69B4,#FF1A8C)">Girly &amp; Pink</button>
-          <button class="mood-btn" data-mood="Bold &amp; Black" style="background:linear-gradient(135deg,#1a1a1a,#3d3d3d)">Bold &amp; Black</button>
-          <button class="mood-btn" data-mood="Earthy Tones" style="background:linear-gradient(135deg,#8B4513,#D2691E)">Earthy Tones</button>
-          <button class="mood-btn" data-mood="Cool Blues" style="background:linear-gradient(135deg,#006494,#00b4d8)">Cool Blues</button>
-          <button class="mood-btn" data-mood="Rainbow" style="background:linear-gradient(135deg,#FF0000,#FF7F00,#FFFF00,#00FF00,#0000FF,#8B00FF)">Rainbow</button>
-          <button class="mood-btn" data-mood="Neon Pop" style="background:linear-gradient(135deg,#39FF14,#FF1493)">Neon Pop</button>
-          <button class="mood-btn" data-mood="Pastel Dreams" style="background:linear-gradient(135deg,#FFD1DC,#AEC6CF)">Pastel Dreams</button>
-          <button class="mood-btn" data-mood="Classic Gold" style="background:linear-gradient(135deg,#C89B3C,#E8C06A)">Classic Gold</button>
+  <div class="inspo-luxury-inner">
+    <!-- Header -->
+    <div class="section-hdr light">
+      <span class="eyebrow-pink">Your Vision</span>
+      <h2 class="section-title white">Share Your Inspiration</h2>
+      <p class="section-sub muted">Drop images, pick your color mood, describe your dream — The Vibe Queen brings it to life.</p>
+    </div>
+
+    <div class="inspo-luxury-grid">
+
+      <!-- LEFT: Upload + Mood + Text -->
+      <div class="inspo-luxury-left">
+
+        <!-- Upload Zone -->
+        <div class="inspo-upload-zone" id="upload-zone">
+          <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
+          <div class="inspo-upload-inner">
+            <img src="assets/products/fairy-moon.jpg" alt="" class="inspo-upload-bg-img"/>
+            <div class="inspo-upload-overlay"></div>
+            <div class="inspo-upload-content">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF1A8C" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p class="inspo-upload-title">Drop Your Inspiration Here</p>
+              <p class="inspo-upload-sub">Pinterest, TikTok, screenshots — anything that speaks your vibe</p>
+              <button class="btn btn-pink" onclick="document.getElementById('file-input').click()">Browse Files</button>
+            </div>
+          </div>
+        </div>
+        <div class="upload-previews" id="upload-previews"></div>
+
+        <!-- Color Mood Grid -->
+        <div class="inspo-mood-section">
+          <h4 class="inspo-mood-title">Pick Your Color Mood</h4>
+          <div class="inspo-mood-grid">
+            <button class="inspo-mood-btn" data-mood="Girly &amp; Pink" style="background:linear-gradient(135deg,#FF69B4,#FF1A8C)"><span>Girly &amp; Pink</span></button>
+            <button class="inspo-mood-btn" data-mood="Bold &amp; Black" style="background:linear-gradient(135deg,#1a1a1a,#3d3d3d);border:1px solid #444"><span>Bold &amp; Black</span></button>
+            <button class="inspo-mood-btn" data-mood="Earthy Tones" style="background:linear-gradient(135deg,#8B4513,#D2691E)"><span>Earthy Tones</span></button>
+            <button class="inspo-mood-btn" data-mood="Cool Blues" style="background:linear-gradient(135deg,#006494,#00b4d8)"><span>Cool Blues</span></button>
+            <button class="inspo-mood-btn" data-mood="Rainbow" style="background:linear-gradient(90deg,#FF0000,#FF7F00,#FFD700,#00CC44,#0066FF,#8B00FF)"><span>Rainbow</span></button>
+            <button class="inspo-mood-btn" data-mood="Neon Pop" style="background:linear-gradient(135deg,#39FF14,#FF1493)"><span>Neon Pop</span></button>
+            <button class="inspo-mood-btn" data-mood="Pastel Dreams" style="background:linear-gradient(135deg,#FFD1DC,#C3B1E1)"><span>Pastel Dreams</span></button>
+            <button class="inspo-mood-btn" data-mood="Classic Gold" style="background:linear-gradient(135deg,#C89B3C,#E8C06A)"><span>Classic Gold</span></button>
+          </div>
+        </div>
+
+        <!-- Vision textarea -->
+        <div class="inspo-vision-box">
+          <label for="inspo-text" class="inspo-vision-label">Describe Your Dream Tumbler</label>
+          <textarea id="inspo-text" rows="4" class="inspo-textarea" placeholder="Colors, theme, occasion, a feeling — tell us everything…"></textarea>
+          <button class="btn btn-pink btn-full mt-4" id="send-inspo-btn">Send to The Vibe Queen →</button>
+          <div class="inspo-success" id="inspo-success"></div>
         </div>
       </div>
 
-      <!-- Vision text -->
-      <div class="field-group mt-6">
-        <label for="inspo-text">Describe Your Vision</label>
-        <textarea id="inspo-text" rows="4" placeholder="Tell us your dream tumbler — colors, theme, occasion, anything that inspires you…"></textarea>
+      <!-- RIGHT: How It Works with real product images -->
+      <div class="inspo-luxury-right">
+        <div class="inspo-how-card">
+          <h3 class="inspo-how-title">How It Works</h3>
+
+          <div class="inspo-step-row">
+            <div class="inspo-step-img" style="background-image:url('assets/products/fairy-moon.jpg')"></div>
+            <div class="inspo-step-text">
+              <span class="inspo-step-num">01</span>
+              <strong>Share your vision</strong>
+              <p>Upload images or describe your dream design</p>
+            </div>
+          </div>
+
+          <div class="inspo-step-row">
+            <div class="inspo-step-img" style="background-image:url('assets/products/teal-marble-pour.jpg')"></div>
+            <div class="inspo-step-text">
+              <span class="inspo-step-num">02</span>
+              <strong>Queen reviews within 24hrs</strong>
+              <p>We send a concept &amp; custom quote for approval</p>
+            </div>
+          </div>
+
+          <div class="inspo-step-row">
+            <div class="inspo-step-img" style="background-image:url('assets/products/mountain-galaxy.jpg')"></div>
+            <div class="inspo-step-text">
+              <span class="inspo-step-num">03</span>
+              <strong>We craft your masterpiece</strong>
+              <p>Handmade, one-of-a-kind, ships in 7–10 days</p>
+            </div>
+          </div>
+
+          <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" rel="noopener" class="btn btn-pink btn-full" style="margin-top:1.5rem">Or DM on TikTok →</a>
+        </div>
       </div>
-      <button class="btn btn-pink mt-4" id="send-inspo-btn">Send Inspiration to The Vibe Queen 👑</button>
-      <div class="inspo-success" id="inspo-success"></div>
-    </div>
-    <div class="inspo-right">
-      <div class="inspo-info-card">
-        <div class="inspo-icon">🎨</div>
-        <h3>How It Works</h3>
-        <ol class="inspo-steps">
-          <li><span>01</span>Upload your inspiration images or describe your vision</li>
-          <li><span>02</span>The Vibe Queen reviews your submission within 24 hrs</li>
-          <li><span>03</span>We send a design concept &amp; quote for your approval</li>
-          <li><span>04</span>Once approved, we craft your one-of-a-kind piece</li>
-          <li><span>05</span>Ships to your door within 7–10 business days</li>
-        </ol>
-        <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="btn btn-pink mt-4">Or DM on TikTok</a>
-      </div>
+
     </div>
   </div>
 </section>
+
+<!-- ── VIDEO DIVIDER ── -->
+<div class="vid-divider" aria-hidden="true">
+  <video autoplay muted loop playsinline><source src="assets/bg-paint.mp4" type="video/mp4"/></video>
+  <div class="vid-divider-overlay"></div>
+</div>
 
 <!-- ── CUSTOM ORDER DARK SECTION ─────────────────────── -->
 <section class="section bg-dark-queen" id="custom">
@@ -631,6 +683,12 @@
 </section>
 
 <!-- ── MARKETPLACE INTEGRATIONS ─────────────────────── -->
+<!-- ── VIDEO DIVIDER ── -->
+<div class="vid-divider" aria-hidden="true">
+  <video autoplay muted loop playsinline><source src="assets/bg-paint.mp4" type="video/mp4"/></video>
+  <div class="vid-divider-overlay"></div>
+</div>
+
 <section class="section bg-dark" id="marketplace">
   <div class="section-hdr light"><span class="eyebrow-pink">Shop Everywhere</span><h2 class="section-title white">Find Us on Your Favorite Platform</h2><p class="section-sub muted">Shop Queens Custom Creations wherever you spend your time.</p></div>
   <div class="market-grid">
@@ -744,6 +802,12 @@
 </section>
 
 <!-- ── AMAZON SUPPLY STORE ────────────────────────────── -->
+<!-- ── VIDEO DIVIDER ── -->
+<div class="vid-divider" aria-hidden="true">
+  <video autoplay muted loop playsinline><source src="assets/bg-paint.mp4" type="video/mp4"/></video>
+  <div class="vid-divider-overlay"></div>
+</div>
+
 <section class="section bg-surface" id="amazon-store">
   <div class="section-hdr">
     <span class="eyebrow-pink">Shop the Supplies</span>

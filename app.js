@@ -1157,3 +1157,11 @@ window.qsNotify = qsNotify;
   for (let i = 0; i < 120; i++) particles.push(new Particle());
   animate();
 })();
+
+/* ── INSPO MOOD BUTTONS (luxury section) ──────────────── */
+document.querySelectorAll('.inspo-mood-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.inspo-mood-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
