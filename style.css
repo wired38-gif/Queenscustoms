@@ -3817,3 +3817,40 @@ body {
   background: #0f0f12 !important;
 }
 
+
+/* ── FOOTER LOGO FIX — small, not giant ──────────────── */
+.footer-logo {
+  height: 60px !important;
+  width: auto !important;
+  max-width: 160px;
+  object-fit: contain;
+  filter: brightness(1.1);
+  border-radius: 0 !important;
+}
+.site-footer {
+  background: #080808 !important;
+}
+.footer-brand p {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+}
+
+/* ── MARKETPLACE LOGO SIZE FIX ───────────────────────── */
+.market-logo {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0;
+}
+
+/* ── STUDIO FEATURE CARDS — replace emoji with SVG icons ─ */
+.studio-feat-ico { font-size: 2rem; }
+
+/* ── BUILDER CTA SECTION — dark not flat ─────────────── */
+#builder {
+  background: linear-gradient(180deg, #0d0d0d 0%, #140008 100%) !important;
+}
+
