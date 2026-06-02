@@ -145,6 +145,7 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+<canvas id="sparkle-canvas" aria-hidden="true"></canvas>
 
 <!-- Fixed BG video -->
 <div class="site-bg-video" id="site-bg-video">
@@ -263,12 +264,12 @@
 <section class="section bg-surface" id="collections">
   <div class="section-hdr"><span class="eyebrow-pink">Browse by Vibe</span><h2 class="section-title">The Collections</h2></div>
   <div class="collections-grid">
-    <a href="#shop" class="col-tile tile-1"><div class="tile-body"><span class="tile-ico">✨</span><h3>Glitter Queens</h3><p>Chunky, opal &amp; holographic glitter works</p><span class="tile-arrow">Shop →</span></div></a>
-    <a href="#shop" class="col-tile tile-2"><div class="tile-body"><span class="tile-ico">👑</span><h3>Custom Royalty</h3><p>Personalized with your name, colors &amp; vibe</p><span class="tile-arrow">Order →</span></div></a>
-    <a href="#shop" class="col-tile tile-3"><div class="tile-body"><span class="tile-ico">📦</span><h3>Ready to Ship</h3><p>In-stock pieces shipping within 5 days</p><span class="tile-arrow">Shop →</span></div></a>
-    <a href="#shop" class="col-tile tile-4"><div class="tile-body"><span class="tile-ico">🎀</span><h3>Seasonal Drops</h3><p>Holiday &amp; limited edition releases</p><span class="tile-arrow">Shop →</span></div></a>
-    <a href="#shop" class="col-tile tile-5"><div class="tile-body"><span class="tile-ico">🎁</span><h3>Gift Sets</h3><p>Curated sets — perfect for any occasion</p><span class="tile-arrow">Shop →</span></div></a>
-    <a href="#tiktok" class="col-tile tile-6"><div class="tile-body"><span class="tile-ico">🔴</span><h3>Live Drops</h3><p>Exclusive TikTok Live event pieces</p><span class="tile-arrow">Watch →</span></div></a>
+    <a href="#shop" class="col-tile tile-1"><div class="tile-img" style="background-image:url('assets/products/fairy-moon.jpg')"></div><div class="tile-body"><h3>Glitter Queens</h3><p>Chunky, opal &amp; holographic glitter works</p><span class="tile-arrow">Shop →</span></div></a>
+    <a href="#shop" class="col-tile tile-2"><div class="tile-img" style="background-image:url('assets/products/p214.jpg')"></div><div class="tile-body"><h3>Custom Royalty</h3><p>Personalized with your name, colors &amp; vibe</p><span class="tile-arrow">Order →</span></div></a>
+    <a href="#shop" class="col-tile tile-3"><div class="tile-img" style="background-image:url('assets/products/tropical-hibiscus.jpg')"></div><div class="tile-body"><h3>Ready to Ship</h3><p>In-stock pieces shipping within 5 days</p><span class="tile-arrow">Shop →</span></div></a>
+    <a href="#shop" class="col-tile tile-4"><div class="tile-img" style="background-image:url('assets/products/red-bow-christmas.jpg')"></div><div class="tile-body"><h3>Seasonal Drops</h3><p>Holiday &amp; limited edition releases</p><span class="tile-arrow">Shop →</span></div></a>
+    <a href="#shop" class="col-tile tile-5"><div class="tile-img" style="background-image:url('assets/products/mama-mini-set.jpg')"></div><div class="tile-body"><h3>Gift Sets</h3><p>Curated sets — perfect for any occasion</p><span class="tile-arrow">Shop →</span></div></a>
+    <a href="#tiktok-section" class="col-tile tile-6"><div class="tile-img" style="background-image:url('assets/products/wolf-glow.jpg')"></div><div class="tile-body"><h3>Live Drops</h3><p>Exclusive TikTok Live event pieces</p><span class="tile-arrow">Watch →</span></div></a>
   </div>
 </section>
 
@@ -335,8 +336,30 @@
 
 <!-- ── TUMBLER BUILDER ───────────────────────────────── -->
 <section class="section bg-dark" id="builder">
-  <div class="section-hdr light"><span class="eyebrow-pink">Interactive Configurator</span><h2 class="section-title white">Design Your Dream Tumbler</h2><p class="section-sub muted">Choose your cup, colors, glitter type, and theme — then preview your creation before ordering.</p><a href="/shop/" class="btn btn-pink" style="margin-top:1.2rem;display:inline-block">Open Full Studio → /shop 🎨</a></div>
-  <div class="builder-wrap">
+  <div class="section-hdr light"><span class="eyebrow-pink">Queens Studio</span><h2 class="section-title white">Design Your Dream Tumbler</h2><p class="section-sub muted">The full interactive tumbler builder lives in the Queens Studio — pick your cup, colors, glitter, theme, and preview your creation before you order.</p><a href="/shop/" class="btn btn-pink" style="margin-top:1.5rem;display:inline-block;font-size:1.1rem;padding:1rem 2.5rem">Enter Queens Studio →</a><p class="section-sub muted" style="margin-top:0.75rem;font-size:0.85rem">Create a free account to save your designs &amp; track orders</p></div>
+  <div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:2rem">
+    <div style="background:rgba(255,26,140,0.08);border:1px solid rgba(255,26,140,0.25);border-radius:1rem;padding:1.5rem 2rem;text-align:center;max-width:200px">
+      <div style="font-size:2rem;margin-bottom:0.5rem">🎨</div>
+      <strong style="color:#fff;display:block;margin-bottom:0.3rem">Custom Colors</strong>
+      <span style="color:rgba(255,255,255,0.55);font-size:0.85rem">22 base colors + ombré</span>
+    </div>
+    <div style="background:rgba(255,26,140,0.08);border:1px solid rgba(255,26,140,0.25);border-radius:1rem;padding:1.5rem 2rem;text-align:center;max-width:200px">
+      <div style="font-size:2rem;margin-bottom:0.5rem">✨</div>
+      <strong style="color:#fff;display:block;margin-bottom:0.3rem">8 Glitter Types</strong>
+      <span style="color:rgba(255,255,255,0.55);font-size:0.85rem">Fine, chunky, glow &amp; more</span>
+    </div>
+    <div style="background:rgba(255,26,140,0.08);border:1px solid rgba(255,26,140,0.25);border-radius:1rem;padding:1.5rem 2rem;text-align:center;max-width:200px">
+      <div style="font-size:2rem;margin-bottom:0.5rem">👁</div>
+      <strong style="color:#fff;display:block;margin-bottom:0.3rem">Live Preview</strong>
+      <span style="color:rgba(255,255,255,0.55);font-size:0.85rem">See it before you order</span>
+    </div>
+    <div style="background:rgba(255,26,140,0.08);border:1px solid rgba(255,26,140,0.25);border-radius:1rem;padding:1.5rem 2rem;text-align:center;max-width:200px">
+      <div style="font-size:2rem;margin-bottom:0.5rem">📦</div>
+      <strong style="color:#fff;display:block;margin-bottom:0.3rem">Order Direct</strong>
+      <span style="color:rgba(255,255,255,0.55);font-size:0.85rem">Ships in 5–7 business days</span>
+    </div>
+  </div>
+  <div class="builder-wrap" style="display:none">
     <!-- LEFT: Steps -->
     <div class="builder-steps" id="builder-steps">
 

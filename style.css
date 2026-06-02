@@ -3466,3 +3466,43 @@ button.quick-add {
   color: #fff !important;
   text-shadow: 0 0 12px rgba(255,26,140,0.8);
 }
+
+/* ── COLLECTION TILE REAL IMAGES ──────────────────── */
+.col-tile {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+.tile-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transition: transform 0.5s ease;
+  filter: brightness(0.45);
+}
+.col-tile:hover .tile-img {
+  transform: scale(1.06);
+  filter: brightness(0.55);
+}
+.tile-body {
+  position: relative;
+  z-index: 1;
+  background: none !important;
+  margin-top: auto;
+}
+.tile-ico { display: none; }
+
+/* ── SPARKLE PARTICLE CANVAS ──────────────────────── */
+#sparkle-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+}
+

@@ -1072,3 +1072,88 @@ function qsNotify(e) {
   window.showToast && window.showToast("You're on the list! 👑 We'll notify you when the supply list drops.", 'success');
 }
 window.qsNotify = qsNotify;
+
+/* ── SPARKLE PARTICLE SYSTEM ──────────────────────────────── */
+(function initSparkles() {
+  const canvas = document.getElementById('sparkle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  const COLORS = ['#FF1A8C','#ff69c0','#ffffff','#ffe4f5','#ffb3de','#c084fc','#f9a8d4'];
+
+  function Particle() {
+    this.reset = function() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H + H;
+      this.size = Math.random() * 2.5 + 0.5;
+      this.speedY = -(Math.random() * 0.6 + 0.2);
+      this.speedX = (Math.random() - 0.5) * 0.4;
+      this.alpha = Math.random() * 0.7 + 0.3;
+      this.fadeSpeed = Math.random() * 0.004 + 0.001;
+      this.twinkle = Math.random() * Math.PI * 2;
+      this.twinkleSpeed = Math.random() * 0.04 + 0.01;
+      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      this.shape = Math.random() > 0.6 ? 'star' : 'circle';
+    };
+    this.reset();
+    this.y = Math.random() * H; // scatter initially
+  }
+
+  function drawStar(ctx, x, y, r, color, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = r * 4;
+    ctx.beginPath();
+    for (let i = 0; i < 5; i++) {
+      const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+      const xi = x + r * Math.cos(angle);
+      const yi = y + r * Math.sin(angle);
+      i === 0 ? ctx.moveTo(xi, yi) : ctx.lineTo(xi, yi);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawCircle(ctx, x, y, r, color, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = r * 5;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.twinkle += p.twinkleSpeed;
+      const twinkleAlpha = p.alpha * (0.6 + 0.4 * Math.sin(p.twinkle));
+      if (p.shape === 'star') {
+        drawStar(ctx, p.x, p.y, p.size, p.color, twinkleAlpha);
+      } else {
+        drawCircle(ctx, p.x, p.y, p.size, p.color, twinkleAlpha);
+      }
+      p.x += p.speedX;
+      p.y += p.speedY;
+      if (p.y < -10 || p.alpha <= 0) p.reset();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  for (let i = 0; i < 120; i++) particles.push(new Particle());
+  animate();
+})();
