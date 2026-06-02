@@ -127,26 +127,33 @@ h1,h2,h3,h4,h5 {
 
 /* ---------- Site Header ---------- */
 .site-header {
-  position: fixed;
+  position: fixed !important;
   top: 0; left: 0; right: 0;
-  z-index: 500;
+  z-index: 9999;
   width: 100%;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  transition: background var(--dur-base), border-color var(--dur-base), box-shadow var(--dur-base);
+  background: rgba(13,13,13,0.82);
+  backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  border-bottom: 1px solid rgba(255,26,140,0.15);
+  box-shadow: 0 2px 32px rgba(0,0,0,0.45);
+  transition: background 0.3s, box-shadow 0.3s;
 }
-.site-header.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+.site-header.scrolled {
+  background: rgba(10,10,10,0.94);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,26,140,0.12);
+}
 .header-inner {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 24px;
-  height: var(--nav-h);
+  height: 74px;
   display: flex;
   align-items: center;
   gap: 16px;
 }
-.logo-wrap { display: flex; align-items: center; margin-right: auto; }
-.site-logo { height: 48px; width: 48px; object-fit: contain; border-radius: 50%; }
+.logo-wrap { display: flex; align-items: center; gap: 12px; margin-right: auto; text-decoration: none; }
+.site-logo { height: 72px; width: 72px; object-fit: contain; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,26,140,0.35), 0 4px 18px rgba(255,26,140,0.2); transition: transform 0.2s; }
+.site-logo:hover { transform: scale(1.05); }
 .main-nav {
   display: flex;
   align-items: center;
@@ -3713,3 +3720,27 @@ button.quick-add {
   color: rgba(255,255,255,0.45);
   font-size: 0.82rem; margin: 0; line-height: 1.5;
 }
+
+/* ── LOGO TEXT BESIDE IMAGE ───────────────────────────── */
+.logo-text-wrap {
+  display: flex; flex-direction: column;
+  line-height: 1.1;
+}
+.logo-name {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+  color: #fff; letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.logo-sub {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 0.68rem; font-weight: 500;
+  color: #FF1A8C; letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── ENSURE BODY CLEARS TALLER HEADER ────────────────── */
+body { padding-top: 74px; }
+.hero { margin-top: -74px; }
+
