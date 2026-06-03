@@ -3959,3 +3959,37 @@ body {
   color: rgba(255,255,255,0.9) !important;
 }
 
+
+/* ── LOGO ALWAYS VISIBLE BELOW TICKER ────────────────── */
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.site-logo {
+  height: 56px !important;
+  width: 56px !important;
+  min-width: 56px;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 0 2.5px #FF1A8C, 0 0 20px rgba(255,26,140,0.55) !important;
+}
+
+/* ── AMAZON STORE IMAGE ───────────────────────────────── */
+.amazon-store-visual {
+  position: relative;
+  min-height: 280px;
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+.amazon-store-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(13,13,13,0.3), rgba(255,153,0,0.1));
+}
+
