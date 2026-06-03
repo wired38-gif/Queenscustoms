@@ -164,7 +164,7 @@
   function tryAutoPlay() {
     if (autoPlayed) return;
     autoPlayed = true;
-    if (localStorage.getItem('qcc_music_playing') !== 'false') {
+    if (false && localStorage.getItem('qcc_music_playing') !== 'false') { // autoplay disabled — user must click play
       setPlayState(true);
     }
   }
