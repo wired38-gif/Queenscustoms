@@ -4262,3 +4262,173 @@ body { padding-top: calc(36px + 74px) !important; }
 .status-shipped   { background: rgba(59,130,246,0.1); color: #2563eb; }
 .status-processing{ background: rgba(245,158,11,0.1); color: #d97706; }
 .order-card-info  { flex: 1; }
+
+/* ============================================================
+   MOBILE RESPONSIVE — Phone-first fixes (≤768px, ≤480px, ≤380px)
+   ============================================================ */
+
+/* ── Compact header on phones ─────────────────────────────── */
+@media (max-width: 480px) {
+  /* Shrink announce bar to 30px on very small screens */
+  .announce-bar { height: 30px !important; padding: 6px 0 !important; }
+  .announce-track span { font-size: 0.7rem !important; }
+
+  /* Reduce header height */
+  .header-inner { height: 58px !important; padding: 0 14px !important; gap: 8px !important; }
+  body { padding-top: calc(30px + 58px) !important; }
+  .hero { margin-top: calc(-30px - 58px) !important; }
+  .site-header { top: 30px !important; }
+
+  /* Smaller logo on phone */
+  .site-logo { height: 44px !important; width: 44px !important; }
+
+  /* Ensure icon buttons don't overflow */
+  .hdr-actions { gap: 2px !important; }
+  .icon-btn { width: 36px !important; height: 36px !important; }
+
+  /* Logo name text — hide sub if it wraps */
+  .logo-sub { display: none !important; }
+  .logo-name { font-size: 0.9rem !important; }
+}
+
+/* ── Hero section on iPhone ───────────────────────────────── */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 92vh;
+    /* Allow content to breathe instead of forcing 100vh */
+    align-items: flex-end;
+  }
+  .hero-body {
+    padding: 60px 20px 48px !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 88vh;
+  }
+  .hero-body {
+    padding: 48px 16px 40px !important;
+  }
+  .hero-title { font-size: 2.2rem !important; line-height: 1.05 !important; }
+  .hero-sub { font-size: 0.9rem !important; }
+  .hero-ctas { gap: 10px !important; }
+  .hero-ctas .btn { padding: 12px 20px !important; font-size: 0.88rem !important; }
+}
+
+/* Landscape phone — keep hero from being too tall */
+@media (max-width: 812px) and (max-height: 430px) and (orientation: landscape) {
+  .hero { min-height: 100vh; align-items: center; }
+  .hero-body { padding: 24px 20px !important; }
+  .hero-title { font-size: 1.9rem !important; }
+  .hero-sub { display: none; }
+}
+
+/* ── Product grid — 2 col stays usable on phones ──────────── */
+@media (max-width: 380px) {
+  .product-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── Session cards — stack on phone ──────────────────────── */
+@media (max-width: 480px) {
+  .session-grid { grid-template-columns: 1fr !important; }
+  .session-card { padding: 20px 16px !important; }
+}
+
+/* ── Amazon store — shorten visual on mobile ─────────────── */
+@media (max-width: 640px) {
+  .amazon-store-visual { min-height: 240px !important; }
+  .amazon-store-card   { grid-template-columns: 1fr !important; }
+  .amazon-store-info   { padding: 20px 16px !important; }
+}
+
+/* ── Section side padding — tighter on tiny phones ────────── */
+@media (max-width: 380px) {
+  .section > .section-hdr,
+  .section > .filter-row,
+  .section > .product-grid,
+  .section > .collections-grid,
+  .section > .builder-wrap,
+  .section > .trust-inner,
+  .section > .contact-inner,
+  .section > .footer-inner,
+  .section > .about-inner,
+  .section > .tt-grid,
+  .section > .tt-cta,
+  .section > .custom-inner,
+  .section > .nl-inner,
+  .section > .marketplace-grid {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+  .header-inner { padding: 0 12px !important; }
+}
+
+/* ── TikTok grid — single col on phone ───────────────────── */
+@media (max-width: 480px) {
+  .tt-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── Collections — always 1 col on phone ────────────────── */
+@media (max-width: 480px) {
+  .collections-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── Builder steps — full width on phone ────────────────── */
+@media (max-width: 480px) {
+  .build-step { padding: 16px !important; }
+  .cup-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .color-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .glitter-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .theme-grid   { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ── Cart drawer full-width on phone ─────────────────────── */
+@media (max-width: 480px) {
+  .cart-drawer { width: 100vw !important; }
+}
+
+/* ── Auth modal full-width on phone ──────────────────────── */
+@media (max-width: 480px) {
+  .auth-modal {
+    width: 96vw !important;
+    max-width: 96vw !important;
+    margin: 16px !important;
+    padding: 24px 18px !important;
+    border-radius: 18px !important;
+  }
+}
+
+/* ── Mobile nav — ensure full height + safe area ─────────── */
+@media (max-width: 1100px) {
+  .mob-nav {
+    padding-top: max(24px, env(safe-area-inset-top, 24px));
+    padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
+  }
+}
+
+/* ── About section — stack cleanly on phone ─────────────── */
+@media (max-width: 480px) {
+  .about-inner { gap: 24px !important; }
+  .about-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+  .stat-num    { font-size: 2rem !important; }
+}
+
+/* ── Footer — single column on phone ────────────────────── */
+@media (max-width: 480px) {
+  .footer-grid-top { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .footer-inner { padding-left: 16px !important; padding-right: 16px !important; }
+}
+
+/* ── Marketplace cards — single col + compact on phone ────── */
+@media (max-width: 480px) {
+  .market-grid { grid-template-columns: 1fr !important; }
+  .market-card { padding: 16px !important; }
+}
+
+/* ── Vibe player — compact pill on very small phones ─────── */
+@media (max-width: 360px) {
+  .vibe-player { bottom: 12px !important; right: 8px !important; }
+  .vibe-vol    { width: 36px !important; }
+}
