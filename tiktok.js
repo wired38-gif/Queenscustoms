@@ -213,59 +213,43 @@
     }
   }
 
-  // ── Hashtag filter ───────────────────────────────────────────────────────
-  const QUEENS_TAGS = ['#queenscustoms', '#queenscustomcreations', '#queenscustom', '#vibequeentumbler', '#vibequeencraft'];
-  function isQueensVideo(oembed) {
-    if (!oembed || !oembed.title) return false;
-    const t = oembed.title.toLowerCase();
-    return QUEENS_TAGS.some(tag => t.includes(tag));
+  // ── Show all curated videos ─────────────────────────
+  // TikTok oEmbed API does not include hashtags in titles;
+  // the old filter was silently blocking all videos.
+  // All 63 curated IDs belong to @the_vibe_queen_hbic.
+  function isQueensVideo() {
+    return true;
   }
 
   // ── Render next batch of cards ────────────────────────────────────────────
   async function renderBatch(grid, count) {
-    let shown = 0;
-    let idx = rendered;
+    const batch = VIDEO_IDS.slice(rendered, rendered + count);
+    if (!batch.length) return;
 
-    while (shown < count && idx < VIDEO_IDS.length) {
-      const batchSize = Math.min(count * 2, VIDEO_IDS.length - idx); // fetch extra to account for filtered ones
-      const batch = VIDEO_IDS.slice(idx, idx + batchSize);
+    // Show skeletons while fetching
+    const skeletons = batch.map(() => {
+      const sk = document.createElement('div');
+      sk.className = 'tt-card tt-card--skeleton';
+      sk.innerHTML = `<div class="tt-thumb tt-thumb--placeholder"></div>`;
+      grid.appendChild(sk);
+      return sk;
+    });
 
-      // Show skeletons
-      const skeletons = batch.map(() => {
-        const sk = document.createElement('div');
-        sk.className = 'tt-card tt-card--skeleton';
-        sk.innerHTML = `<div class="tt-thumb tt-thumb--placeholder"></div>`;
-        grid.appendChild(sk);
-        return sk;
-      });
+    // Fetch oEmbed for all in parallel
+    const oembeds = await Promise.all(batch.map(id => fetchOembed(id)));
 
-      // Fetch oEmbed for each (parallel)
-      const oembeds = await Promise.all(batch.map(id => fetchOembed(id)));
+    // Replace skeletons with real cards
+    batch.forEach((id, i) => {
+      const card = buildCard(id, oembeds[i]);
+      grid.replaceChild(card, skeletons[i]);
+    });
 
-      // Filter and render only Queens Customs tagged videos
-      batch.forEach((id, i) => {
-        const oembed = oembeds[i];
-        const skeleton = skeletons[i];
-        if (isQueensVideo(oembed)) {
-          const card = buildCard(id, oembed);
-          grid.replaceChild(card, skeleton);
-          shown++;
-        } else {
-          // Remove skeleton for non-queens videos
-          skeleton.remove();
-        }
-      });
-
-      idx += batchSize;
-    }
-
-    rendered = idx;
+    rendered += batch.length;
 
     // Update counter
     const counter = document.getElementById('tt-counter');
     if (counter) {
-      const cards = grid.querySelectorAll('.tt-card:not(.tt-card--skeleton)').length;
-      counter.textContent = `Showing ${cards} Queens Customs videos`;
+      counter.textContent = `Showing ${rendered} of ${VIDEO_IDS.length} videos`;
     }
 
     saveCache(oembedCache);
@@ -308,7 +292,7 @@
             </svg>
             <div>
               <h2 class="tt-title">@${TT_HANDLE}</h2>
-              <p class="tt-sub">13K Followers · Queens Customs drops only</p>
+              <p class="tt-sub">13K Followers · All latest drops &amp; content</p>
             </div>
           </div>
           <a class="btn btn-pink tt-follow-btn" href="${TT_PROFILE}" target="_blank" rel="noopener">

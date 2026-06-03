@@ -99,9 +99,12 @@ h1,h2,h3,h4,h5 {
   color: #fff;
   padding: 9px 0;
   overflow: hidden;
-  position: relative;
-  z-index: 50;
-  margin-top: var(--nav-h);
+  position: fixed !important;
+  top: 0 !important;
+  left: 0; right: 0;
+  z-index: 10000 !important;
+  height: 36px;
+  box-sizing: border-box;
 }
 .announce-track {
   display: flex;
@@ -128,7 +131,7 @@ h1,h2,h3,h4,h5 {
 /* ---------- Site Header ---------- */
 .site-header {
   position: fixed !important;
-  top: 0; left: 0; right: 0;
+  top: 36px !important; left: 0; right: 0;
   z-index: 9999;
   width: 100%;
   background: rgba(13,13,13,0.82);
@@ -1231,7 +1234,7 @@ select.fi { appearance: none; background-image: url("data:image/svg+xml,%3Csvg x
   border-radius: var(--radius-md);
   padding: 10px 14px;
   font-size: 0.84rem;
-  color: #1a0a12;
+  color: rgba(255,255,255,0.85);
   border-left: 3px solid var(--pink);
 }
 .custom-inner {
@@ -3740,9 +3743,9 @@ button.quick-add {
   white-space: nowrap;
 }
 
-/* ── ENSURE BODY CLEARS TALLER HEADER ────────────────── */
-body { padding-top: 74px; }
-.hero { margin-top: -74px; }
+/* ── ENSURE BODY CLEARS TICKER + HEADER ─────────────── */
+body { padding-top: calc(36px + 74px) !important; }
+.hero { margin-top: calc(-36px - 74px) !important; }
 
 
 /* ── LOGO DUAL LOCKUP ─────────────────────────────────── */
@@ -3886,23 +3889,7 @@ body {
 .site-logo-wide { display: none !important; }
 
 
-/* ── TICKER ABOVE NAV — both locked to top ────────────── */
-.announce-bar {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0; right: 0;
-  z-index: 10000 !important;
-  height: 36px;
-}
-.site-header {
-  top: 36px !important;
-}
-body {
-  padding-top: calc(36px + 74px) !important;
-}
-.hero {
-  margin-top: calc(-36px - 74px) !important;
-}
+/* TICKER+NAV already fixed at top of file */
 
 /* ── NEW LOGO — bigger, sparkle version ───────────────── */
 .site-logo {
@@ -3951,13 +3938,31 @@ body {
   transform: translateY(-2px) scale(1.04);
 }
 
-/* ── CUSTOM ORDER CARD TEXT FIX ───────────────────────── */
-.custom-pricing-card h3,
-.custom-pricing-card .custom-price,
-.custom-pricing-card li,
-.custom-pricing-card p {
-  color: rgba(255,255,255,0.9) !important;
+/* ── CUSTOM ORDER SECTION — ALL TEXT READABLE ──────── */
+#custom .cpc-label,
+#custom .cpc-note,
+#custom .cpc-features span,
+.cpc-label, .cpc-note { color: rgba(255,255,255,0.85) !important; }
+#custom .cpc-price { color: #FF1A8C !important; font-size: 2.5rem !important; font-weight: 700 !important; }
+#custom .cpc-icon { font-size: 2rem !important; display: block !important; margin-bottom: 0.5rem !important; }
+#custom .cpc-features span {
+  display: inline-block !important;
+  background: rgba(255,26,140,0.1) !important;
+  border: 1px solid rgba(255,26,140,0.3) !important;
+  border-radius: 20px !important;
+  padding: 4px 12px !important;
+  margin: 3px !important;
+  font-size: 0.82rem !important;
+  color: rgba(255,255,255,0.88) !important;
 }
+.custom-price-card {
+  background: rgba(255,26,140,0.06) !important;
+  border: 1px solid rgba(255,26,140,0.3) !important;
+  border-radius: 1.25rem !important;
+  padding: 2rem 1.5rem !important;
+  text-align: center !important;
+}
+
 
 
 /* ── LOGO ALWAYS VISIBLE BELOW TICKER ────────────────── */
