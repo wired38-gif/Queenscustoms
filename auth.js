@@ -61,6 +61,23 @@
   let signupNameInput, signupEmailInput, signupPassInput, signupError;
   let tabs, authForms, authDashboard;
 
+
+  /* ─── Pre-seed admin account ─────────────────────────── */
+  function seedAdminAccount() {
+    const users = getUsers();
+    const adminEmail = 'wired4365@aol.com';
+    if (!users[adminEmail]) {
+      users[adminEmail] = {
+        email: adminEmail,
+        name: 'Vibe Queen Admin',
+        password: hashPass('74Slimjim!'),
+        joinDate: '2022-01-01',
+        isAdmin: true,
+      };
+      saveUsers(users);
+    }
+  }
+
   /* ─── Init ───────────────────────────────────────────────── */
   function init() {
     overlay   = document.getElementById('auth-overlay');
@@ -134,6 +151,9 @@
         }
       });
     });
+
+    // Seed admin account
+    seedAdminAccount();
 
     // Restore session
     const session = getSession();
@@ -323,7 +343,10 @@
     const panel = document.getElementById('panel-orders');
     if (!panel) return;
 
-    const orders = getOrders().filter(o => o.userEmail === email);
+    const session2 = getSession();
+    const isAdmin = session2 && session2.email && session2.email.toLowerCase() === 'wired4365@aol.com';
+    const allOrders = getOrders();
+    const orders = isAdmin ? allOrders : allOrders.filter(o => o.userEmail === email);
     if (!orders.length) {
       panel.innerHTML = '<p style="color:var(--text-3);font-size:0.9rem;text-align:center;padding:2rem 0;">No orders yet. Time to reign! 👑</p>';
       return;
@@ -337,6 +360,7 @@
           <div style="font-size:0.8rem;color:var(--text-3);margin-top:2px;">
             ${o.items.map(i => `${i.name} (×${i.qty})`).join(', ')}
           </div>
+          ${(getSession()?.email?.toLowerCase()==='wired4365@aol.com') ? `<div style="font-size:0.72rem;color:#FF1A8C;margin-top:2px;">Customer: ${o.userEmail}</div>` : ''}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
           <span class="order-status status-${o.status}">${capitalize(o.status)}</span>
@@ -475,7 +499,7 @@
 
   /* ─── Nav icon update ────────────────────────────────────── */
   function updateNavUserIcon(session) {
-    const btn = document.getElementById('nav-account-btn');
+    const btn = document.getElementById('user-btn');
     if (!btn) return;
     if (session) {
       const initials = (session.name || '?')

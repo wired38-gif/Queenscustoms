@@ -3889,7 +3889,7 @@ body {
 .site-logo-wide { display: none !important; }
 
 
-/* TICKER+NAV already fixed at top of file */
+
 
 /* ── NEW LOGO — bigger, sparkle version ───────────────── */
 .site-logo {
@@ -3998,3 +3998,176 @@ body {
   background: linear-gradient(135deg, rgba(13,13,13,0.3), rgba(255,153,0,0.1));
 }
 
+
+
+/* ═══════════════════════════════════════════════════════════
+   FULL READABILITY PASS — neon pink & cyan on dark bg
+   ═══════════════════════════════════════════════════════════ */
+
+/* About section body text */
+#about .about-body p,
+#about .about-text p,
+.about-body p {
+  color: rgba(255,255,255,0.88) !important;
+}
+#about .about-text h2,
+#about .about-title,
+.about-title {
+  color: #fff !important;
+}
+
+/* All section on dark backgrounds */
+.section.bg-dark p,
+.section.bg-dark span:not(.badge):not(.urgency-tag):not(.btn),
+.section.bg-dark li,
+.bg-dark .section-sub,
+.bg-dark .eyebrow-pink { color: rgba(255,255,255,0.82) !important; }
+
+/* Custom order section — all text white/pink */
+#custom,
+#custom * { color: rgba(255,255,255,0.88) !important; }
+#custom .cpc-price,
+#custom strong { color: #FF1A8C !important; }
+#custom .cpc-features span {
+  color: rgba(255,255,255,0.9) !important;
+  background: rgba(255,26,140,0.12) !important;
+  border: 1px solid rgba(255,26,140,0.35) !important;
+  border-radius: 20px !important;
+  padding: 3px 10px !important;
+  display: inline-block !important;
+  margin: 3px !important;
+}
+
+/* Product card "Add to Cart" button — always visible */
+.p-card .btn-pink, .p-card .btn {
+  opacity: 1 !important;
+  color: #fff !important;
+}
+/* Product badge doesn't clip button */
+.p-card { overflow: visible !important; position: relative !important; }
+.p-badge { position: absolute !important; top: 10px !important; left: 10px !important; z-index: 2 !important; }
+.p-urgency { position: absolute !important; bottom: 54px !important; left: 10px !important; z-index: 2 !important; }
+.p-info { position: relative !important; z-index: 1 !important; }
+
+/* Contact section text fix */
+.contact-text p, .contact-text h2, .contact-text span { color: rgba(255,255,255,0.85) !important; }
+.contact-title { color: #fff !important; }
+
+/* Contact form - clean modern design, not chunky */
+.contact-form { 
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,26,140,0.2) !important;
+  border-radius: 1.5rem !important;
+  padding: 2rem !important;
+}
+.contact-form .fg label { color: rgba(255,255,255,0.75) !important; font-size: 0.8rem !important; letter-spacing: 0.05em !important; text-transform: uppercase !important; }
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,26,140,0.3) !important;
+  border-radius: 0.75rem !important;
+  color: #fff !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.92rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s !important;
+}
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: #FF1A8C !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(255,26,140,0.15) !important;
+}
+.contact-form select option { background: #1a0a1a !important; color: #fff !important; }
+
+/* Auth modal — clean, not chunky */
+.auth-modal {
+  background: #0d0d0d !important;
+  border: 1px solid rgba(255,26,140,0.25) !important;
+  border-radius: 1.5rem !important;
+}
+.auth-modal input[type="email"],
+.auth-modal input[type="text"],
+.auth-modal input[type="password"] {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,26,140,0.3) !important;
+  border-radius: 0.75rem !important;
+  color: #fff !important;
+  padding: 0.75rem 1rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+.auth-modal label { color: rgba(255,255,255,0.65) !important; font-size: 0.78rem !important; letter-spacing: 0.06em !important; text-transform: uppercase !important; display: block !important; margin-bottom: 4px !important; }
+.form-row { display: flex !important; gap: 1rem !important; flex-wrap: wrap !important; }
+.form-row .fg { flex: 1 !important; min-width: 140px !important; }
+.fg { display: flex !important; flex-direction: column !important; gap: 4px !important; margin-bottom: 1rem !important; }
+
+/* ch-link (contact channel links) — neon readable */
+.ch-link { color: rgba(255,255,255,0.85) !important; }
+.ch-link:hover { color: #FF1A8C !important; }
+
+/* Nav menu bar — make text more visible */
+.main-nav a { color: rgba(255,255,255,0.9) !important; font-weight: 500 !important; }
+.main-nav a:hover { color: #FF1A8C !important; }
+
+/* Ticker scroll animation guarantee */
+.announce-bar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 10001 !important;
+  height: 36px !important;
+  overflow: hidden !important;
+}
+.site-header {
+  position: fixed !important;
+  top: 36px !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+}
+body { padding-top: calc(36px + 74px) !important; }
+.hero { margin-top: calc(-36px - 74px) !important; }
+
+/* Studio gate page - bg video */
+.shop-gate { position: relative !important; overflow: hidden !important; }
+.shop-gate-bg-video { position: absolute !important; inset: 0 !important; z-index: 0 !important; }
+.shop-gate-bg-video video { width:100% !important; height:100% !important; object-fit:cover !important; opacity:0.18 !important; }
+.shop-gate-content { position: relative !important; z-index: 1 !important; }
+
+/* ── LIGHT MODE (auto-detect from device) ───────────────── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f8f4f6;
+    --surface: #fff;
+    --black: #1a0a12;
+    --black-2: #2d1a24;
+    --black-3: #f0e8ed;
+    --text: #1a0a12;
+    --text-2: #4a2a3a;
+    --text-3: #8a5a6a;
+    --border: rgba(180,80,120,0.2);
+  }
+  body { background: #f8f4f6 !important; color: #1a0a12 !important; }
+  .site-header { background: rgba(255,255,255,0.92) !important; }
+  .site-header .main-nav a { color: #1a0a12 !important; }
+  .site-header .main-nav a:hover { color: #FF1A8C !important; }
+  .site-header .icon-btn { color: #1a0a12 !important; }
+  .announce-bar { background: #1a0a12 !important; }
+  .section.bg-dark { background: #1a0a12 !important; }
+  .section.bg-surface { background: #fff !important; }
+  .p-card { background: #fff !important; border: 1px solid rgba(180,80,120,0.15) !important; }
+  .p-card h3, .p-card .p-price { color: #1a0a12 !important; }
+  #about .about-text p, .about-body p { color: #4a2a3a !important; }
+  .contact-text p { color: #4a2a3a !important; }
+  .contact-form { background: rgba(255,255,255,0.9) !important; border: 1px solid rgba(180,80,120,0.2) !important; }
+  .contact-form input, .contact-form select, .contact-form textarea { background: #f8f4f6 !important; color: #1a0a12 !important; border: 1px solid rgba(180,80,120,0.3) !important; }
+  .trust-bar { background: #f0e8ed !important; }
+  .trust-item strong { color: #1a0a12 !important; }
+  .trust-item span { color: #8a5a6a !important; }
+  .site-footer { background: #1a0a12 !important; color: rgba(255,255,255,0.8) !important; }
+}

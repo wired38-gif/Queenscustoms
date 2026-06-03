@@ -160,18 +160,40 @@
   /* ── Auto-play on first interaction ───────────────────── */
   loadVibe(currentVibe, false);
 
+  /* ── Auto-play on first user interaction ────────────────
+     Mobile browsers require a user gesture before any audio
+     plays. We listen for the first click, scroll, or touch
+     and start the music then — unless the user already
+     explicitly paused it in a prior visit.
+  ─────────────────────────────────────────────────────── */
   let autoPlayed = false;
+
   function tryAutoPlay() {
     if (autoPlayed) return;
     autoPlayed = true;
-    // Auto-play on first user interaction (scroll, tap, or click)
-    // Only auto-plays if user hasn't explicitly paused
-    if (localStorage.getItem('qcc_music_playing') !== 'false') {
-      setPlayState(true);
+    if (localStorage.getItem('qcc_music_playing') === 'false') return;
+
+    // Load + play inline inside the gesture event
+    const vibe = getVibe(currentVibe);
+    audio.src     = vibe.src;
+    audio.preload = 'auto';
+    audio.volume  = DEFAULT_VOL;
+    const promise = audio.play();
+    if (promise !== undefined) {
+      promise.then(() => {
+        bars.classList.remove('paused');
+        toggleBtn.querySelector('.vibe-icon-play').style.display  = 'none';
+        toggleBtn.querySelector('.vibe-icon-pause').style.display = '';
+        localStorage.setItem('qcc_music_playing', 'true');
+        if (labelName) labelName.textContent = `${vibe.label} ${vibe.emoji}`;
+      }).catch(() => {
+        // Autoplay blocked — user can tap play manually, that's fine
+      });
     }
   }
+
   document.addEventListener('click',      tryAutoPlay, { once: true });
   document.addEventListener('scroll',     tryAutoPlay, { once: true });
-  document.addEventListener('touchstart', tryAutoPlay, { once: true });
+  document.addEventListener('touchstart', tryAutoPlay, { once: true, passive: true });
 
 })();

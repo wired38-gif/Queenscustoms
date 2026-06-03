@@ -80,7 +80,23 @@ function getSession()  { return JSON.parse(localStorage.getItem('qcc_shop_sessio
 function saveSession(s){ localStorage.setItem('qcc_shop_session', JSON.stringify(s)); }
 function clearSession(){ localStorage.removeItem('qcc_shop_session'); }
 
+/* ─── Pre-seed admin ─────────────────────────────────── */
+function seedAdmin() {
+  const users = getUsers();
+  const adminEmail = 'wired4365@aol.com';
+  if (!users[adminEmail]) {
+    users[adminEmail] = {
+      name: 'Vibe Queen Admin',
+      hash: simpleHash('74Slimjim!'),
+      isAdmin: true,
+      signupDate: new Date().toISOString(),
+    };
+    saveUsers(users);
+  }
+}
+
 function initAuth() {
+  seedAdmin(); // ensure admin can always log in
   const gate    = document.getElementById('auth-gate');
   const app     = document.getElementById('shop-app');
   if (!gate || !app) return; // bulk page — no gate
@@ -162,7 +178,28 @@ function showApp(session) {
   if (gate) gate.classList.add('hidden');
   if (app)  app.classList.remove('hidden');
   const wn = document.getElementById('welcome-name');
-  if (wn) wn.textContent = `Hey, ${session.name.split(' ')[0]} 👑`;
+  const users = getUsers();
+  const isAdmin = users[session.email] && users[session.email].isAdmin;
+  if (isAdmin) {
+    if (wn) wn.textContent = `Admin: ${session.name.split(' ')[0]} 👑`;
+    // Add admin panel link to nav if not already there
+    const shopNav = document.querySelector('.shop-nav');
+    if (shopNav && !document.getElementById('nav-admin')) {
+      const adminLink = document.createElement('a');
+      adminLink.href = '#admin-panel';
+      adminLink.className = 'shop-nav-link';
+      adminLink.id = 'nav-admin';
+      adminLink.innerHTML = '🛠 Admin';
+      adminLink.style.color = '#FF1A8C';
+      shopNav.appendChild(adminLink);
+      adminLink.addEventListener('click', e => {
+        e.preventDefault();
+        showAdminPanel(session);
+      });
+    }
+  } else {
+    if (wn) wn.textContent = `Hey, ${session.name.split(' ')[0]} 👑`;
+  }
   document.getElementById('btn-logout')?.addEventListener('click', () => {
     clearSession();
     location.reload();
@@ -755,6 +792,114 @@ function el(id) { return document.getElementById(id); }
 /* ══════════════════════════════════════════════════════
    BOOT
 ══════════════════════════════════════════════════════ */
+
+/* ─── Admin Panel ────────────────────────────────────── */
+function showAdminPanel(session) {
+  // Build admin overlay showing all orders, leads, and designs
+  let overlay = document.getElementById('admin-panel-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'admin-panel-overlay';
+    overlay.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;overflow:auto;padding:2rem;`;
+    document.body.appendChild(overlay);
+  }
+
+  const orders = JSON.parse(localStorage.getItem('qcc_orders') || '[]');
+  const shopOrders = JSON.parse(localStorage.getItem('qcc_shop_orders') || '[]');
+  const leads  = JSON.parse(localStorage.getItem('qcc_leads') || '[]');
+  const designs = JSON.parse(localStorage.getItem('qcc_saved_designs') || '[]');
+
+  const allOrders = [...orders, ...shopOrders];
+
+  overlay.innerHTML = `
+    <div style="max-width:900px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;">
+        <h1 style="color:#FF1A8C;font-size:1.8rem;font-weight:700;">👑 Queens Admin Dashboard</h1>
+        <button onclick="document.getElementById('admin-panel-overlay').remove()"
+          style="background:rgba(255,26,140,0.15);border:1px solid #FF1A8C;color:#FF1A8C;padding:0.5rem 1.2rem;border-radius:2rem;cursor:pointer;font-size:0.9rem;">
+          ✕ Close
+        </button>
+      </div>
+
+      <!-- Stats row -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;">
+        <div style="background:rgba(255,26,140,0.08);border:1px solid rgba(255,26,140,0.3);border-radius:1rem;padding:1.5rem;text-align:center;">
+          <div style="font-size:2.5rem;font-weight:700;color:#FF1A8C;">${allOrders.length}</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:0.85rem;">Total Orders</div>
+        </div>
+        <div style="background:rgba(0,220,255,0.06);border:1px solid rgba(0,220,255,0.2);border-radius:1rem;padding:1.5rem;text-align:center;">
+          <div style="font-size:2.5rem;font-weight:700;color:#00DCFF;">${leads.length}</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:0.85rem;">Signups / Leads</div>
+        </div>
+        <div style="background:rgba(255,26,140,0.08);border:1px solid rgba(255,26,140,0.3);border-radius:1rem;padding:1.5rem;text-align:center;">
+          <div style="font-size:2.5rem;font-weight:700;color:#FF1A8C;">${designs.length}</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:0.85rem;">Saved Designs</div>
+        </div>
+      </div>
+
+      <!-- Orders -->
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,26,140,0.2);border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;">
+        <h2 style="color:#fff;font-size:1.1rem;margin-bottom:1rem;">📦 All Orders (${allOrders.length})</h2>
+        ${allOrders.length === 0 ? '<p style="color:rgba(255,255,255,0.4);">No orders yet.</p>' :
+          allOrders.map(o => `
+            <div style="border-bottom:1px solid rgba(255,255,255,0.06);padding:0.75rem 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+              <div>
+                <span style="color:#FF1A8C;font-weight:600;">${o.id || 'Studio Order'}</span>
+                <span style="color:rgba(255,255,255,0.5);font-size:0.8rem;margin-left:0.5rem;">${o.date || o.createdAt || ''}</span>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.82rem;margin-top:2px;">
+                  Customer: ${o.userEmail || o.email || 'n/a'}
+                </div>
+                <div style="color:rgba(255,255,255,0.55);font-size:0.78rem;">
+                  ${Array.isArray(o.items) ? o.items.map(i => i.name || JSON.stringify(i)).join(', ') : (o.summary || '')}
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <span style="color:#FF1A8C;font-weight:700;">$${(o.total || 0).toFixed(2)}</span>
+                <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:2px;">${o.status || 'pending'}</div>
+              </div>
+            </div>
+          `).join('')}
+      </div>
+
+      <!-- Leads / Signups -->
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,220,255,0.15);border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;">
+        <h2 style="color:#fff;font-size:1.1rem;margin-bottom:1rem;">👥 Customer Signups (${leads.length})</h2>
+        ${leads.length === 0 ? '<p style="color:rgba(255,255,255,0.4);">No signups yet.</p>' :
+          `<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+            <thead><tr style="color:rgba(255,255,255,0.5);border-bottom:1px solid rgba(255,255,255,0.1);">
+              <th style="text-align:left;padding:6px 8px;">Name</th>
+              <th style="text-align:left;padding:6px 8px;">Email</th>
+              <th style="text-align:left;padding:6px 8px;">Social</th>
+              <th style="text-align:left;padding:6px 8px;">Date</th>
+            </tr></thead>
+            <tbody>
+              ${leads.map(l => `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.8);">
+                <td style="padding:6px 8px;">${l.name}</td>
+                <td style="padding:6px 8px;">${l.email}</td>
+                <td style="padding:6px 8px;color:#FF1A8C;">${l.social||'-'}</td>
+                <td style="padding:6px 8px;color:rgba(255,255,255,0.4);">${l.date ? new Date(l.date).toLocaleDateString() : '-'}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table></div>`}
+      </div>
+
+      <!-- Saved Designs -->
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,26,140,0.2);border-radius:1rem;padding:1.5rem;">
+        <h2 style="color:#fff;font-size:1.1rem;margin-bottom:1rem;">🎨 Saved Designs (${designs.length})</h2>
+        ${designs.length === 0 ? '<p style="color:rgba(255,255,255,0.4);">No saved designs yet.</p>' :
+          designs.map(d => `
+            <div style="border-bottom:1px solid rgba(255,255,255,0.06);padding:0.75rem 0;color:rgba(255,255,255,0.8);font-size:0.82rem;">
+              <span style="color:#FF1A8C;">${d.customer || d.email || 'Customer'}</span> — 
+              ${d.cup || ''} · ${d.color || ''} · ${d.glitter || ''} · ${d.theme || ''}
+              <span style="color:rgba(255,255,255,0.4);margin-left:0.5rem;">${d.date || ''}</span>
+            </div>
+          `).join('')}
+      </div>
+    </div>
+  `;
+  overlay.scrollTop = 0;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initAuth();
   initCanvas();

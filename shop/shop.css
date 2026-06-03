@@ -162,12 +162,23 @@ input,select,textarea { font-family:inherit; font-size:inherit; }
 }
 .gate-back {
   text-align: center;
-  color: var(--text-2);
-  font-size: 0.85rem;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.9rem;
+  font-weight: 500;
   display: block;
-  transition: color 0.2s;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 2rem;
+  background: rgba(255,255,255,0.06);
+  transition: all 0.2s;
+  text-decoration: none;
 }
-.gate-back:hover { color: var(--pink); }
+.gate-back:hover {
+  color: #FF1A8C;
+  border-color: #FF1A8C;
+  background: rgba(255,26,140,0.08);
+}
 .gate-fine {
   font-size: 0.75rem;
   color: var(--text-2);
