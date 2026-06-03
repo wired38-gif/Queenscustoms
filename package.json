@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Queens Custom Creations — static site",
   "scripts": {
-    "start": "npx serve . -l 3000",
+    "start": "serve . -l $PORT",
     "build": "echo 'Static site - no build needed'"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
   },
   "engines": {
     "node": ">=18"
