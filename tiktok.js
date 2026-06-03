@@ -213,17 +213,54 @@
     }
   }
 
-  // ── Show all curated videos ─────────────────────────
-  // TikTok oEmbed API does not include hashtags in titles;
-  // the old filter was silently blocking all videos.
-  // All 63 curated IDs belong to @the_vibe_queen_hbic.
-  function isQueensVideo() {
-    return true;
+  // ── #queenscustoms whitelist ─────────────────────────────
+  // TikTok oEmbed doesn’t return hashtag data, so we maintain
+  // a hardcoded whitelist of confirmed #queenscustoms video IDs.
+  // To add new videos: copy the video ID from the TikTok URL and
+  // add it to QUEENS_IDS below.
+  const QUEENS_IDS = new Set([
+    '7558473833640938783',
+    '7456898691488615723',
+    '7407637849891196191',
+    '7406487909244652831',
+    '7404508782924926239',
+    '7400941948099415326',
+    '7394171044010921247',
+    '7393849415640845599',
+    '7393312571970866462',
+    '7390741143199239454',
+    '7390525940444482847',
+    '7387984059730808094',
+    '7387403519264869662',
+    '7387037379636235551',
+    '7386639317663223071',
+    '7386352772452551967',
+    '7386297540691414303',
+    '7386273892379200798',
+    '7386269783668444446',
+    '7385197258570026271',
+    '7385159328925289759',
+    '7384828970811886878',
+    '7383837872849292574',
+    '7382186997223312671',
+    '7382043839726390558',
+    '7381828590519799070',
+    '7381222380326128927',
+    '7381134285698354462',
+    '7380538217000389918',
+    '7379721155919252779',
+  ]);
+
+  function isQueensVideo(id) {
+    return QUEENS_IDS.has(id);
   }
 
-  // ── Render next batch of cards ────────────────────────────────────────────
+  // ── Render next batch of cards ─────────────────────────────────────────
+  // Only shows videos in the QUEENS_IDS whitelist (#queenscustoms tagged)
   async function renderBatch(grid, count) {
-    const batch = VIDEO_IDS.slice(rendered, rendered + count);
+    // Filter to only #queenscustoms videos
+    const filteredIds = VIDEO_IDS.filter(id => isQueensVideo(id));
+    const batch = filteredIds.slice(rendered, rendered + count);
     if (!batch.length) return;
 
     // Show skeletons while fetching
@@ -247,9 +284,9 @@
     rendered += batch.length;
 
     // Update counter
-    const counter = document.getElementById('tt-counter');
+    const counter = document.getElementById('tt-count');
     if (counter) {
-      counter.textContent = `Showing ${rendered} of ${VIDEO_IDS.length} videos`;
+      counter.textContent = `Showing ${rendered} of ${filteredIds.length} #queenscustoms videos`;
     }
 
     saveCache(oembedCache);

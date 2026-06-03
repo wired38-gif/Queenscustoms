@@ -735,7 +735,7 @@
 
     <!-- Bring Your Own Supplies -->
     <div class="session-card">
-      <div class="session-thumb"><img src="assets/amazon-storefront.jpg" alt="Bring Your Own Supplies session"/></div>
+      <div class="session-thumb"><img src="assets/icon-byos.jpg" alt="Bring Your Own Supplies session" style="object-fit:contain;background:#fff;padding:8px;"/></div>
       <div class="session-badge-wrap"><span class="session-badge">Most Popular</span></div>
       <h3 class="session-name">Bring Your Own Supplies</h3>
       <div class="session-price"><span class="session-amt">$25</span><span class="session-per">/hr</span></div>
@@ -751,7 +751,7 @@
 
     <!-- Supplies Provided -->
     <div class="session-card session-card--featured">
-      <div class="session-thumb"><img src="assets/products/mama-mini-set.jpg" alt="Supplies Provided session"/></div>
+      <div class="session-thumb"><img src="assets/icon-we-craft.jpg" alt="Supplies Provided session" style="object-fit:contain;background:#fff;padding:8px;"/></div>
       <div class="session-badge-wrap"><span class="session-badge session-badge--gold">Full Experience</span></div>
       <h3 class="session-name">Supplies Provided</h3>
       <div class="session-price"><span class="session-amt">$38.50</span><span class="session-per">/hr</span></div>
@@ -767,7 +767,7 @@
 
     <!-- Live Crafting Video Call -->
     <div class="session-card">
-      <div class="session-thumb"><img src="assets/products/mountain-galaxy.jpg" alt="Live Crafting Stream"/></div>
+      <div class="session-thumb"><img src="assets/icon-epoxy-resin.jpg" alt="Live Crafting Stream" style="object-fit:contain;background:#fff;padding:8px;"/></div>
       <div class="session-badge-wrap"><span class="session-badge">Remote Option</span></div>
       <h3 class="session-name">Live Crafting Stream</h3>
       <div class="session-price"><span class="session-amt">$10</span><span class="session-per">/hr</span></div>
@@ -783,7 +783,7 @@
 
     <!-- Private Coaching Call -->
     <div class="session-card">
-      <div class="session-thumb"><img src="assets/products/fairy-moon.jpg" alt="Private Coaching Call"/></div>
+      <div class="session-thumb"><img src="assets/icon-queen-review.jpg" alt="Private Coaching Call" style="object-fit:contain;background:#fff;padding:8px;"/></div>
       <div class="session-badge-wrap"><span class="session-badge">1-on-1 Coaching</span></div>
       <h3 class="session-name">Private Coaching Call</h3>
       <div class="session-price"><span class="session-amt">$25</span><span class="session-per">/hr</span></div>
@@ -820,7 +820,12 @@
 
   <div class="amazon-store-wrap">
     <div class="amazon-store-card">
-      <div class="amazon-store-visual" style="background-image:url('assets/amazon-storefront.jpg');background-size:cover;background-position:center;min-height:280px;border-radius:1.25rem;overflow:hidden">
+      <div class="amazon-store-visual" style="min-height:280px;border-radius:1.25rem;overflow:hidden;position:relative;background:#0d0d0d;">
+        <video autoplay loop muted playsinline style="width:100%;height:100%;min-height:280px;object-fit:cover;position:absolute;inset:0;opacity:0.85;">
+          <source src="assets/amazon-storefront.mp4" type="video/mp4"/>
+          <img src="assets/amazon-storefront.jpg" alt="Amazon Storefront" style="width:100%;height:100%;object-fit:cover;"/>
+        </video>
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,13,13,0.5) 0%,rgba(0,0,0,0.1) 100%);"></div>
         <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.493.124.104.17.04.33-.18.477-.218.152-.546.344-.983.577C18.093 22.266 14.966 23 11.67 23c-3.946 0-7.564-1.003-10.855-3.008-.34-.2-.49-.4-.77-.9z" fill="#FF9900"/>
           <path d="M20.96 14.408c-.265-.337-.694-.438-1.288-.303l-.11.026c-1.01.228-1.842.358-2.485.384-1.18.05-2.057-.118-2.59-.5-1.08-.77-1.55-2.07-1.41-3.91.14-1.83.71-3.31 1.72-4.43 1.01-1.12 2.23-1.68 3.66-1.68.99 0 1.85.25 2.57.76.72.5 1.21 1.22 1.47 2.14.08.25.2.43.36.52.17.1.36.1.56.01.21-.08.35-.22.44-.42.09-.2.09-.4.01-.6-.37-1.26-1.07-2.26-2.1-3.01-1.03-.75-2.24-1.12-3.63-1.12-1.88 0-3.47.67-4.77 2.02-1.29 1.35-2.01 3.13-2.16 5.34-.14 2.17.38 3.86 1.56 5.06 1.17 1.2 2.77 1.7 4.8 1.5.85-.09 1.77-.27 2.77-.55.33-.09.59-.25.78-.47z" fill="#FF9900"/>
@@ -1278,6 +1283,7 @@
 
 <!-- ── CART DRAWER ────────────────────────────────────── -->
 <div class="drawer-overlay" id="drawer-overlay"></div>
+<div class="cart-overlay" id="cart-overlay"></div>
 <aside class="cart-drawer" id="cart-drawer">
   <div class="drawer-hdr"><h2>Your Cart 👑</h2><button class="icon-btn" id="cart-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
   <div class="cart-items" id="cart-items"><div class="cart-empty" id="cart-empty"><span>👑</span><p>Your cart is empty</p><a href="#shop" class="btn btn-pink" id="cart-shop-link">Shop Now</a></div></div>
@@ -1294,7 +1300,7 @@
 
 <!-- ── AUTH MODAL ─────────────────────────────────────── -->
 <div class="cart-overlay" id="cart-overlay"></div>
-<div class="modal-overlay" id="auth-overlay"></div>
+<div class="auth-overlay" id="auth-overlay">
 <div class="auth-modal" id="auth-modal" role="dialog" aria-label="Account">
   <button class="modal-close" id="auth-modal-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   <div class="auth-tabs" id="auth-tabs">
@@ -1327,22 +1333,23 @@
     </form>
   </div>
   <!-- Account Dashboard (shown when logged in) -->
-  <div class="auth-panel" id="panel-account">
+  <div class="auth-panel" id="auth-dashboard">
     <div class="auth-logo">👑</div>
-    <h2 class="auth-title" id="account-welcome">Welcome back!</h2>
+    <h2 class="auth-title"><span id="dashboard-name">Welcome back</span>Welcome back!</h2>
     <div class="account-tabs">
-      <button class="acc-tab active" data-acc="orders">Order History</button>
-      <button class="acc-tab" data-acc="addresses">Saved Addresses</button>
-      <button class="acc-tab" data-acc="wishlist">Wishlist</button>
+      <button class="dashboard-tab active" data-panel="orders">Order History</button>
+      <button class="dashboard-tab" data-panel="addresses">Saved Addresses</button>
+      <button class="dashboard-tab" data-panel="wishlist">Wishlist</button>
     </div>
-    <div class="acc-panel active" id="acc-orders">
+    <div class="dashboard-panel active" id="panel-orders">
       <div class="order-item"><div class="order-ico">🎀</div><div><strong>Pink Glitter Queen Tumbler</strong><p>Order #QCC-2024-001 · $40.00 · Delivered</p></div></div>
       <div class="order-item"><div class="order-ico">👑</div><div><strong>Purple Reign Tumbler</strong><p>Order #QCC-2024-002 · $40.00 · In Progress</p></div></div>
     </div>
-    <div class="acc-panel" id="acc-addresses"><p class="acc-empty">No saved addresses yet.</p></div>
-    <div class="acc-panel" id="acc-wishlist"><p class="acc-empty">Your wishlist is empty. Start shopping! 👑</p></div>
-    <button class="btn btn-outline-pink btn-full mt-4" id="logout-btn">Sign Out</button>
+    <div class="dashboard-panel" id="panel-addresses"><p class="acc-empty">No saved addresses yet.</p></div>
+    <div class="dashboard-panel" id="panel-wishlist"><p class="acc-empty">Your wishlist is empty. Start shopping! 👑</p></div>
+    <button class="btn btn-outline-pink btn-full mt-4" id="dashboard-logout">Sign Out</button>
   </div>
+</div>
 </div>
 
 <!-- TOAST -->
