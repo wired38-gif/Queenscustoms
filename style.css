@@ -2600,7 +2600,7 @@ button.quick-add {
   border-radius: 20px;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 340px 1fr;
   box-shadow: 0 8px 32px rgba(0,0,0,0.08);
   border: 1px solid var(--border-1, #e8e8e8);
 }
@@ -2616,7 +2616,24 @@ button.quick-add {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 32px 24px;
+  padding: 0;
+  position: relative;
+  min-height: 420px !important;
+  overflow: hidden;
+}
+.amazon-store-visual video,
+.amazon-store-visual img:not(.amazon-svg) {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 0.85;
+}
+.amazon-store-visual > svg,
+.amazon-store-visual > span.amazon-store-tag {
+  position: relative;
+  z-index: 2;
 }
 
 .amazon-store-tag {
@@ -3814,6 +3831,28 @@ body {
   border: 1px solid rgba(255,255,255,0.06) !important;
 }
 .p-info { background: #1a1a20 !important; }
+
+/* ── PRODUCT CARD TEXT — force white/pink on dark bg ───── */
+.p-card .p-name,
+.p-card .p-info .p-name {
+  color: #ffffff !important;
+}
+.p-card .p-price {
+  color: #FF1A8C !important;
+}
+.p-card .p-orig {
+  color: rgba(255,255,255,0.45) !important;
+}
+.p-card .p-cat,
+.p-card .p-badge,
+.p-card .p-urgency {
+  /* badges already styled, keep them */
+}
+/* Any other text inside .p-info on dark cards */
+.p-info p,
+.p-info span:not(.p-badge):not(.p-urgency) {
+  color: rgba(255,255,255,0.82) !important;
+}
 
 /* ── TIKTOK SECTION BG ───────────────────────────────── */
 #tiktok-section {

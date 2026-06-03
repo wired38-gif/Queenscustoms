@@ -192,8 +192,9 @@
     }
   }
 
+  /* NOTE: scroll is NOT a trusted user gesture on iOS Safari — audio.play() inside
+     a scroll handler is silently blocked. Only click and touchstart are trusted. */
   document.addEventListener('click',      tryAutoPlay, { once: true });
-  document.addEventListener('scroll',     tryAutoPlay, { once: true });
   document.addEventListener('touchstart', tryAutoPlay, { once: true, passive: true });
 
 })();
