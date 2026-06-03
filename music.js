@@ -11,7 +11,7 @@
 
   let currentVibe = localStorage.getItem('qcc_vibe') || 'chill';
   let isOpen      = false;
-  const DEFAULT_VOL = 0.05;
+  const DEFAULT_VOL = 0.10;
 
   /* ── Build HTML ───────────────────────────────────────── */
   const playerHTML = `
