@@ -4432,3 +4432,95 @@ body { padding-top: calc(36px + 74px) !important; }
   .vibe-player { bottom: 12px !important; right: 8px !important; }
   .vibe-vol    { width: 36px !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   QUEENS SITE FIXES — June 2026 Audit Pass
+   ═══════════════════════════════════════════════════════════ */
+
+/* FIX 1: Shop section title invisible on dark bg
+   .bg-white is forced to dark #111114, so dark title text disappears */
+.bg-white .section-title,
+.bg-white h2.section-title,
+#shop .section-title,
+#shop h2 {
+  color: #ffffff !important;
+  text-shadow: 0 0 24px rgba(255, 26, 140, 0.35) !important;
+}
+.bg-white .section-sub,
+#shop .section-sub {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+.bg-white .eyebrow-pink,
+#shop .eyebrow-pink {
+  color: #FF1A8C !important;
+}
+
+/* FIX 2: Add to Cart button — full pill, not icon circle
+   The .add-to-cart CSS was set to 36px circle, but HTML uses it as a text button */
+.btn.btn-pink.btn-xs.add-to-cart,
+.p-footer .add-to-cart,
+.gallery-caption .add-to-cart {
+  width: auto !important;
+  height: auto !important;
+  border-radius: 999px !important;
+  padding: 8px 16px !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* FIX 3: Product image label + badge overlap
+   Move pi-lbl to bottom-left, keep badge top-left */
+.pi-lbl {
+  bottom: 8px !important;
+  top: auto !important;
+  left: 8px !important;
+  right: auto !important;
+}
+
+/* FIX 4: p-footer layout — price + button on same row */
+.p-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+}
+.p-footer > div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* FIX 5: Filter buttons visibility on dark bg */
+.filter-row .filter-btn {
+  color: rgba(255,255,255,0.75) !important;
+  border-color: rgba(255,255,255,0.2) !important;
+}
+.filter-row .filter-btn.active,
+.filter-row .filter-btn:hover {
+  color: #fff !important;
+  border-color: #FF1A8C !important;
+  background: rgba(255,26,140,0.15) !important;
+}
+
+/* FIX 6: Gallery caption text color on dark bg */
+.gallery-caption .gc-name,
+.gallery-caption .gc-size {
+  color: rgba(255,255,255,0.9) !important;
+}
+.gallery-caption .gc-price {
+  color: #FF1A8C !important;
+}
+
+/* FIX 7: Ensure section-hdr text is readable on all dark sections */
+.section-hdr .section-title:not(.white) {
+  color: #ffffff !important;
+}
+.section-hdr .section-sub:not(.muted) {
+  color: rgba(255,255,255,0.7) !important;
+}
