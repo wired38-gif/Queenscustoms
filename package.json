@@ -2,6 +2,7 @@
   "name": "queenscustoms-shop",
   "version": "2.0.0",
   "description": "Queens Custom Creations — full-stack shop",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "build": "echo 'no build needed'"
