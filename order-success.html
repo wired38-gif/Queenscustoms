@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Confirmed! | Queens Custom Creations</title>
+  <link rel="stylesheet" href="style.css?v=1780617330"/>
+  <link rel="preconnect" href="https://api.fontshare.com"/>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600&f[]=satoshi@400,500&display=swap"/>
+  <style>
+    body { background: #0d0d10; color: #fff; font-family: 'Satoshi', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 24px; }
+    .success-card { max-width: 480px; }
+    .crown { font-size: 64px; display: block; margin-bottom: 16px; animation: bounce 0.6s ease; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+    h1 { font-family: 'Clash Display', sans-serif; font-size: 2.2rem; margin-bottom: 12px; }
+    p { color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.6; margin-bottom: 24px; }
+    .order-num { display: inline-block; background: rgba(255,26,140,0.1); border: 1px solid rgba(255,26,140,0.3); border-radius: 999px; padding: 8px 20px; font-family: monospace; font-size: 0.95rem; color: #FF1A8C; margin-bottom: 28px; }
+    .btn { display: inline-block; padding: 14px 32px; background: #FF1A8C; color: #fff; border-radius: 999px; text-decoration: none; font-family: 'Clash Display', sans-serif; font-size: 1rem; font-weight: 600; transition: opacity 0.2s; }
+    .btn:hover { opacity: 0.85; }
+    .tiktok-link { display: block; margin-top: 16px; color: rgba(255,255,255,0.45); font-size: 0.85rem; text-decoration: none; }
+    .tiktok-link:hover { color: #FF1A8C; }
+  </style>
+</head>
+<body>
+  <div class="success-card">
+    <span class="crown">👑</span>
+    <h1>Order Confirmed!</h1>
+    <div class="order-num" id="order-num-display">Processing...</div>
+    <p>Thank you! The Vibe Queen personally reviews every order and will reach out within 24 hours to confirm your design details.</p>
+    <p style="font-size:0.85rem">A confirmation email is on its way to your inbox.</p>
+    <a href="/" class="btn">Back to Shop 👑</a>
+    <a href="https://www.tiktok.com/@the_vibe_queen_hbic" target="_blank" class="tiktok-link">Follow @the_vibe_queen_hbic on TikTok for updates ↗</a>
+  </div>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const num = params.get('order') || localStorage.getItem('qcc_last_order_num') || '';
+    if (num) document.getElementById('order-num-display').textContent = num;
+    else document.getElementById('order-num-display').textContent = 'Order Received!';
+  </script>
+</body>
+</html>

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Queens Admin Portal</title>
+  <link rel="preconnect" href="https://api.fontshare.com"/>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@400,500,700&display=swap"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink: #FF1A8C;
+      --pink-dim: rgba(255,26,140,0.12);
+      --pink-glow: rgba(255,26,140,0.3);
+      --bg: #0d0d10;
+      --surface: #141418;
+      --surface-2: #1c1c22;
+      --border: rgba(255,255,255,0.07);
+      --text: #f0f0f5;
+      --text-2: rgba(240,240,245,0.65);
+      --text-3: rgba(240,240,245,0.38);
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --font-display: 'Clash Display', sans-serif;
+      --font-body: 'Satoshi', sans-serif;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────────── */
+    .sidebar {
+      width: 240px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      z-index: 100;
+      transition: transform 0.3s;
+    }
+    .sidebar-brand {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-brand .crown { font-size: 24px; margin-bottom: 6px; display: block; }
+    .sidebar-brand h1 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .sidebar-brand p { font-size: 0.7rem; color: var(--text-3); margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .sidebar-nav { padding: 16px 12px; flex: 1; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-2);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.15s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      text-decoration: none;
+    }
+    .nav-item:hover { background: var(--pink-dim); color: var(--text); }
+    .nav-item.active { background: var(--pink-dim); color: var(--pink); }
+    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .nav-section { font-size: 0.65rem; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 12px 4px; }
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .logout-btn {
+      width: 100%;
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--text-2);
+      font-size: 0.83rem;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.15s;
+    }
+    .logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── Main ────────────────────────────────────────────────── */
+    .main {
+      margin-left: 240px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .topbar {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar-title { font-family: var(--font-display); font-size: 1.25rem; }
+    .topbar-user { font-size: 0.82rem; color: var(--text-2); }
+    .topbar-user strong { color: var(--pink); }
+    .content { padding: 28px; }
+
+    /* ── Login Screen ────────────────────────────────────────── */
+    #login-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .login-card .crown { font-size: 40px; margin-bottom: 12px; display: block; }
+    .login-card h2 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 4px; }
+    .login-card p { font-size: 0.85rem; color: var(--text-2); margin-bottom: 28px; }
+    .form-field { margin-bottom: 16px; text-align: left; }
+    .form-field label { display: block; font-size: 0.75rem; color: var(--text-2); margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+    .form-field input {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-field input:focus { border-color: var(--pink); }
+    .btn-pink {
+      width: 100%;
+      padding: 12px;
+      border-radius: 999px;
+      background: var(--pink);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-pink:hover { opacity: 0.88; }
+    .login-error { color: var(--red); font-size: 0.82rem; margin-top: 10px; min-height: 18px; }
+
+    /* ── Stat Cards ──────────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .stat-card .stat-label { font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .stat-card .stat-val { font-family: var(--font-display); font-size: 2rem; font-weight: 700; }
+    .stat-card .stat-sub { font-size: 0.75rem; color: var(--text-3); margin-top: 4px; }
+    .stat-card.pink .stat-val { color: var(--pink); }
+    .stat-card.green .stat-val { color: var(--green); }
+    .stat-card.amber .stat-val { color: var(--amber); }
+
+    /* ── Table ───────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .card-title { font-family: var(--font-display); font-size: 1rem; }
+    .search-box {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 0.83rem;
+      font-family: var(--font-body);
+      outline: none;
+      width: 220px;
+    }
+    .search-box:focus { border-color: var(--pink); }
+    .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-tab {
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--text-2);
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.15s;
+    }
+    .filter-tab.active { background: var(--pink-dim); border-color: var(--pink); color: var(--pink); }
+    .filter-tab:hover:not(.active) { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.025); }
+    tbody td { padding: 14px 16px; font-size: 0.85rem; }
+    .td-order { font-family: monospace; font-size: 0.78rem; color: var(--text-2); }
+    .td-customer { font-weight: 500; }
+    .td-email { color: var(--text-2); font-size: 0.8rem; }
+    .td-amount { font-weight: 700; color: var(--text); }
+    .td-date { color: var(--text-3); font-size: 0.78rem; }
+    .empty-state { padding: 48px; text-align: center; color: var(--text-3); }
+
+    /* ── Badges ──────────────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .badge-pending  { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .badge-confirmed{ background: rgba(59,130,246,0.15); color: var(--blue); }
+    .badge-in_progress { background: rgba(255,26,140,0.15); color: var(--pink); }
+    .badge-shipped  { background: rgba(168,85,247,0.15); color: #a855f7; }
+    .badge-delivered{ background: rgba(34,197,94,0.15); color: var(--green); }
+    .badge-cancelled{ background: rgba(239,68,68,0.15); color: var(--red); }
+    .badge-paid     { background: rgba(34,197,94,0.15); color: var(--green); }
+    .badge-unpaid   { background: rgba(239,68,68,0.15); color: var(--red); }
+
+    /* ── Order Detail Modal ──────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h3 { font-family: var(--font-display); font-size: 1.1rem; }
+    .modal-close {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--text-2);
+      cursor: pointer;
+      font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+    }
+    .modal-close:hover { border-color: var(--red); color: var(--red); }
+    .modal-body { padding: 24px; }
+    .modal-section { margin-bottom: 20px; }
+    .modal-label { font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .modal-value { font-size: 0.9rem; color: var(--text); }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .item-row:last-child { border-bottom: none; }
+    .status-select {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .status-select:focus { border-color: var(--pink); }
+    .btn-sm {
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: var(--pink);
+      color: #fff;
+      border: none;
+      font-family: var(--font-body);
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-sm:hover { opacity: 0.85; }
+
+    /* ── Customers table ─────────────────────────────────────── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── Toast ───────────────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 0.85rem;
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.success { border-color: var(--green); color: var(--green); }
+    #toast.error   { border-color: var(--red);   color: var(--red); }
+
+    /* ── Mobile sidebar ──────────────────────────────────────── */
+    .ham { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 4px; }
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .ham { display: block; }
+      .mob-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
+      .mob-overlay.show { display: block; }
+      table { font-size: 0.78rem; }
+      thead th:nth-child(3), tbody td:nth-child(3),
+      thead th:nth-child(5), tbody td:nth-child(5) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Login Screen ──────────────────────────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-card">
+    <span class="crown">👑</span>
+    <h2>Admin Portal</h2>
+    <p>Queens Custom Creations</p>
+    <div class="form-field">
+      <label>Email</label>
+      <input type="email" id="adm-email" value="wired4365@aol.com" autocomplete="username"/>
+    </div>
+    <div class="form-field">
+      <label>Password</label>
+      <input type="password" id="adm-pass" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+    <button class="btn-pink" id="adm-login-btn">Sign In to Admin</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- ── Sidebar ────────────────────────────────────────────────────────────── -->
+<div class="mob-overlay" id="mob-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <span class="crown">👑</span>
+    <h1>Queens Admin</h1>
+    <p>Custom Creations Portal</p>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Overview</div>
+    <button class="nav-item active" data-page="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </button>
+    <div class="nav-section">Orders</div>
+    <button class="nav-item" data-page="orders">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      All Orders
+    </button>
+    <button class="nav-item" data-page="orders" data-filter="pending">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Pending
+    </button>
+    <div class="nav-section">Customers</div>
+    <button class="nav-item" data-page="customers">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Customers
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="logout-btn" id="logout-btn">Sign Out</button>
+  </div>
+</aside>
+
+<!-- ── Main ───────────────────────────────────────────────────────────────── -->
+<main class="main" id="main-app" style="display:none">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="ham" id="ham">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span class="topbar-title" id="page-title">Dashboard</span>
+    </div>
+    <div class="topbar-user">Signed in as <strong id="admin-name">Admin</strong></div>
+  </div>
+
+  <div class="content">
+
+    <!-- Dashboard Page -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card pink">
+          <div class="stat-label">Total Revenue</div>
+          <div class="stat-val" id="stat-revenue">$0</div>
+          <div class="stat-sub">Paid orders only</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Orders</div>
+          <div class="stat-val" id="stat-orders">0</div>
+          <div class="stat-sub">All time</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-label">Pending</div>
+          <div class="stat-val" id="stat-pending">0</div>
+          <div class="stat-sub">Need attention</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-label">Customers</div>
+          <div class="stat-val" id="stat-customers">0</div>
+          <div class="stat-sub">Registered accounts</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Recent Orders</span>
+          <button class="filter-tab active" onclick="showPage('orders')">View All →</button>
+        </div>
+        <table>
+          <thead><tr>
+            <th>Order #</th><th>Customer</th><th>Email</th><th>Total</th><th>Status</th><th>Date</th>
+          </tr></thead>
+          <tbody id="recent-tbody">
+            <tr><td colspan="6" class="empty-state">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Orders Page -->
+    <div class="page" id="page-orders">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Orders</span>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <input class="search-box" id="order-search" placeholder="Search orders…" oninput="filterOrders()"/>
+            <div class="filter-tabs">
+              <button class="filter-tab active" data-status="all" onclick="setOrderFilter(this,'all')">All</button>
+              <button class="filter-tab" data-status="pending" onclick="setOrderFilter(this,'pending')">Pending</button>
+              <button class="filter-tab" data-status="confirmed" onclick="setOrderFilter(this,'confirmed')">Confirmed</button>
+              <button class="filter-tab" data-status="in_progress" onclick="setOrderFilter(this,'in_progress')">In Progress</button>
+              <button class="filter-tab" data-status="shipped" onclick="setOrderFilter(this,'shipped')">Shipped</button>
+              <button class="filter-tab" data-status="delivered" onclick="setOrderFilter(this,'delivered')">Delivered</button>
+            </div>
+          </div>
+        </div>
+        <table>
+          <thead><tr>
+            <th>Order #</th><th>Customer</th><th>Email</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th>
+          </tr></thead>
+          <tbody id="orders-tbody">
+            <tr><td colspan="7" class="empty-state">Loading orders…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Customers Page -->
+    <div class="page" id="page-customers">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Customers</span>
+        </div>
+        <table>
+          <thead><tr>
+            <th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Joined</th>
+          </tr></thead>
+          <tbody id="customers-tbody">
+            <tr><td colspan="5" class="empty-state">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<!-- ── Order Detail Modal ─────────────────────────────────────────────────── -->
+<div class="modal-overlay hidden" id="order-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-order-num">Order Details</h3>
+      <button class="modal-close" id="modal-close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="modal-section">
+          <div class="modal-label">Customer</div>
+          <div class="modal-value" id="modal-customer"></div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-label">Email</div>
+          <div class="modal-value" id="modal-email"></div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-label">Phone</div>
+          <div class="modal-value" id="modal-phone"></div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-label">Date</div>
+          <div class="modal-value" id="modal-date"></div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-label">Payment</div>
+          <div class="modal-value" id="modal-payment"></div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-label">Total</div>
+          <div class="modal-value" style="font-size:1.2rem;font-weight:700;color:#FF1A8C" id="modal-total"></div>
+        </div>
+      </div>
+      <div class="modal-section" id="modal-notes-section" style="display:none">
+        <div class="modal-label">Customer Notes</div>
+        <div class="modal-value" id="modal-notes" style="padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.85rem;margin-top:4px"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-label">Items Ordered</div>
+        <div id="modal-items" style="margin-top:8px"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-label">Update Status</div>
+        <div style="margin-top:8px;display:flex;align-items:center">
+          <select class="status-select" id="modal-status-select">
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="in_progress">In Progress</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <button class="btn-sm" id="modal-save-status">Save Status</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  let token = localStorage.getItem('qcc_admin_token');
+  let currentOrderId = null;
+  let currentOrderFilter = 'all';
+  let allOrders = [];
+
+  // ── Auth ──────────────────────────────────────────────────────────────────
+
+  async function apiLogin(email, pass) {
+    const r = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass }),
+    });
+    return r.json();
+  }
+
+  document.getElementById('adm-login-btn').addEventListener('click', async () => {
+    const email = document.getElementById('adm-email').value.trim();
+    const pass  = document.getElementById('adm-pass').value;
+    const errEl = document.getElementById('login-error');
+    errEl.textContent = '';
+
+    const data = await apiLogin(email, pass);
+    if (data.error) { errEl.textContent = data.error; return; }
+    if (data.user?.role !== 'admin') { errEl.textContent = 'Admin access required'; return; }
+
+    token = data.token;
+    localStorage.setItem('qcc_admin_token', token);
+    document.getElementById('admin-name').textContent = data.user.name || data.user.email;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('main-app').style.display = 'flex';
+    loadDashboard();
+  });
+
+  // Allow Enter key on password field
+  document.getElementById('adm-pass').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('adm-login-btn').click();
+  });
+
+  // Auto-login if token exists
+  if (token) {
+    fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+      .then(r => r.json())
+      .then(user => {
+        if (user?.role === 'admin') {
+          document.getElementById('admin-name').textContent = user.name || user.email;
+          document.getElementById('login-screen').style.display = 'none';
+          document.getElementById('main-app').style.display = 'flex';
+          loadDashboard();
+        } else {
+          localStorage.removeItem('qcc_admin_token');
+        }
+      }).catch(() => localStorage.removeItem('qcc_admin_token'));
+  }
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.removeItem('qcc_admin_token');
+    location.reload();
+  });
+
+  // ── Navigation ────────────────────────────────────────────────────────────
+
+  window.showPage = function(name, filter) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(`page-${name}`).classList.add('active');
+    document.querySelector(`[data-page="${name}"]`)?.classList.add('active');
+    document.getElementById('page-title').textContent =
+      name === 'dashboard' ? 'Dashboard' : name === 'orders' ? 'All Orders' : 'Customers';
+
+    if (name === 'dashboard') loadDashboard();
+    if (name === 'orders') { if (filter) setOrderFilter(document.querySelector(`[data-status="${filter}"]`), filter); else loadOrders(); }
+    if (name === 'customers') loadCustomers();
+    closeSidebar();
+  };
+
+  document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
+    btn.addEventListener('click', () => showPage(btn.dataset.page, btn.dataset.filter));
+  });
+
+  // ── Mobile sidebar ────────────────────────────────────────────────────────
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mob-overlay');
+  document.getElementById('ham').addEventListener('click', () => {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  });
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+  overlay.addEventListener('click', closeSidebar);
+
+  // ── Fetch helpers ─────────────────────────────────────────────────────────
+
+  function api(path, opts = {}) {
+    return fetch(path, {
+      ...opts,
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', ...(opts.headers || {}) },
+      body: opts.body ? JSON.stringify(opts.body) : undefined,
+    }).then(r => r.json());
+  }
+
+  // ── Dashboard ─────────────────────────────────────────────────────────────
+
+  async function loadDashboard() {
+    const data = await api('/api/admin/stats');
+    document.getElementById('stat-revenue').textContent  = `$${data.revenue}`;
+    document.getElementById('stat-orders').textContent   = data.totalOrders;
+    document.getElementById('stat-pending').textContent  = data.pendingOrders;
+    document.getElementById('stat-customers').textContent= data.customers;
+
+    const tbody = document.getElementById('recent-tbody');
+    if (!data.recentOrders?.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No orders yet 👑</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.recentOrders.map(o => `
+      <tr onclick="openOrder(${o.id})">
+        <td class="td-order">${o.order_num}</td>
+        <td class="td-customer">${o.customer_name}</td>
+        <td class="td-email">${o.customer_email}</td>
+        <td class="td-amount">$${parseFloat(o.total).toFixed(2)}</td>
+        <td><span class="badge badge-${o.status}">${fmtStatus(o.status)}</span></td>
+        <td class="td-date">${fmtDate(o.created_at)}</td>
+      </tr>`).join('');
+  }
+
+  // ── Orders ────────────────────────────────────────────────────────────────
+
+  async function loadOrders() {
+    const search = document.getElementById('order-search')?.value || '';
+    const data = await api(`/api/admin/orders?status=${currentOrderFilter}&search=${encodeURIComponent(search)}`);
+    allOrders = data.orders || [];
+    renderOrderTable(allOrders);
+  }
+
+  function renderOrderTable(orders) {
+    const tbody = document.getElementById('orders-tbody');
+    if (!orders.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No orders found</td></tr>';
+      return;
+    }
+    tbody.innerHTML = orders.map(o => `
+      <tr onclick="openOrder(${o.id})">
+        <td class="td-order">${o.order_num}</td>
+        <td class="td-customer">${o.customer_name}</td>
+        <td class="td-email">${o.customer_email}</td>
+        <td class="td-amount">$${parseFloat(o.total).toFixed(2)}</td>
+        <td><span class="badge badge-${o.payment_status}">${o.payment_status}</span></td>
+        <td><span class="badge badge-${o.status}">${fmtStatus(o.status)}</span></td>
+        <td class="td-date">${fmtDate(o.created_at)}</td>
+      </tr>`).join('');
+  }
+
+  window.setOrderFilter = function(el, status) {
+    currentOrderFilter = status;
+    document.querySelectorAll('.filter-tab[data-status]').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    loadOrders();
+  };
+
+  window.filterOrders = function() { loadOrders(); };
+
+  // ── Customers ─────────────────────────────────────────────────────────────
+
+  async function loadCustomers() {
+    const customers = await api('/api/admin/customers');
+    const tbody = document.getElementById('customers-tbody');
+    if (!customers.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No customers yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = customers.filter(c => c.role !== 'admin').map(c => `
+      <tr>
+        <td class="td-customer">${c.name}</td>
+        <td class="td-email">${c.email}</td>
+        <td class="td-email">${c.phone || '—'}</td>
+        <td><span class="badge badge-confirmed">${c.role}</span></td>
+        <td class="td-date">${fmtDate(c.created_at)}</td>
+      </tr>`).join('');
+  }
+
+  // ── Order Detail Modal ────────────────────────────────────────────────────
+
+  window.openOrder = async function(id) {
+    currentOrderId = id;
+    const order = await api(`/api/admin/orders/${id}`);
+    document.getElementById('modal-order-num').textContent = order.order_num;
+    document.getElementById('modal-customer').textContent  = order.customer_name;
+    document.getElementById('modal-email').textContent     = order.customer_email;
+    document.getElementById('modal-phone').textContent     = order.customer_phone || '—';
+    document.getElementById('modal-date').textContent      = fmtDate(order.created_at);
+    document.getElementById('modal-payment').innerHTML     = `<span class="badge badge-${order.payment_status}">${order.payment_status}</span>`;
+    document.getElementById('modal-total').textContent     = `$${parseFloat(order.total).toFixed(2)}`;
+    document.getElementById('modal-status-select').value   = order.status;
+
+    const notesEl = document.getElementById('modal-notes-section');
+    if (order.notes) {
+      notesEl.style.display = '';
+      document.getElementById('modal-notes').textContent = order.notes;
+    } else {
+      notesEl.style.display = 'none';
+    }
+
+    const items = Array.isArray(order.items) ? order.items : JSON.parse(order.items);
+    document.getElementById('modal-items').innerHTML = items.map(i => `
+      <div class="item-row">
+        <span>${i.name} × ${i.qty || 1}</span>
+        <span>$${((i.price || 40) * (i.qty || 1)).toFixed(2)}</span>
+      </div>`).join('') +
+      `<div class="item-row" style="font-weight:700;border-top:1px solid rgba(255,255,255,0.1);margin-top:4px;padding-top:12px">
+        <span>Total</span><span style="color:#FF1A8C">$${parseFloat(order.total).toFixed(2)}</span>
+      </div>`;
+
+    document.getElementById('order-modal').classList.remove('hidden');
+  };
+
+  document.getElementById('modal-close').addEventListener('click', () => {
+    document.getElementById('order-modal').classList.add('hidden');
+  });
+  document.getElementById('order-modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) document.getElementById('order-modal').classList.add('hidden');
+  });
+
+  document.getElementById('modal-save-status').addEventListener('click', async () => {
+    const status = document.getElementById('modal-status-select').value;
+    await api(`/api/admin/orders/${currentOrderId}/status`, { method: 'PATCH', body: { status } });
+    showToast('Status updated!', 'success');
+    document.getElementById('order-modal').classList.add('hidden');
+    loadOrders();
+    loadDashboard();
+  });
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+
+  function fmtDate(str) {
+    if (!str) return '—';
+    return new Date(str).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function fmtStatus(s) {
+    return { pending:'Pending', confirmed:'Confirmed', in_progress:'In Progress', shipped:'Shipped', delivered:'Delivered', cancelled:'Cancelled' }[s] || s;
+  }
+
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `show ${type}`;
+    setTimeout(() => t.className = '', 2500);
+  }
+
+})();
+</script>
+</body>
+</html>
