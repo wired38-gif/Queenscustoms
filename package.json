@@ -1,18 +1,18 @@
 {
   "name": "queenscustoms-shop",
   "version": "2.0.0",
-  "description": "Queens Custom Creations — full-stack shop with PayPal + admin portal",
+  "description": "Queens Custom Creations — full-stack shop",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'No build needed'"
+    "build": "echo 'no build needed'"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "better-sqlite3": "^9.4.3",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.9",
     "twilio": "^5.0.0",
-    "express": "^4.18.2",
     "express-session": "^1.17.3",
     "dotenv": "^16.4.1",
     "cors": "^2.8.5"
