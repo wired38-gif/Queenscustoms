@@ -244,8 +244,9 @@ app.get('/admin/*',       (req, res) => res.sendFile(path.join(__dirname, 'admin
 
 // ── Start ─────────────────────────────────────────────────────────────────────
 initDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Queens Custom Creations server running on port ${PORT}`);
+  const HOST = process.env.HOST || '0.0.0.0';
+  app.listen(PORT, HOST, () => {
+    console.log(`Queens Custom Creations server running on ${HOST}:${PORT}`);
   });
 }).catch(err => {
   console.error('DB init failed:', err);

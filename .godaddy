@@ -1,6 +1,6 @@
 {
-  "start": "npm start",
-  "build": "npm run build",
+  "start": "node server.js",
+  "build": "npm install --omit=dev",
   "allowedHosts": [
     "queenscustoms.shop",
     "www.queenscustoms.shop"
