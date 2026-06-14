@@ -1,0 +1,42 @@
+# Render Blueprint — Queens Custom Creations (wired38-gif/Queenscustoms)
+# Copy to repo root as render.yaml, or launch via: npm run queens:deploy-render
+# Docs: docs/QUEENS-RENDER-DEPLOY.md
+
+services:
+  - type: web
+    name: queenscustoms
+    runtime: node
+    repo: https://github.com/wired38-gif/Queenscustoms
+    branch: main
+    plan: starter
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /api/config
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PAYPAL_ENV
+        value: live
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: TWILIO_SID
+        sync: false
+      - key: TWILIO_TOKEN
+        sync: false
+      - key: TWILIO_FROM
+        sync: false
+    disk:
+      name: queens-data
+      mountPath: /opt/render/project/src
+      sizeGB: 1
