@@ -2,8 +2,10 @@
   "name": "queenscustoms",
   "version": "1.0.0",
   "description": "Queens Custom Creations — full-stack shop",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
+    "build": "npm install --omit=dev",
     "start": "node server.js"
   },
   "dependencies": {
