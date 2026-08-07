@@ -164,6 +164,31 @@
     .ai-panel-header span { font-size: 1.5rem; }
     .ai-panel-header h3 { font-family: var(--font-display); font-size: 0.95rem; }
     .ai-tip { font-size: 0.85rem; color: var(--text-2); line-height: 1.6; padding: 14px; background: var(--pink-dim); border-radius: var(--radius-sm); border-left: 3px solid var(--pink); }
+    .coach-log {
+      max-height: 220px; overflow-y: auto; margin: 12px 0; display: grid; gap: 8px;
+      font-size: 0.8rem; line-height: 1.45;
+    }
+    .coach-bubble {
+      padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface-2); color: var(--text-2); white-space: pre-wrap;
+    }
+    .coach-bubble.you { border-color: rgba(255,26,140,0.35); color: #fff; }
+    .coach-bubble.meta { font-size: 0.7rem; color: var(--text-3); border: none; background: transparent; padding: 0 2px; }
+    .coach-form { display: grid; gap: 8px; margin-top: 8px; }
+    .coach-form textarea {
+      width: 100%; min-height: 64px; resize: vertical; padding: 10px 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.82rem; font-family: inherit;
+    }
+    .coach-form button {
+      padding: 10px 14px; border-radius: 999px; border: none; cursor: pointer;
+      background: var(--pink); color: #fff; font-family: var(--font-display); font-weight: 600; font-size: 0.82rem;
+    }
+    .coach-form button:disabled { opacity: 0.55; cursor: wait; }
+    .coach-status-pill {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 600;
+      padding: 3px 8px; border-radius: 999px; background: rgba(245,158,11,0.12); color: var(--amber);
+    }
+    .coach-status-pill.on { background: rgba(34,197,94,0.12); color: var(--green); }
     .integration-grid { display: grid; gap: 20px; }
     .integration-block { padding: 20px; background: var(--surface-2); border-radius: var(--radius-sm); border: 1px solid var(--border); }
     .integration-block h4 { font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
@@ -378,8 +403,16 @@
       <div class="wizard-layout">
         <div class="wizard-main" id="wizard-main"></div>
         <div class="ai-panel">
-          <div class="ai-panel-header"><span>👑</span><h3>Do this next</h3></div>
+          <div class="ai-panel-header"><span>👑</span><h3>Setup Coach</h3></div>
           <div class="ai-tip" id="ai-tip"></div>
+          <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+            <span id="coach-llm-status" class="coach-status-pill">Coach loading…</span>
+          </div>
+          <div class="coach-log" id="coach-log" aria-live="polite"></div>
+          <form class="coach-form" id="coach-form">
+            <textarea id="coach-input" placeholder="Ask anything — e.g. explain Shop ID like I’m five" maxlength="2000"></textarea>
+            <button type="submit" id="coach-send">Ask Coach</button>
+          </form>
           <div id="setup-status-panel" style="margin-top:16px"></div>
         </div>
       </div>
@@ -948,7 +981,61 @@
     $('ai-tip').textContent = AI_TIPS[wizardStep] || '';
     const side = $('setup-status-panel');
     if (side) side.innerHTML = '<p style="font-size:0.75rem;color:var(--text-3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">Live on your shop</p>' + statusChecklistHtml();
+    refreshCoachStatus();
   }
+
+  async function refreshCoachStatus() {
+    const el = $('coach-llm-status');
+    if (!el || !token) return;
+    try {
+      const st = await api('/api/admin/setup-coach/status');
+      if (st.configured) {
+        el.className = 'coach-status-pill on';
+        el.textContent = 'LLM ready · ' + (st.model || 'gpt-4o-mini');
+      } else {
+        el.className = 'coach-status-pill';
+        el.textContent = 'Guided tips only (add SETUP_COACH_API_KEY on server)';
+      }
+    } catch {
+      el.className = 'coach-status-pill';
+      el.textContent = 'Coach status unavailable';
+    }
+  }
+
+  function appendCoachBubble(text, who) {
+    const log = $('coach-log');
+    if (!log) return;
+    const b = document.createElement('div');
+    b.className = 'coach-bubble' + (who ? ' ' + who : '');
+    b.textContent = text;
+    log.appendChild(b);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  $('coach-form') && $('coach-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = $('coach-input');
+    const btn = $('coach-send');
+    const message = (input && input.value || '').trim();
+    if (!message) return;
+    appendCoachBubble(message, 'you');
+    if (input) input.value = '';
+    if (btn) btn.disabled = true;
+    try {
+      const res = await api('/api/admin/setup-coach', {
+        method: 'POST',
+        body: { message, step: wizardStep },
+      });
+      appendCoachBubble(res.reply || 'No reply', '');
+      if (res.source) {
+        appendCoachBubble(res.source === 'llm' ? 'Answered via AI' : 'Answered via guided tips', 'meta');
+      }
+    } catch (err) {
+      appendCoachBubble(err.message || 'Coach failed', 'meta');
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
 
   function statusChecklistHtml() {
     const s = integrations.stripe || {};

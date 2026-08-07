@@ -31,6 +31,8 @@ rsync -a \
   "$ROOT/db.js" \
   "$ROOT/notify.js" \
   "$ROOT/auth.js" \
+  "$ROOT/oauth.js" \
+  "$ROOT/setupCoach.js" \
   "$ROOT/index.html" \
   "$ROOT/style.css" \
   "$ROOT/app.js" \
@@ -75,8 +77,8 @@ find "$STAGE/node_modules" -type d \( \
 
 echo "Creating zip (explicit file list, target ~60-80 MB)..."
 (cd "$STAGE" && zip -r -q "$ZIP" \
-  package.json package-lock.json server.js db.js notify.js auth.js \
-  index.html style.css app.js builder.js checkout.js music.js tiktok.js \
+  package.json package-lock.json server.js db.js notify.js auth.js oauth.js setupCoach.js \
+  index.html style.css app.js builder.js checkout.js music.js tiktok.js queen-chat.js \
   order-cancel.html order-success.html robots.txt sitemap.xml \
   .godaddy .node-version .npmrc \
   admin/ shop/ assets/ node_modules/ \

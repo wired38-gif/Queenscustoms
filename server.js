@@ -12,6 +12,7 @@ const cors     = require('cors');
 const { initDB, queryAll, queryOne, run, generateOrderNum } = require('./db');
 const { notifyNewOrder } = require('./notify');
 const oauth = require('./oauth');
+const setupCoach = require('./setupCoach');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -547,6 +548,25 @@ app.post('/api/admin/integrations/complete-setup', adminMiddleware, (req, res) =
     run('INSERT INTO integrations (id, settings) VALUES (1, ?)', [JSON.stringify(current)]);
   }
   res.json(maskSecrets(current));
+});
+
+// ── Admin: Setup Coach (rules + optional OpenAI) ──────────────────────────────
+app.get('/api/admin/setup-coach/status', adminMiddleware, (req, res) => {
+  res.json(setupCoach.coachStatus());
+});
+
+app.post('/api/admin/setup-coach', adminMiddleware, async (req, res) => {
+  try {
+    const message = req.body && req.body.message;
+    const step = req.body && typeof req.body.step === 'number' ? req.body.step : null;
+    const context = (req.body && req.body.context) || {};
+    const result = await setupCoach.answerSetupCoach(message, { step, context });
+    if (result.error) return res.status(result.status || 400).json({ error: result.error });
+    res.json(result);
+  } catch (e) {
+    console.error('[setup-coach]', e);
+    res.status(500).json({ error: e.message || 'Setup Coach failed' });
+  }
 });
 
 // Stripe Connect OAuth (Setup → Payments)
