@@ -1312,6 +1312,12 @@
   <div class="auth-panel active" id="panel-login">
     <div class="auth-logo">👑</div>
     <h2 class="auth-title">Welcome Back, Queen</h2>
+    <div class="social-auth" id="social-auth-login" hidden>
+      <a class="social-btn google" href="/api/auth/google" data-provider="google">Continue with Google</a>
+      <a class="social-btn apple" href="/api/auth/apple" data-provider="apple">Continue with Apple</a>
+      <a class="social-btn facebook" href="/api/auth/facebook" data-provider="facebook">Continue with Facebook</a>
+      <div class="social-divider"><span>or email</span></div>
+    </div>
     <form id="login-form" novalidate>
       <div class="fg"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" required/></div>
       <div class="fg"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••" required/></div>
@@ -1324,6 +1330,12 @@
   <div class="auth-panel" id="panel-signup">
     <div class="auth-logo">👑</div>
     <h2 class="auth-title">Join the Royal Court</h2>
+    <div class="social-auth" id="social-auth-signup" hidden>
+      <a class="social-btn google" href="/api/auth/google" data-provider="google">Continue with Google</a>
+      <a class="social-btn apple" href="/api/auth/apple" data-provider="apple">Continue with Apple</a>
+      <a class="social-btn facebook" href="/api/auth/facebook" data-provider="facebook">Continue with Facebook</a>
+      <div class="social-divider"><span>or email</span></div>
+    </div>
     <form id="signup-form" novalidate>
       <div class="fg"><label>Full Name</label><input type="text" id="su-name" placeholder="Your name" required/></div>
       <div class="fg"><label>Email</label><input type="email" id="su-email" placeholder="your@email.com" required/></div>
@@ -1362,5 +1374,6 @@
 <script src="tiktok.js?v=1780617330"></script>
 <script src="music.js?v=1780617330"></script>
 <script src="checkout.js?v=1780617330"></script>
+<script src="queen-chat.js?v=1780618000"></script>
 </body>
 </html>

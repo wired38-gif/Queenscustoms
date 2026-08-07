@@ -155,6 +155,12 @@
     // Seed admin account
     seedAdminAccount();
 
+    // OAuth return from Google / Apple / Facebook
+    handleOAuthReturn();
+
+    // Show social buttons when providers are enabled in Setup
+    loadSocialProviders();
+
     // Restore session
     const session = getSession();
     if (session) {
@@ -166,6 +172,61 @@
     window.closeAuthModal = closeModal;
     window.getAuthUser    = getSession;
     window.toggleWishlist = toggleWishlist;
+  }
+
+  function handleOAuthReturn() {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('auth_token');
+    const err = params.get('auth_error');
+    if (err) {
+      if (window.history && history.replaceState) history.replaceState({}, '', window.location.pathname);
+      openModal('login');
+      const msg = document.getElementById('login-msg');
+      if (msg) {
+        msg.style.display = 'block';
+        msg.textContent = err;
+        msg.style.color = '#ef4444';
+      }
+      return;
+    }
+    if (!token) return;
+    const name = params.get('auth_name') || 'Queen';
+    // Decode JWT payload lightly for email (no verify — server already issued it)
+    let email = '';
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      email = payload.email || '';
+    } catch (_) { /* ignore */ }
+    const session = {
+      email: email || (name.replace(/\s+/g, '.').toLowerCase() + '@oauth.local'),
+      name,
+      token,
+      oauth: true,
+      joinDate: new Date().toISOString().slice(0, 10),
+    };
+    saveSession(session);
+    if (window.history && history.replaceState) history.replaceState({}, '', window.location.pathname);
+    updateNavUserIcon(session);
+    openModal('login');
+  }
+
+  async function loadSocialProviders() {
+    try {
+      const res = await fetch('/api/auth/providers');
+      if (!res.ok) return;
+      const providers = await res.json();
+      ['login', 'signup'].forEach(which => {
+        const wrap = document.getElementById('social-auth-' + which);
+        if (!wrap) return;
+        let any = false;
+        wrap.querySelectorAll('[data-provider]').forEach(btn => {
+          const on = !!providers[btn.dataset.provider];
+          btn.hidden = !on;
+          if (on) any = true;
+        });
+        wrap.hidden = !any;
+      });
+    } catch (_) { /* offline / old server */ }
   }
 
   /* ─── Modal open/close ───────────────────────────────────── */

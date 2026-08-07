@@ -869,13 +869,27 @@
       });
     }
 
-    // Contact form
+    // Contact form → inquiries inbox
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-      contactForm.addEventListener('submit', e => {
+      contactForm.addEventListener('submit', async e => {
         e.preventDefault();
-        showToast('Message sent! The Vibe Queen will reply soon 💌', 'success');
-        contactForm.reset();
+        const name = (document.getElementById('c-name') || {}).value || '';
+        const email = (document.getElementById('c-email') || {}).value || '';
+        const subject = (document.getElementById('c-subj') || {}).value || 'Contact Form';
+        const message = (document.getElementById('c-msg') || {}).value || '';
+        try {
+          const res = await fetch('/api/inquiries', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, subject, message, source: 'contact-form' }),
+          });
+          if (!res.ok) throw new Error('fail');
+          showToast('Message sent! The Vibe Queen will reply soon 💌', 'success');
+          contactForm.reset();
+        } catch (err) {
+          showToast("Couldn't reach inbox — email wired4365@aol.com or try again 👑", 'error');
+        }
       });
     }
 

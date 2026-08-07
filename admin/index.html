@@ -1,625 +1,466 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Queens Admin Portal</title>
+  <title>Queens Custom Creations — Admin Portal</title>
   <link rel="preconnect" href="https://api.fontshare.com"/>
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@400,500,700&display=swap"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --pink: #FF1A8C;
-      --pink-dim: rgba(255,26,140,0.12);
-      --pink-glow: rgba(255,26,140,0.3);
-      --bg: #0d0d10;
-      --surface: #141418;
-      --surface-2: #1c1c22;
-      --border: rgba(255,255,255,0.07);
-      --text: #f0f0f5;
-      --text-2: rgba(240,240,245,0.65);
-      --text-3: rgba(240,240,245,0.38);
-      --green: #22c55e;
-      --amber: #f59e0b;
-      --red: #ef4444;
-      --blue: #3b82f6;
-      --font-display: 'Clash Display', sans-serif;
-      --font-body: 'Satoshi', sans-serif;
-      --radius: 14px;
-      --radius-sm: 8px;
+      --pink: #FF1A8C; --pink-dim: rgba(255,26,140,0.12); --pink-glow: rgba(255,26,140,0.3);
+      --bg: #0d0d10; --surface: #141418; --surface-2: #1c1c22;
+      --border: rgba(255,255,255,0.12); --text: #f7f7fb;
+      --text-2: rgba(247,247,251,0.82); --text-3: rgba(247,247,251,0.62);
+      --green: #22c55e; --amber: #f59e0b; --red: #ef4444; --blue: #3b82f6;
+      --font-display: 'Clash Display', sans-serif; --font-body: 'Satoshi', sans-serif;
+      --radius: 14px; --radius-sm: 8px;
     }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; }
+    body.authed { display: flex; }
+    .hidden { display: none !important; }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-    }
-
-    /* ── Sidebar ─────────────────────────────────────────────── */
-    .sidebar {
-      width: 240px;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      left: 0; top: 0; bottom: 0;
-      z-index: 100;
-      transition: transform 0.3s;
-    }
-    .sidebar-brand {
-      padding: 24px 20px 20px;
-      border-bottom: 1px solid var(--border);
-    }
-    .sidebar-brand .crown { font-size: 24px; margin-bottom: 6px; display: block; }
-    .sidebar-brand h1 {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      color: var(--text);
-      line-height: 1.2;
-    }
-    .sidebar-brand p { font-size: 0.7rem; color: var(--text-3); margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; }
-    .sidebar-nav { padding: 16px 12px; flex: 1; }
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      color: var(--text-2);
-      font-size: 0.88rem;
-      font-weight: 500;
-      transition: all 0.15s;
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: left;
-      text-decoration: none;
-    }
-    .nav-item:hover { background: var(--pink-dim); color: var(--text); }
-    .nav-item.active { background: var(--pink-dim); color: var(--pink); }
-    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
-    .nav-section { font-size: 0.65rem; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 12px 4px; }
-    .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .logout-btn {
-      width: 100%;
-      padding: 9px 14px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: none;
-      color: var(--text-2);
-      font-size: 0.83rem;
-      cursor: pointer;
-      font-family: var(--font-body);
-      transition: all 0.15s;
-    }
-    .logout-btn:hover { border-color: var(--red); color: var(--red); }
-
-    /* ── Main ────────────────────────────────────────────────── */
-    .main {
-      margin-left: 240px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .topbar {
-      padding: 20px 28px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .topbar-title { font-family: var(--font-display); font-size: 1.25rem; }
-    .topbar-user { font-size: 0.82rem; color: var(--text-2); }
-    .topbar-user strong { color: var(--pink); }
-    .content { padding: 28px; }
-
-    /* ── Login Screen ────────────────────────────────────────── */
-    #login-screen {
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .login-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-    }
+    /* Login */
+    #login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+    .login-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px; width: 100%; max-width: 380px; text-align: center; }
     .login-card .crown { font-size: 40px; margin-bottom: 12px; display: block; }
     .login-card h2 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 4px; }
     .login-card p { font-size: 0.85rem; color: var(--text-2); margin-bottom: 28px; }
     .form-field { margin-bottom: 16px; text-align: left; }
     .form-field label { display: block; font-size: 0.75rem; color: var(--text-2); margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
-    .form-field input {
-      width: 100%;
-      padding: 11px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--surface-2);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 0.92rem;
-      outline: none;
-      transition: border-color 0.2s;
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface-2); color: var(--text); font-family: var(--font-body); font-size: 0.92rem; outline: none;
     }
-    .form-field input:focus { border-color: var(--pink); }
-    .btn-pink {
-      width: 100%;
-      padding: 12px;
-      border-radius: 999px;
-      background: var(--pink);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.2s;
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--pink); }
+    .form-field textarea {
+      width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface-2); color: var(--text); font-family: ui-monospace, monospace; font-size: 0.8rem;
+      min-height: 110px; resize: vertical; outline: none;
     }
+    .form-field textarea:focus { border-color: var(--pink); }
+    .form-field code { font-size: 0.72rem; color: var(--pink); word-break: break-all; }
+    .btn-pink { padding: 12px 20px; border-radius: 999px; background: var(--pink); color: #fff; font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; border: none; cursor: pointer; transition: opacity 0.2s; }
     .btn-pink:hover { opacity: 0.88; }
+    .btn-pink.full { width: 100%; }
+    .btn-ghost { padding: 10px 16px; border-radius: 999px; background: transparent; color: var(--text-2); border: 1px solid var(--border); font-family: var(--font-body); font-size: 0.85rem; cursor: pointer; }
+    .btn-ghost:hover { border-color: var(--pink); color: var(--text); }
+    .btn-sm { padding: 8px 16px; border-radius: 8px; background: var(--pink); color: #fff; border: none; font-family: var(--font-body); font-size: 0.83rem; font-weight: 600; cursor: pointer; }
+    .btn-sm:hover { opacity: 0.85; }
+    .btn-danger { background: var(--red); }
     .login-error { color: var(--red); font-size: 0.82rem; margin-top: 10px; min-height: 18px; }
 
-    /* ── Stat Cards ──────────────────────────────────────────── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-    }
-    .stat-card .stat-label { font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-    .stat-card .stat-val { font-family: var(--font-display); font-size: 2rem; font-weight: 700; }
-    .stat-card .stat-sub { font-size: 0.75rem; color: var(--text-3); margin-top: 4px; }
+    /* Sidebar */
+    .sidebar { width: 240px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; z-index: 100; transition: transform 0.3s; }
+    .sidebar-brand { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
+    .sidebar-brand .crown { font-size: 24px; margin-bottom: 6px; display: block; }
+    .sidebar-brand h1 { font-family: var(--font-display); font-size: 1.05rem; line-height: 1.2; }
+    .sidebar-brand p { font-size: 0.7rem; color: var(--text-3); margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .sidebar-nav { padding: 16px 12px; flex: 1; overflow-y: auto; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-sm); cursor: pointer; color: var(--text-2); font-size: 0.88rem; font-weight: 500; transition: all 0.15s; border: none; background: none; width: 100%; text-align: left; }
+    .nav-item:hover { background: var(--pink-dim); color: var(--text); }
+    .nav-item.active { background: var(--pink-dim); color: var(--pink); }
+    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .nav-section { font-size: 0.65rem; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 12px 4px; }
+    .sidebar-footer { padding: 16px; border-top: 1px solid var(--border); }
+    .logout-btn { width: 100%; padding: 9px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: none; color: var(--text-2); font-size: 0.83rem; cursor: pointer; font-family: var(--font-body); }
+    .logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* Main */
+    .main { margin-left: 240px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; min-width: 0; }
+    .main.setup-mode { margin-left: 0; }
+    .topbar { padding: 16px 28px; border-bottom: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 10; flex-wrap: wrap; }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-title { font-family: var(--font-display); font-size: 1.25rem; }
+    .topbar-user { font-size: 0.82rem; color: var(--text-2); }
+    .topbar-user strong { color: var(--pink); }
+    .content { padding: 28px; flex: 1; }
+
+    /* Mode toggle */
+    .mode-toggle { display: flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+    .mode-btn { padding: 8px 18px; border-radius: 999px; border: none; background: none; color: var(--text-2); font-family: var(--font-display); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .mode-btn.active { background: var(--pink); color: #fff; }
+    .mode-btn:not(.active):hover { color: var(--text); }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+    .stat-label { font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .stat-val { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; }
+    .stat-sub { font-size: 0.75rem; color: var(--text-3); margin-top: 4px; }
     .stat-card.pink .stat-val { color: var(--pink); }
     .stat-card.green .stat-val { color: var(--green); }
     .stat-card.amber .stat-val { color: var(--amber); }
 
-    /* ── Table ───────────────────────────────────────────────── */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 24px;
-    }
-    .card-header {
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    /* Cards & tables */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 24px; }
+    .card-header { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .card-title { font-family: var(--font-display); font-size: 1rem; }
-    .search-box {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface-2);
-      color: var(--text);
-      font-size: 0.83rem;
-      font-family: var(--font-body);
-      outline: none;
-      width: 220px;
-    }
+    .card-body { padding: 20px; }
+    .search-box { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font-size: 0.83rem; font-family: var(--font-body); outline: none; width: 220px; }
     .search-box:focus { border-color: var(--pink); }
     .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-    .filter-tab {
-      padding: 5px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: none;
-      color: var(--text-2);
-      font-size: 0.75rem;
-      cursor: pointer;
-      font-family: var(--font-body);
-      transition: all 0.15s;
-    }
+    .filter-tab { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border); background: none; color: var(--text-2); font-size: 0.75rem; cursor: pointer; font-family: var(--font-body); }
     .filter-tab.active { background: var(--pink-dim); border-color: var(--pink); color: var(--pink); }
-    .filter-tab:hover:not(.active) { border-color: rgba(255,255,255,0.2); color: var(--text); }
-
     table { width: 100%; border-collapse: collapse; }
-    thead th {
-      padding: 12px 16px;
-      text-align: left;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--text-3);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--border);
-    }
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      transition: background 0.12s;
-    }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: rgba(255,255,255,0.025); }
+    thead th { padding: 12px 16px; text-align: left; font-size: 0.7rem; font-weight: 600; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
+    tbody tr.clickable { cursor: pointer; }
+    tbody tr.clickable:hover { background: rgba(255,255,255,0.025); }
     tbody td { padding: 14px 16px; font-size: 0.85rem; }
     .td-order { font-family: monospace; font-size: 0.78rem; color: var(--text-2); }
     .td-customer { font-weight: 500; }
     .td-email { color: var(--text-2); font-size: 0.8rem; }
-    .td-amount { font-weight: 700; color: var(--text); }
+    .td-amount { font-weight: 700; }
     .td-date { color: var(--text-3); font-size: 0.78rem; }
     .empty-state { padding: 48px; text-align: center; color: var(--text-3); }
 
-    /* ── Badges ──────────────────────────────────────────────── */
-    .badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-    }
-    .badge-pending  { background: rgba(245,158,11,0.15); color: var(--amber); }
-    .badge-confirmed{ background: rgba(59,130,246,0.15); color: var(--blue); }
+    /* Badges */
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; }
+    .badge-pending, .badge-new { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .badge-confirmed { background: rgba(59,130,246,0.15); color: var(--blue); }
     .badge-in_progress { background: rgba(255,26,140,0.15); color: var(--pink); }
-    .badge-shipped  { background: rgba(168,85,247,0.15); color: #a855f7; }
-    .badge-delivered{ background: rgba(34,197,94,0.15); color: var(--green); }
-    .badge-cancelled{ background: rgba(239,68,68,0.15); color: var(--red); }
-    .badge-paid     { background: rgba(34,197,94,0.15); color: var(--green); }
-    .badge-unpaid   { background: rgba(239,68,68,0.15); color: var(--red); }
+    .badge-shipped { background: rgba(168,85,247,0.15); color: #a855f7; }
+    .badge-delivered, .badge-paid, .badge-active, .badge-replied { background: rgba(34,197,94,0.15); color: var(--green); }
+    .badge-cancelled, .badge-unpaid, .badge-out_of_stock { background: rgba(239,68,68,0.15); color: var(--red); }
+    .badge-draft, .badge-read { background: rgba(255,255,255,0.08); color: var(--text-2); }
+    .badge-admin { background: var(--pink-dim); color: var(--pink); }
 
-    /* ── Order Detail Modal ──────────────────────────────────── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.hidden { display: none; }
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      width: 100%;
-      max-width: 560px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .modal-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
+    .modal.wide { max-width: 720px; }
+    .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .modal-header h3 { font-family: var(--font-display); font-size: 1.1rem; }
-    .modal-close {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: none;
-      color: var(--text-2);
-      cursor: pointer;
-      font-size: 18px;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.15s;
-    }
+    .modal-close { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: none; color: var(--text-2); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
     .modal-close:hover { border-color: var(--red); color: var(--red); }
     .modal-body { padding: 24px; }
     .modal-section { margin-bottom: 20px; }
     .modal-label { font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
-    .modal-value { font-size: 0.9rem; color: var(--text); }
+    .modal-value { font-size: 0.9rem; }
     .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .item-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
-    .item-row:last-child { border-bottom: none; }
-    .status-select {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface-2);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      outline: none;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-    .status-select:focus { border-color: var(--pink); }
-    .btn-sm {
-      padding: 8px 16px;
-      border-radius: 8px;
-      background: var(--pink);
-      color: #fff;
-      border: none;
-      font-family: var(--font-body);
-      font-size: 0.83rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .btn-sm:hover { opacity: 0.85; }
+    .item-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap; }
+    .status-select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font-family: var(--font-body); font-size: 0.85rem; outline: none; }
 
-    /* ── Customers table ─────────────────────────────────────── */
+    /* Pages */
     .page { display: none; }
     .page.active { display: block; }
 
-    /* ── Toast ───────────────────────────────────────────────── */
-    #toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 20px;
-      font-size: 0.85rem;
-      z-index: 9999;
-      transform: translateY(80px);
-      opacity: 0;
-      transition: all 0.3s;
+    /* Setup wizard */
+    .setup-wrap { max-width: 1100px; margin: 0 auto; }
+    .progress-bar { display: flex; gap: 4px; margin-bottom: 28px; }
+    .progress-step { flex: 1; height: 4px; background: var(--surface-2); border-radius: 2px; transition: background 0.3s; }
+    .progress-step.done { background: var(--pink); }
+    .progress-step.current { background: var(--pink-glow); }
+    .wizard-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+    .wizard-main { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; }
+    .wizard-main h2 { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 8px; }
+    .wizard-main .lead { color: var(--text-2); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.5; }
+    .wizard-nav { display: flex; justify-content: space-between; margin-top: 28px; gap: 12px; flex-wrap: wrap; }
+    .ai-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .ai-panel-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .ai-panel-header span { font-size: 1.5rem; }
+    .ai-panel-header h3 { font-family: var(--font-display); font-size: 0.95rem; }
+    .ai-tip { font-size: 0.85rem; color: var(--text-2); line-height: 1.6; padding: 14px; background: var(--pink-dim); border-radius: var(--radius-sm); border-left: 3px solid var(--pink); }
+    .integration-grid { display: grid; gap: 20px; }
+    .integration-block { padding: 20px; background: var(--surface-2); border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .integration-block h4 { font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .connected-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-3); }
+    .connected-dot.on { background: var(--green); }
+    .connect-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 16px; align-items: center; }
+    .btn-connect {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--surface); color: var(--text);
+      font-family: var(--font-display); font-size: 0.82rem; font-weight: 600; cursor: pointer;
     }
+    .btn-connect:hover { border-color: var(--pink); color: #fff; background: rgba(255,26,140,0.12); }
+    .btn-connect.stripe { border-color: #635bff; }
+    .btn-connect.stripe:hover { background: rgba(99,91,255,0.15); border-color: #635bff; }
+    .btn-connect.google { border-color: #4285f4; }
+    .btn-connect.apple { border-color: rgba(255,255,255,0.35); }
+    .btn-connect.facebook { border-color: #1877f2; }
+    .connect-note { font-size: 0.78rem; color: var(--text-2); line-height: 1.5; margin: 0 0 12px; }
+    .connect-status {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600;
+      padding: 4px 10px; border-radius: 999px; background: rgba(34,197,94,0.12); color: var(--green);
+    }
+    .connect-status.off { background: rgba(245,158,11,0.12); color: var(--amber); }
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .toggle-row label { margin: 0; color: var(--text); font-size: 0.85rem; text-transform: none; letter-spacing: 0; }
+    .toggle-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--pink); }
+    .howto {
+      background: rgba(255,26,140,0.08); border: 1px solid rgba(255,26,140,0.28);
+      border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 20px;
+    }
+    .howto h3 { font-family: var(--font-display); font-size: 0.9rem; margin-bottom: 8px; color: #fff; }
+    .howto ol { margin: 0; padding-left: 1.2rem; color: var(--text-2); font-size: 0.82rem; line-height: 1.55; }
+    .howto ol li { margin-bottom: 6px; }
+    .howto a { color: var(--pink); text-decoration: underline; }
+    .status-list { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
+    .status-list li {
+      display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-2);
+      padding: 10px 12px; background: var(--surface-2); border-radius: 10px; border: 1px solid var(--border);
+    }
+    .status-list li.on { color: #fff; border-color: rgba(34,197,94,0.35); }
+    .status-list .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-3); flex-shrink: 0; }
+    .status-list li.on .dot { background: var(--green); }
+    .save-banner {
+      display: none; margin-bottom: 16px; padding: 12px 14px; border-radius: 10px;
+      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.35);
+      color: #bbf7d0; font-size: 0.85rem; line-height: 1.45;
+    }
+    .save-banner.show { display: block; }
+    .save-banner.warn { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.35); color: #fde68a; }
+    .login-hint { font-size: 0.78rem; color: var(--text-2); margin-top: 16px; line-height: 1.45; }
+    .step-labels { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-3); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .complete-icon { font-size: 64px; text-align: center; margin: 20px 0; }
+    .product-quick-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .product-quick-row input { padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.85rem; width: 90px; }
+    .product-quick-row .name { font-size: 0.88rem; font-weight: 500; }
+
+    /* Toast */
+    #toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 20px; font-size: 0.85rem; z-index: 9999; transform: translateY(80px); opacity: 0; transition: all 0.3s; }
     #toast.show { transform: translateY(0); opacity: 1; }
     #toast.success { border-color: var(--green); color: var(--green); }
-    #toast.error   { border-color: var(--red);   color: var(--red); }
+    #toast.error { border-color: var(--red); color: var(--red); }
 
-    /* ── Mobile sidebar ──────────────────────────────────────── */
+    /* Mobile */
     .ham { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 4px; }
+    .mob-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
+    .mob-overlay.show { display: block; }
+    @media (max-width: 900px) {
+      .wizard-layout { grid-template-columns: 1fr; }
+      .ai-panel { order: -1; }
+    }
     @media (max-width: 768px) {
       .sidebar { transform: translateX(-100%); }
       .sidebar.open { transform: translateX(0); }
       .main { margin-left: 0; }
       .ham { display: block; }
-      .mob-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
-      .mob-overlay.show { display: block; }
-      table { font-size: 0.78rem; }
+      .modal-grid { grid-template-columns: 1fr; }
+      .product-quick-row { grid-template-columns: 1fr 1fr; }
       thead th:nth-child(3), tbody td:nth-child(3),
       thead th:nth-child(5), tbody td:nth-child(5) { display: none; }
+      .step-labels { display: none; }
     }
-  </style>
+</style>
 </head>
 <body>
 
-<!-- ── Login Screen ──────────────────────────────────────────────────────── -->
+<!-- Login -->
 <div id="login-screen">
   <div class="login-card">
     <span class="crown">👑</span>
     <h2>Admin Portal</h2>
     <p>Queens Custom Creations</p>
-    <div class="form-field">
-      <label>Email</label>
-      <input type="email" id="adm-email" value="wired4365@aol.com" autocomplete="username"/>
-    </div>
-    <div class="form-field">
-      <label>Password</label>
-      <input type="password" id="adm-pass" placeholder="••••••••" autocomplete="current-password"/>
-    </div>
-    <button class="btn-pink" id="adm-login-btn">Sign In to Admin</button>
+    <div class="form-field"><label>Email</label><input type="email" id="adm-email" placeholder="admin@example.com" autocomplete="username"/></div>
+    <div class="form-field"><label>Password</label><input type="password" id="adm-pass" placeholder="••••••••" autocomplete="current-password"/></div>
+    <button class="btn-pink full" id="adm-login-btn">Sign In to Admin</button>
     <div class="login-error" id="login-error"></div>
+    <p class="login-hint">After you sign in, Setup walks you through Stripe, PayPal, and Google / Apple / Facebook — all in this browser. No terminal or code needed. Hit <strong>Save</strong> and the shop updates automatically.</p>
   </div>
 </div>
 
-<!-- ── Sidebar ────────────────────────────────────────────────────────────── -->
 <div class="mob-overlay" id="mob-overlay"></div>
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
     <span class="crown">👑</span>
-    <h1>Queens Admin</h1>
-    <p>Custom Creations Portal</p>
+    <h1>Queens Custom Creations</h1>
+    <p>Admin Portal</p>
   </div>
-  <nav class="sidebar-nav">
-    <div class="nav-section">Overview</div>
-    <button class="nav-item active" data-page="dashboard">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-      Dashboard
-    </button>
-    <div class="nav-section">Orders</div>
-    <button class="nav-item" data-page="orders">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      All Orders
-    </button>
-    <button class="nav-item" data-page="orders" data-filter="pending">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Pending
-    </button>
-    <div class="nav-section">Customers</div>
-    <button class="nav-item" data-page="customers">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Customers
-    </button>
+  <nav class="sidebar-nav" id="ops-nav">
+    <div class="nav-section">Operations</div>
+    <button class="nav-item active" data-page="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</button>
+    <button class="nav-item" data-page="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>Orders</button>
+    <button class="nav-item" data-page="customers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</button>
+    <button class="nav-item" data-page="inquiries"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Inquiries</button>
+    <button class="nav-item" data-page="products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Products</button>
+    <button class="nav-item" data-page="admin-users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Admin Users</button>
   </nav>
-  <div class="sidebar-footer">
-    <button class="logout-btn" id="logout-btn">Sign Out</button>
-  </div>
+  <div class="sidebar-footer"><button class="logout-btn" id="logout-btn">Sign Out</button></div>
 </aside>
 
-<!-- ── Main ───────────────────────────────────────────────────────────────── -->
-<main class="main" id="main-app" style="display:none">
+<main class="main hidden" id="main-app">
   <div class="topbar">
-    <div style="display:flex;align-items:center;gap:12px">
-      <button class="ham" id="ham">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
+    <div class="topbar-left">
+      <button class="ham" id="ham" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <span class="topbar-title" id="page-title">Dashboard</span>
+    </div>
+    <div class="mode-toggle" id="mode-toggle">
+      <button type="button" class="mode-btn active" data-mode="operations">Operations</button>
+      <button type="button" class="mode-btn" data-mode="setup">Setup</button>
     </div>
     <div class="topbar-user">Signed in as <strong id="admin-name">Admin</strong></div>
   </div>
 
-  <div class="content">
-
-    <!-- Dashboard Page -->
+  <div class="content" id="ops-content">
     <div class="page active" id="page-dashboard">
-      <div class="stats-grid" id="stats-grid">
-        <div class="stat-card pink">
-          <div class="stat-label">Total Revenue</div>
-          <div class="stat-val" id="stat-revenue">$0</div>
-          <div class="stat-sub">Paid orders only</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Total Orders</div>
-          <div class="stat-val" id="stat-orders">0</div>
-          <div class="stat-sub">All time</div>
-        </div>
-        <div class="stat-card amber">
-          <div class="stat-label">Pending</div>
-          <div class="stat-val" id="stat-pending">0</div>
-          <div class="stat-sub">Need attention</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-label">Customers</div>
-          <div class="stat-val" id="stat-customers">0</div>
-          <div class="stat-sub">Registered accounts</div>
-        </div>
+      <div class="stats-grid">
+        <div class="stat-card pink"><div class="stat-label">Revenue</div><div class="stat-val" id="stat-revenue">$0</div><div class="stat-sub">Paid orders</div></div>
+        <div class="stat-card"><div class="stat-label">Orders</div><div class="stat-val" id="stat-orders">0</div><div class="stat-sub">All time</div></div>
+        <div class="stat-card amber"><div class="stat-label">Pending</div><div class="stat-val" id="stat-pending">0</div><div class="stat-sub">Need action</div></div>
+        <div class="stat-card green"><div class="stat-label">Customers</div><div class="stat-val" id="stat-customers">0</div><div class="stat-sub">Registered</div></div>
+        <div class="stat-card pink"><div class="stat-label">New Inquiries</div><div class="stat-val" id="stat-inquiries">0</div><div class="stat-sub">Unread</div></div>
+        <div class="stat-card"><div class="stat-label">Products</div><div class="stat-val" id="stat-products">0</div><div class="stat-sub">Active</div></div>
       </div>
-
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">Recent Orders</span>
-          <button class="filter-tab active" onclick="showPage('orders')">View All →</button>
-        </div>
-        <table>
-          <thead><tr>
-            <th>Order #</th><th>Customer</th><th>Email</th><th>Total</th><th>Status</th><th>Date</th>
-          </tr></thead>
-          <tbody id="recent-tbody">
-            <tr><td colspan="6" class="empty-state">Loading...</td></tr>
-          </tbody>
-        </table>
+        <div class="card-header"><span class="card-title">Recent Orders</span><button type="button" class="filter-tab active" id="dash-view-orders">View All →</button></div>
+        <table><thead><tr><th>Order #</th><th>Customer</th><th>Email</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody id="recent-tbody"><tr><td colspan="6" class="empty-state">Loading…</td></tr></tbody></table>
       </div>
     </div>
 
-    <!-- Orders Page -->
     <div class="page" id="page-orders">
       <div class="card">
         <div class="card-header">
           <span class="card-title">Orders</span>
           <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-            <input class="search-box" id="order-search" placeholder="Search orders…" oninput="filterOrders()"/>
-            <div class="filter-tabs">
-              <button class="filter-tab active" data-status="all" onclick="setOrderFilter(this,'all')">All</button>
-              <button class="filter-tab" data-status="pending" onclick="setOrderFilter(this,'pending')">Pending</button>
-              <button class="filter-tab" data-status="confirmed" onclick="setOrderFilter(this,'confirmed')">Confirmed</button>
-              <button class="filter-tab" data-status="in_progress" onclick="setOrderFilter(this,'in_progress')">In Progress</button>
-              <button class="filter-tab" data-status="shipped" onclick="setOrderFilter(this,'shipped')">Shipped</button>
-              <button class="filter-tab" data-status="delivered" onclick="setOrderFilter(this,'delivered')">Delivered</button>
+            <input class="search-box" id="order-search" placeholder="Search orders…"/>
+            <div class="filter-tabs" id="order-filters">
+              <button type="button" class="filter-tab active" data-status="all">All</button>
+              <button type="button" class="filter-tab" data-status="pending">Pending</button>
+              <button type="button" class="filter-tab" data-status="confirmed">Confirmed</button>
+              <button type="button" class="filter-tab" data-status="in_progress">In Progress</button>
+              <button type="button" class="filter-tab" data-status="shipped">Shipped</button>
+              <button type="button" class="filter-tab" data-status="delivered">Delivered</button>
+              <button type="button" class="filter-tab" data-status="cancelled">Cancelled</button>
             </div>
           </div>
         </div>
-        <table>
-          <thead><tr>
-            <th>Order #</th><th>Customer</th><th>Email</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th>
-          </tr></thead>
-          <tbody id="orders-tbody">
-            <tr><td colspan="7" class="empty-state">Loading orders…</td></tr>
-          </tbody>
-        </table>
+        <table><thead><tr><th>Order #</th><th>Customer</th><th>Email</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody id="orders-tbody"><tr><td colspan="7" class="empty-state">Loading…</td></tr></tbody></table>
       </div>
     </div>
 
-    <!-- Customers Page -->
     <div class="page" id="page-customers">
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">Customers</span>
-        </div>
-        <table>
-          <thead><tr>
-            <th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Joined</th>
-          </tr></thead>
-          <tbody id="customers-tbody">
-            <tr><td colspan="5" class="empty-state">Loading…</td></tr>
-          </tbody>
-        </table>
+        <div class="card-header"><span class="card-title">Customers</span></div>
+        <table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Joined</th></tr></thead>
+        <tbody id="customers-tbody"><tr><td colspan="5" class="empty-state">Loading…</td></tr></tbody></table>
       </div>
     </div>
 
-  </div><!-- /content -->
+    <div class="page" id="page-inquiries">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Inquiries</span></div>
+        <table><thead><tr><th>From</th><th>Subject</th><th>Status</th><th>Source</th><th>Date</th></tr></thead>
+        <tbody id="inquiries-tbody"><tr><td colspan="5" class="empty-state">Loading…</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <div class="page" id="page-products">
+      <div class="stats-grid" id="product-stats-grid" style="margin-bottom:16px"></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Products</span></div>
+        <table><thead><tr><th>Name</th><th>SKU</th><th>Price</th><th>Inventory</th><th>Status</th><th>Sales</th></tr></thead>
+        <tbody id="products-tbody"><tr><td colspan="6" class="empty-state">Loading…</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <div class="page" id="page-admin-users">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Admin Users</span>
+          <button type="button" class="btn-sm" id="btn-new-admin">+ Add Admin</button>
+        </div>
+        <table><thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Actions</th></tr></thead>
+        <tbody id="admins-tbody"><tr><td colspan="4" class="empty-state">Loading…</td></tr></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="content hidden" id="setup-content">
+    <div class="setup-wrap">
+      <div class="progress-bar" id="wizard-progress"></div>
+      <div class="step-labels" id="wizard-step-labels"></div>
+      <div class="wizard-layout">
+        <div class="wizard-main" id="wizard-main"></div>
+        <div class="ai-panel">
+          <div class="ai-panel-header"><span>👑</span><h3>Do this next</h3></div>
+          <div class="ai-tip" id="ai-tip"></div>
+          <div id="setup-status-panel" style="margin-top:16px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
-<!-- ── Order Detail Modal ─────────────────────────────────────────────────── -->
+<!-- Order modal -->
 <div class="modal-overlay hidden" id="order-modal">
   <div class="modal">
-    <div class="modal-header">
-      <h3 id="modal-order-num">Order Details</h3>
-      <button class="modal-close" id="modal-close">×</button>
-    </div>
+    <div class="modal-header"><h3 id="modal-order-num">Order</h3><button type="button" class="modal-close" data-close="order-modal">×</button></div>
     <div class="modal-body">
       <div class="modal-grid">
-        <div class="modal-section">
-          <div class="modal-label">Customer</div>
-          <div class="modal-value" id="modal-customer"></div>
-        </div>
-        <div class="modal-section">
-          <div class="modal-label">Email</div>
-          <div class="modal-value" id="modal-email"></div>
-        </div>
-        <div class="modal-section">
-          <div class="modal-label">Phone</div>
-          <div class="modal-value" id="modal-phone"></div>
-        </div>
-        <div class="modal-section">
-          <div class="modal-label">Date</div>
-          <div class="modal-value" id="modal-date"></div>
-        </div>
-        <div class="modal-section">
-          <div class="modal-label">Payment</div>
-          <div class="modal-value" id="modal-payment"></div>
-        </div>
-        <div class="modal-section">
-          <div class="modal-label">Total</div>
-          <div class="modal-value" style="font-size:1.2rem;font-weight:700;color:#FF1A8C" id="modal-total"></div>
-        </div>
+        <div class="modal-section"><div class="modal-label">Customer</div><div class="modal-value" id="modal-customer"></div></div>
+        <div class="modal-section"><div class="modal-label">Email</div><div class="modal-value" id="modal-email"></div></div>
+        <div class="modal-section"><div class="modal-label">Phone</div><div class="modal-value" id="modal-phone"></div></div>
+        <div class="modal-section"><div class="modal-label">Date</div><div class="modal-value" id="modal-date"></div></div>
+        <div class="modal-section"><div class="modal-label">Payment</div><div class="modal-value" id="modal-payment"></div></div>
+        <div class="modal-section"><div class="modal-label">Total</div><div class="modal-value" style="font-size:1.2rem;font-weight:700;color:#FF1A8C" id="modal-total"></div></div>
       </div>
-      <div class="modal-section" id="modal-notes-section" style="display:none">
-        <div class="modal-label">Customer Notes</div>
-        <div class="modal-value" id="modal-notes" style="padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.85rem;margin-top:4px"></div>
-      </div>
-      <div class="modal-section">
-        <div class="modal-label">Items Ordered</div>
-        <div id="modal-items" style="margin-top:8px"></div>
-      </div>
-      <div class="modal-section">
-        <div class="modal-label">Update Status</div>
-        <div style="margin-top:8px;display:flex;align-items:center">
+      <div class="modal-section hidden" id="modal-notes-section"><div class="modal-label">Notes</div><div class="modal-value" id="modal-notes" style="padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.85rem"></div></div>
+      <div class="modal-section"><div class="modal-label">Items</div><div id="modal-items" style="margin-top:8px"></div></div>
+      <div class="modal-section"><div class="modal-label">Update Status</div>
+        <div style="margin-top:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
           <select class="status-select" id="modal-status-select">
-            <option value="pending">Pending</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="in_progress">In Progress</option>
-            <option value="shipped">Shipped</option>
-            <option value="delivered">Delivered</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="pending">Pending</option><option value="confirmed">Confirmed</option>
+            <option value="in_progress">In Progress</option><option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option><option value="cancelled">Cancelled</option>
           </select>
-          <button class="btn-sm" id="modal-save-status">Save Status</button>
+          <button type="button" class="btn-sm" id="modal-save-status">Save Status</button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Inquiry modal -->
+<div class="modal-overlay hidden" id="inquiry-modal">
+  <div class="modal wide">
+    <div class="modal-header"><h3 id="inquiry-modal-title">Inquiry</h3><button type="button" class="modal-close" data-close="inquiry-modal">×</button></div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="modal-section"><div class="modal-label">From</div><div class="modal-value" id="inq-name"></div></div>
+        <div class="modal-section"><div class="modal-label">Email</div><div class="modal-value" id="inq-email"></div></div>
+        <div class="modal-section"><div class="modal-label">Subject</div><div class="modal-value" id="inq-subject"></div></div>
+        <div class="modal-section"><div class="modal-label">Date</div><div class="modal-value" id="inq-date"></div></div>
+      </div>
+      <div class="modal-section"><div class="modal-label">Message</div><div class="modal-value" id="inq-message" style="padding:12px;background:var(--surface-2);border-radius:8px;line-height:1.5;margin-top:6px"></div></div>
+      <div class="modal-section hidden" id="inq-reply-section"><div class="modal-label">Previous Reply</div><div class="modal-value" id="inq-reply-prev" style="padding:12px;background:var(--surface-2);border-radius:8px;margin-top:6px"></div></div>
+      <div class="form-field"><label>Status</label><select id="inq-status"><option value="new">New</option><option value="read">Read</option><option value="replied">Replied</option><option value="closed">Closed</option></select></div>
+      <div class="form-field"><label>Reply</label><textarea id="inq-reply" placeholder="Type your reply…"></textarea></div>
+      <div class="modal-actions"><button type="button" class="btn-ghost" data-close="inquiry-modal">Cancel</button><button type="button" class="btn-sm" id="inq-save">Send Reply</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Product modal -->
+<div class="modal-overlay hidden" id="product-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="product-modal-title">Edit Product</h3><button type="button" class="modal-close" data-close="product-modal">×</button></div>
+    <div class="modal-body">
+      <div class="form-field"><label>Price ($)</label><input type="number" id="prod-price" min="0" step="0.01"/></div>
+      <div class="form-field"><label>Inventory</label><input type="number" id="prod-inventory" min="0" step="1"/></div>
+      <div class="form-field"><label>Status</label><select id="prod-status"><option value="active">Active</option><option value="out_of_stock">Out of Stock</option><option value="draft">Draft</option></select></div>
+      <div class="modal-actions"><button type="button" class="btn-ghost" data-close="product-modal">Cancel</button><button type="button" class="btn-sm" id="prod-save">Save</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin user modal -->
+<div class="modal-overlay hidden" id="admin-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="admin-modal-title">Admin User</h3><button type="button" class="modal-close" data-close="admin-modal">×</button></div>
+    <div class="modal-body">
+      <div class="form-field"><label>Name</label><input type="text" id="admin-user-name"/></div>
+      <div class="form-field"><label>Email</label><input type="email" id="admin-user-email"/></div>
+      <div class="form-field"><label>Password</label><input type="password" id="admin-user-pass" placeholder="Min 8 characters"/></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" data-close="admin-modal">Cancel</button>
+        <button type="button" class="btn-sm btn-danger hidden" id="admin-delete">Delete</button>
+        <button type="button" class="btn-sm" id="admin-save">Save</button>
       </div>
     </div>
   </div>
@@ -627,245 +468,47 @@
 
 <div id="toast"></div>
 
-<script>
-(function () {
+<script>(function () {
   'use strict';
 
-  let token = localStorage.getItem('qcc_admin_token');
+  const TOKEN_KEY = 'qcc_admin_token';
+  const ORDER_STATUSES = ['pending','confirmed','in_progress','shipped','delivered','cancelled'];
+  const WIZARD_STEPS = ['Welcome','E-Commerce','Payments','Logins','Email','Products','Admins','Complete'];
+  const AI_TIPS = [
+    'Everything happens in this Setup screen. Open the links we give you, copy your keys, paste them here, then tap Save — the shop updates by itself.',
+    'Optional for later: Etsy / Amazon / TikTok. You can skip this step and come back anytime from the Setup toggle.',
+    'For Stripe: paste your Connect Client ID + Secret Key, then Save. We’ll open Stripe automatically so you can approve the connection. PayPal is paste-and-Save only.',
+    'Want shoppers to use Google / Apple / Facebook? Create those apps in your own developer accounts, paste the keys, turn Enable ON, then Save — buttons appear on the shop login right away.',
+    'Email is optional. Paste your Mailchimp / Klaviyo / SendGrid key and Save when you’re ready for newsletters.',
+    'Adjust prices or inventory if you want — Save on each row. Or Continue to skip.',
+    'You can add another admin later. Continue when you’re ready.',
+    'Setup is finished. Operations is your daily dashboard for orders and messages. You can reopen Setup anytime to change keys.'
+  ];
+  const STEP_INDEX = { welcome: 0, ecommerce: 1, payments: 2, logins: 3, email: 4, products: 5, admins: 6, complete: 7 };
+
+  let token = localStorage.getItem(TOKEN_KEY);
+  let currentUser = null;
+  let currentMode = 'operations';
+  let currentPage = 'dashboard';
   let currentOrderId = null;
   let currentOrderFilter = 'all';
-  let allOrders = [];
+  let currentInquiryId = null;
+  let currentProductId = null;
+  let currentAdminId = null;
+  let wizardStep = 0;
+  let integrations = {};
+  let wizardProducts = [];
 
-  // ── Auth ──────────────────────────────────────────────────────────────────
+  const $ = (id) => document.getElementById(id);
+  const hide = (el) => el && el.classList.add('hidden');
+  const show = (el) => el && el.classList.remove('hidden');
 
-  async function apiLogin(email, pass) {
-    const r = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass }),
-    });
-    return r.json();
+  function toast(msg, type) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.className = 'show ' + (type || 'success');
+    setTimeout(() => { t.className = ''; }, 2500);
   }
-
-  document.getElementById('adm-login-btn').addEventListener('click', async () => {
-    const email = document.getElementById('adm-email').value.trim();
-    const pass  = document.getElementById('adm-pass').value;
-    const errEl = document.getElementById('login-error');
-    errEl.textContent = '';
-
-    const data = await apiLogin(email, pass);
-    if (data.error) { errEl.textContent = data.error; return; }
-    if (data.user?.role !== 'admin') { errEl.textContent = 'Admin access required'; return; }
-
-    token = data.token;
-    localStorage.setItem('qcc_admin_token', token);
-    document.getElementById('admin-name').textContent = data.user.name || data.user.email;
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('main-app').style.display = 'flex';
-    loadDashboard();
-  });
-
-  // Allow Enter key on password field
-  document.getElementById('adm-pass').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('adm-login-btn').click();
-  });
-
-  // Auto-login if token exists
-  if (token) {
-    fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => r.json())
-      .then(user => {
-        if (user?.role === 'admin') {
-          document.getElementById('admin-name').textContent = user.name || user.email;
-          document.getElementById('login-screen').style.display = 'none';
-          document.getElementById('main-app').style.display = 'flex';
-          loadDashboard();
-        } else {
-          localStorage.removeItem('qcc_admin_token');
-        }
-      }).catch(() => localStorage.removeItem('qcc_admin_token'));
-  }
-
-  document.getElementById('logout-btn').addEventListener('click', () => {
-    localStorage.removeItem('qcc_admin_token');
-    location.reload();
-  });
-
-  // ── Navigation ────────────────────────────────────────────────────────────
-
-  window.showPage = function(name, filter) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById(`page-${name}`).classList.add('active');
-    document.querySelector(`[data-page="${name}"]`)?.classList.add('active');
-    document.getElementById('page-title').textContent =
-      name === 'dashboard' ? 'Dashboard' : name === 'orders' ? 'All Orders' : 'Customers';
-
-    if (name === 'dashboard') loadDashboard();
-    if (name === 'orders') { if (filter) setOrderFilter(document.querySelector(`[data-status="${filter}"]`), filter); else loadOrders(); }
-    if (name === 'customers') loadCustomers();
-    closeSidebar();
-  };
-
-  document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
-    btn.addEventListener('click', () => showPage(btn.dataset.page, btn.dataset.filter));
-  });
-
-  // ── Mobile sidebar ────────────────────────────────────────────────────────
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('mob-overlay');
-  document.getElementById('ham').addEventListener('click', () => {
-    sidebar.classList.add('open');
-    overlay.classList.add('show');
-  });
-  function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('show');
-  }
-  overlay.addEventListener('click', closeSidebar);
-
-  // ── Fetch helpers ─────────────────────────────────────────────────────────
-
-  function api(path, opts = {}) {
-    return fetch(path, {
-      ...opts,
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', ...(opts.headers || {}) },
-      body: opts.body ? JSON.stringify(opts.body) : undefined,
-    }).then(r => r.json());
-  }
-
-  // ── Dashboard ─────────────────────────────────────────────────────────────
-
-  async function loadDashboard() {
-    const data = await api('/api/admin/stats');
-    document.getElementById('stat-revenue').textContent  = `$${data.revenue}`;
-    document.getElementById('stat-orders').textContent   = data.totalOrders;
-    document.getElementById('stat-pending').textContent  = data.pendingOrders;
-    document.getElementById('stat-customers').textContent= data.customers;
-
-    const tbody = document.getElementById('recent-tbody');
-    if (!data.recentOrders?.length) {
-      tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No orders yet 👑</td></tr>';
-      return;
-    }
-    tbody.innerHTML = data.recentOrders.map(o => `
-      <tr onclick="openOrder(${o.id})">
-        <td class="td-order">${o.order_num}</td>
-        <td class="td-customer">${o.customer_name}</td>
-        <td class="td-email">${o.customer_email}</td>
-        <td class="td-amount">$${parseFloat(o.total).toFixed(2)}</td>
-        <td><span class="badge badge-${o.status}">${fmtStatus(o.status)}</span></td>
-        <td class="td-date">${fmtDate(o.created_at)}</td>
-      </tr>`).join('');
-  }
-
-  // ── Orders ────────────────────────────────────────────────────────────────
-
-  async function loadOrders() {
-    const search = document.getElementById('order-search')?.value || '';
-    const data = await api(`/api/admin/orders?status=${currentOrderFilter}&search=${encodeURIComponent(search)}`);
-    allOrders = data.orders || [];
-    renderOrderTable(allOrders);
-  }
-
-  function renderOrderTable(orders) {
-    const tbody = document.getElementById('orders-tbody');
-    if (!orders.length) {
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No orders found</td></tr>';
-      return;
-    }
-    tbody.innerHTML = orders.map(o => `
-      <tr onclick="openOrder(${o.id})">
-        <td class="td-order">${o.order_num}</td>
-        <td class="td-customer">${o.customer_name}</td>
-        <td class="td-email">${o.customer_email}</td>
-        <td class="td-amount">$${parseFloat(o.total).toFixed(2)}</td>
-        <td><span class="badge badge-${o.payment_status}">${o.payment_status}</span></td>
-        <td><span class="badge badge-${o.status}">${fmtStatus(o.status)}</span></td>
-        <td class="td-date">${fmtDate(o.created_at)}</td>
-      </tr>`).join('');
-  }
-
-  window.setOrderFilter = function(el, status) {
-    currentOrderFilter = status;
-    document.querySelectorAll('.filter-tab[data-status]').forEach(t => t.classList.remove('active'));
-    if (el) el.classList.add('active');
-    loadOrders();
-  };
-
-  window.filterOrders = function() { loadOrders(); };
-
-  // ── Customers ─────────────────────────────────────────────────────────────
-
-  async function loadCustomers() {
-    const customers = await api('/api/admin/customers');
-    const tbody = document.getElementById('customers-tbody');
-    if (!customers.length) {
-      tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No customers yet</td></tr>';
-      return;
-    }
-    tbody.innerHTML = customers.filter(c => c.role !== 'admin').map(c => `
-      <tr>
-        <td class="td-customer">${c.name}</td>
-        <td class="td-email">${c.email}</td>
-        <td class="td-email">${c.phone || '—'}</td>
-        <td><span class="badge badge-confirmed">${c.role}</span></td>
-        <td class="td-date">${fmtDate(c.created_at)}</td>
-      </tr>`).join('');
-  }
-
-  // ── Order Detail Modal ────────────────────────────────────────────────────
-
-  window.openOrder = async function(id) {
-    currentOrderId = id;
-    const order = await api(`/api/admin/orders/${id}`);
-    document.getElementById('modal-order-num').textContent = order.order_num;
-    document.getElementById('modal-customer').textContent  = order.customer_name;
-    document.getElementById('modal-email').textContent     = order.customer_email;
-    document.getElementById('modal-phone').textContent     = order.customer_phone || '—';
-    document.getElementById('modal-date').textContent      = fmtDate(order.created_at);
-    document.getElementById('modal-payment').innerHTML     = `<span class="badge badge-${order.payment_status}">${order.payment_status}</span>`;
-    document.getElementById('modal-total').textContent     = `$${parseFloat(order.total).toFixed(2)}`;
-    document.getElementById('modal-status-select').value   = order.status;
-
-    const notesEl = document.getElementById('modal-notes-section');
-    if (order.notes) {
-      notesEl.style.display = '';
-      document.getElementById('modal-notes').textContent = order.notes;
-    } else {
-      notesEl.style.display = 'none';
-    }
-
-    const items = Array.isArray(order.items) ? order.items : JSON.parse(order.items);
-    document.getElementById('modal-items').innerHTML = items.map(i => `
-      <div class="item-row">
-        <span>${i.name} × ${i.qty || 1}</span>
-        <span>$${((i.price || 40) * (i.qty || 1)).toFixed(2)}</span>
-      </div>`).join('') +
-      `<div class="item-row" style="font-weight:700;border-top:1px solid rgba(255,255,255,0.1);margin-top:4px;padding-top:12px">
-        <span>Total</span><span style="color:#FF1A8C">$${parseFloat(order.total).toFixed(2)}</span>
-      </div>`;
-
-    document.getElementById('order-modal').classList.remove('hidden');
-  };
-
-  document.getElementById('modal-close').addEventListener('click', () => {
-    document.getElementById('order-modal').classList.add('hidden');
-  });
-  document.getElementById('order-modal').addEventListener('click', e => {
-    if (e.target === e.currentTarget) document.getElementById('order-modal').classList.add('hidden');
-  });
-
-  document.getElementById('modal-save-status').addEventListener('click', async () => {
-    const status = document.getElementById('modal-status-select').value;
-    await api(`/api/admin/orders/${currentOrderId}/status`, { method: 'PATCH', body: { status } });
-    showToast('Status updated!', 'success');
-    document.getElementById('order-modal').classList.add('hidden');
-    loadOrders();
-    loadDashboard();
-  });
-
-  // ── Helpers ───────────────────────────────────────────────────────────────
 
   function fmtDate(str) {
     if (!str) return '—';
@@ -873,15 +516,780 @@
   }
 
   function fmtStatus(s) {
-    return { pending:'Pending', confirmed:'Confirmed', in_progress:'In Progress', shipped:'Shipped', delivered:'Delivered', cancelled:'Cancelled' }[s] || s;
+    const m = { pending:'Pending', confirmed:'Confirmed', in_progress:'In Progress', shipped:'Shipped', delivered:'Delivered', cancelled:'Cancelled', new:'New', read:'Read', replied:'Replied', closed:'Closed', active:'Active', out_of_stock:'Out of Stock', draft:'Draft' };
+    return m[s] || s;
   }
 
-  function showToast(msg, type = 'success') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = `show ${type}`;
-    setTimeout(() => t.className = '', 2500);
+  function badge(s) {
+    return '<span class="badge badge-' + s + '">' + fmtStatus(s) + '</span>';
   }
+
+  async function api(path, opts) {
+    opts = opts || {};
+    const headers = { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' };
+    if (opts.headers) Object.assign(headers, opts.headers);
+    const r = await fetch(path, {
+      method: opts.method || 'GET',
+      headers,
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    });
+    const data = await r.json().catch(() => ({}));
+    if (r.status === 401) {
+      localStorage.removeItem(TOKEN_KEY);
+      location.reload();
+      throw new Error('Session expired');
+    }
+    if (!r.ok && data.error) throw new Error(data.error);
+    return data;
+  }
+
+  function closeSidebar() {
+    $('sidebar').classList.remove('open');
+    $('mob-overlay').classList.remove('show');
+  }
+
+  function openModal(id) { show($('' + id)); }
+  function closeModal(id) { hide($('' + id)); }
+
+  document.querySelectorAll('[data-close]').forEach(btn => {
+    btn.addEventListener('click', () => closeModal(btn.getAttribute('data-close')));
+  });
+  document.querySelectorAll('.modal-overlay').forEach(ov => {
+    ov.addEventListener('click', e => { if (e.target === ov) hide(ov); });
+  });
+
+  // ── Auth ──────────────────────────────────────────────────────
+  async function login(email, pass) {
+    const r = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass })
+    });
+    return r.json();
+  }
+
+  function consumeSetupQuery() {
+    const params = new URLSearchParams(location.search);
+    const setup = params.get('setup');
+    const stripeOk = params.get('stripe_connected') === '1';
+    const stripeErr = params.get('stripe_error');
+    if (stripeOk) toast('Stripe Connect linked 👑');
+    if (stripeErr) toast(stripeErr, 'error');
+    if (setup || stripeOk || stripeErr) {
+      wizardStep = (setup && STEP_INDEX[setup] != null) ? STEP_INDEX[setup] : STEP_INDEX.payments;
+      history.replaceState({}, '', '/admin/');
+      setMode('setup');
+      return true;
+    }
+    return false;
+  }
+
+  async function showApp(user) {
+    currentUser = user;
+    $('admin-name').textContent = user.name || user.email;
+    hide($('login-screen'));
+    show($('main-app'));
+    document.body.classList.add('authed');
+    if (consumeSetupQuery()) return;
+    try {
+      await loadIntegrations();
+      const setup = integrations.setup || {};
+      if (!setup.complete) {
+        wizardStep = typeof setup.step === 'number' ? Math.min(setup.step, WIZARD_STEPS.length - 1) : 0;
+        setMode('setup');
+        return;
+      }
+    } catch (_) { /* fall through to operations */ }
+    setMode('operations');
+  }
+
+  $('adm-login-btn').addEventListener('click', async () => {
+    const email = $('adm-email').value.trim();
+    const pass = $('adm-pass').value;
+    $('login-error').textContent = '';
+    const data = await login(email, pass);
+    if (data.error) { $('login-error').textContent = data.error; return; }
+    if (data.user?.role !== 'admin') { $('login-error').textContent = 'Admin access required'; return; }
+    token = data.token;
+    localStorage.setItem(TOKEN_KEY, token);
+    showApp(data.user);
+  });
+  $('adm-pass').addEventListener('keydown', e => { if (e.key === 'Enter') $('adm-login-btn').click(); });
+
+  if (token) {
+    fetch('/api/auth/me', { headers: { Authorization: 'Bearer ' + token } })
+      .then(r => r.json())
+      .then(user => {
+        if (user?.role === 'admin') showApp(user);
+        else localStorage.removeItem(TOKEN_KEY);
+      })
+      .catch(() => localStorage.removeItem(TOKEN_KEY));
+  }
+
+  $('logout-btn').addEventListener('click', () => {
+    localStorage.removeItem(TOKEN_KEY);
+    location.reload();
+  });
+
+  // ── Mode toggle ─────────────────────────────────────────────
+  function setMode(mode) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+    const sidebar = $('sidebar');
+    const main = $('main-app');
+    if (mode === 'setup') {
+      hide($('ops-content'));
+      show($('setup-content'));
+      sidebar.classList.add('hidden');
+      main.classList.add('setup-mode');
+      loadIntegrations().then(() => renderWizard()).catch(() => renderWizard());
+    } else {
+      show($('ops-content'));
+      hide($('setup-content'));
+      sidebar.classList.remove('hidden');
+      main.classList.remove('setup-mode');
+      showPage(currentPage);
+    }
+    closeSidebar();
+  }
+
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => setMode(btn.dataset.mode));
+  });
+
+  // ── Navigation ────────────────────────────────────────────────
+  const PAGE_TITLES = { dashboard:'Dashboard', orders:'Orders', customers:'Customers', inquiries:'Inquiries', products:'Products', 'admin-users':'Admin Users' };
+
+  function showPage(name) {
+    currentPage = name;
+    document.querySelectorAll('#ops-content .page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#ops-nav .nav-item').forEach(n => n.classList.remove('active'));
+    const page = $('page-' + name);
+    if (page) page.classList.add('active');
+    const nav = document.querySelector('#ops-nav [data-page="' + name + '"]');
+    if (nav) nav.classList.add('active');
+    $('page-title').textContent = PAGE_TITLES[name] || name;
+    if (name === 'dashboard') loadDashboard();
+    if (name === 'orders') loadOrders();
+    if (name === 'customers') loadCustomers();
+    if (name === 'inquiries') loadInquiries();
+    if (name === 'products') loadProducts();
+    if (name === 'admin-users') loadAdminUsers();
+    closeSidebar();
+  }
+
+  document.querySelectorAll('#ops-nav .nav-item').forEach(btn => {
+    btn.addEventListener('click', () => showPage(btn.dataset.page));
+  });
+  $('dash-view-orders').addEventListener('click', () => showPage('orders'));
+
+  $('ham').addEventListener('click', () => {
+    $('sidebar').classList.add('open');
+    $('mob-overlay').classList.add('show');
+  });
+  $('mob-overlay').addEventListener('click', closeSidebar);
+
+  // ── Dashboard ───────────────────────────────────────────────
+  async function loadDashboard() {
+    const data = await api('/api/admin/stats');
+    $('stat-revenue').textContent = '$' + data.revenue;
+    $('stat-orders').textContent = data.totalOrders;
+    $('stat-pending').textContent = data.pendingOrders;
+    $('stat-customers').textContent = data.customers;
+    $('stat-inquiries').textContent = data.newInquiries;
+    $('stat-products').textContent = data.activeProducts;
+    const tbody = $('recent-tbody');
+    if (!data.recentOrders?.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No orders yet 👑</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.recentOrders.map(o => '<tr class="clickable" data-order="' + o.id + '"><td class="td-order">' + o.order_num + '</td><td class="td-customer">' + esc(o.customer_name) + '</td><td class="td-email">' + esc(o.customer_email) + '</td><td class="td-amount">$' + parseFloat(o.total).toFixed(2) + '</td><td>' + badge(o.status) + '</td><td class="td-date">' + fmtDate(o.created_at) + '</td></tr>').join('');
+    tbody.querySelectorAll('[data-order]').forEach(row => row.addEventListener('click', () => openOrder(row.dataset.order)));
+  }
+
+  // ── Orders ────────────────────────────────────────────────────
+  async function loadOrders() {
+    const search = $('order-search').value || '';
+    const data = await api('/api/admin/orders?status=' + currentOrderFilter + '&search=' + encodeURIComponent(search));
+    const tbody = $('orders-tbody');
+    const orders = data.orders || [];
+    if (!orders.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No orders found</td></tr>';
+      return;
+    }
+    tbody.innerHTML = orders.map(o => '<tr class="clickable" data-order="' + o.id + '"><td class="td-order">' + o.order_num + '</td><td class="td-customer">' + esc(o.customer_name) + '</td><td class="td-email">' + esc(o.customer_email) + '</td><td class="td-amount">$' + parseFloat(o.total).toFixed(2) + '</td><td>' + badge(o.payment_status) + '</td><td>' + badge(o.status) + '</td><td class="td-date">' + fmtDate(o.created_at) + '</td></tr>').join('');
+    tbody.querySelectorAll('[data-order]').forEach(row => row.addEventListener('click', () => openOrder(row.dataset.order)));
+  }
+
+  $('order-search').addEventListener('input', () => loadOrders());
+  document.querySelectorAll('#order-filters .filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      currentOrderFilter = tab.dataset.status;
+      document.querySelectorAll('#order-filters .filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      loadOrders();
+    });
+  });
+
+  async function openOrder(id) {
+    currentOrderId = id;
+    const order = await api('/api/admin/orders/' + id);
+    $('modal-order-num').textContent = order.order_num;
+    $('modal-customer').textContent = order.customer_name;
+    $('modal-email').textContent = order.customer_email;
+    $('modal-phone').textContent = order.customer_phone || '—';
+    $('modal-date').textContent = fmtDate(order.created_at);
+    $('modal-payment').innerHTML = badge(order.payment_status);
+    $('modal-total').textContent = '$' + parseFloat(order.total).toFixed(2);
+    $('modal-status-select').value = order.status;
+    const notesSec = $('modal-notes-section');
+    if (order.notes) {
+      show(notesSec);
+      $('modal-notes').textContent = order.notes;
+    } else hide(notesSec);
+    const items = Array.isArray(order.items) ? order.items : JSON.parse(order.items || '[]');
+    $('modal-items').innerHTML = items.map(i => '<div class="item-row"><span>' + esc(i.name) + ' × ' + (i.qty || 1) + '</span><span>$' + ((i.price || 40) * (i.qty || 1)).toFixed(2) + '</span></div>').join('') +
+      '<div class="item-row" style="font-weight:700;margin-top:4px"><span>Total</span><span style="color:#FF1A8C">$' + parseFloat(order.total).toFixed(2) + '</span></div>';
+    openModal('order-modal');
+  }
+
+  $('modal-save-status').addEventListener('click', async () => {
+    const status = $('modal-status-select').value;
+    await api('/api/admin/orders/' + currentOrderId + '/status', { method: 'PATCH', body: { status } });
+    toast('Status updated');
+    closeModal('order-modal');
+    loadOrders();
+    if (currentPage === 'dashboard') loadDashboard();
+  });
+
+  // ── Customers ─────────────────────────────────────────────────
+  async function loadCustomers() {
+    const customers = await api('/api/admin/customers');
+    const tbody = $('customers-tbody');
+    const list = customers.filter(c => c.role !== 'admin');
+    if (!list.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No customers yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = list.map(c => '<tr><td class="td-customer">' + esc(c.name) + '</td><td class="td-email">' + esc(c.email) + '</td><td class="td-email">' + (c.phone || '—') + '</td><td>' + badge(c.role) + '</td><td class="td-date">' + fmtDate(c.created_at) + '</td></tr>').join('');
+  }
+
+  // ── Inquiries ─────────────────────────────────────────────────
+  async function loadInquiries() {
+    const inquiries = await api('/api/admin/inquiries');
+    const tbody = $('inquiries-tbody');
+    if (!inquiries.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No inquiries</td></tr>';
+      return;
+    }
+    tbody.innerHTML = inquiries.map(q => '<tr class="clickable" data-inquiry="' + q.id + '"><td class="td-customer">' + esc(q.name) + '<br><span class="td-email">' + esc(q.email) + '</span></td><td>' + esc(q.subject || '—') + '</td><td>' + badge(q.status) + '</td><td class="td-email">' + esc(q.source || 'website') + '</td><td class="td-date">' + fmtDate(q.created_at) + '</td></tr>').join('');
+    tbody.querySelectorAll('[data-inquiry]').forEach(row => row.addEventListener('click', () => openInquiry(row.dataset.inquiry)));
+  }
+
+  async function openInquiry(id) {
+    currentInquiryId = id;
+    const inquiries = await api('/api/admin/inquiries');
+    const q = inquiries.find(x => String(x.id) === String(id));
+    if (!q) return;
+    $('inquiry-modal-title').textContent = q.subject || 'Inquiry';
+    $('inq-name').textContent = q.name;
+    $('inq-email').textContent = q.email;
+    $('inq-subject').textContent = q.subject || '—';
+    $('inq-date').textContent = fmtDate(q.created_at);
+    $('inq-message').textContent = q.message;
+    $('inq-status').value = q.status || 'new';
+    $('inq-reply').value = '';
+    const replySec = $('inq-reply-section');
+    if (q.reply) {
+      show(replySec);
+      $('inq-reply-prev').textContent = q.reply;
+    } else hide(replySec);
+    openModal('inquiry-modal');
+  }
+
+  $('inq-save').addEventListener('click', async () => {
+    const status = $('inq-status').value;
+    const reply = $('inq-reply').value.trim();
+    const body = { status };
+    if (reply) body.reply = reply;
+    await api('/api/admin/inquiries/' + currentInquiryId, { method: 'PUT', body });
+    toast(reply ? 'Reply sent' : 'Inquiry updated');
+    closeModal('inquiry-modal');
+    loadInquiries();
+    if (currentPage === 'dashboard') loadDashboard();
+  });
+
+  // ── Products ──────────────────────────────────────────────────
+  async function loadProducts() {
+    const data = await api('/api/admin/products');
+    const stats = data.stats || {};
+    $('product-stats-grid').innerHTML =
+      '<div class="stat-card"><div class="stat-label">Total</div><div class="stat-val">' + (stats.total || 0) + '</div></div>' +
+      '<div class="stat-card green"><div class="stat-label">Active</div><div class="stat-val">' + (stats.active || 0) + '</div></div>' +
+      '<div class="stat-card amber"><div class="stat-label">Out of Stock</div><div class="stat-val">' + (stats.outOfStock || 0) + '</div></div>' +
+      '<div class="stat-card pink"><div class="stat-label">Total Sales</div><div class="stat-val">' + (stats.totalSales || 0) + '</div></div>';
+    const tbody = $('products-tbody');
+    const products = data.products || [];
+    if (!products.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No products</td></tr>';
+      return;
+    }
+    tbody.innerHTML = products.map(p => '<tr class="clickable" data-product="' + p.id + '"><td class="td-customer">' + esc(p.name) + '</td><td class="td-order">' + esc(p.sku) + '</td><td class="td-amount">$' + parseFloat(p.price).toFixed(2) + '</td><td>' + p.inventory + '</td><td>' + badge(p.status) + '</td><td>' + (p.sales || 0) + '</td></tr>').join('');
+    tbody.querySelectorAll('[data-product]').forEach(row => row.addEventListener('click', () => openProduct(row.dataset.product, products)));
+  }
+
+  function openProduct(id, products) {
+    const p = products.find(x => String(x.id) === String(id));
+    if (!p) return;
+    currentProductId = id;
+    $('product-modal-title').textContent = p.name;
+    $('prod-price').value = p.price;
+    $('prod-inventory').value = p.inventory;
+    $('prod-status').value = p.status;
+    openModal('product-modal');
+  }
+
+  $('prod-save').addEventListener('click', async () => {
+    await api('/api/admin/products/' + currentProductId, {
+      method: 'PUT',
+      body: {
+        price: parseFloat($('prod-price').value),
+        inventory: parseInt($('prod-inventory').value, 10),
+        status: $('prod-status').value
+      }
+    });
+    toast('Product updated');
+    closeModal('product-modal');
+    loadProducts();
+    if (currentPage === 'dashboard') loadDashboard();
+  });
+
+  // ── Admin users ───────────────────────────────────────────────
+  async function loadAdminUsers() {
+    const users = await api('/api/admin/users');
+    const tbody = $('admins-tbody');
+    if (!users.length) {
+      tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No admin users</td></tr>';
+      return;
+    }
+    tbody.innerHTML = users.map(u => '<tr><td class="td-customer">' + esc(u.name) + '</td><td class="td-email">' + esc(u.email) + '</td><td class="td-date">' + fmtDate(u.created_at) + '</td><td><button type="button" class="btn-sm" data-edit-admin="' + u.id + '">Edit</button></td></tr>').join('');
+    tbody.querySelectorAll('[data-edit-admin]').forEach(btn => btn.addEventListener('click', () => openAdminModal(btn.dataset.editAdmin, users)));
+  }
+
+  function openAdminModal(id, users) {
+    currentAdminId = id || null;
+    $('admin-modal-title').textContent = id ? 'Edit Admin' : 'New Admin';
+    $('admin-user-name').value = '';
+    $('admin-user-email').value = '';
+    $('admin-user-pass').value = '';
+    $('admin-user-pass').placeholder = id ? 'Leave blank to keep current' : 'Min 8 characters';
+    const delBtn = $('admin-delete');
+    if (id) {
+      const u = users.find(x => String(x.id) === String(id));
+      if (u) {
+        $('admin-user-name').value = u.name || '';
+        $('admin-user-email').value = u.email || '';
+      }
+      show(delBtn);
+      delBtn.classList.toggle('hidden', String(id) === String(currentUser?.id));
+    } else hide(delBtn);
+    openModal('admin-modal');
+  }
+
+  $('btn-new-admin').addEventListener('click', () => openAdminModal(null, []));
+
+  $('admin-save').addEventListener('click', async () => {
+    const name = $('admin-user-name').value.trim();
+    const email = $('admin-user-email').value.trim();
+    const password = $('admin-user-pass').value;
+    try {
+      if (currentAdminId) {
+        const body = {};
+        if (name) body.name = name;
+        if (email) body.email = email;
+        if (password) body.password = password;
+        await api('/api/admin/users/' + currentAdminId, { method: 'PUT', body });
+        toast('Admin updated');
+      } else {
+        if (!email || !password) { toast('Email and password required', 'error'); return; }
+        await api('/api/admin/users', { method: 'POST', body: { name, email, password } });
+        toast('Admin created');
+      }
+      closeModal('admin-modal');
+      loadAdminUsers();
+    } catch (e) {
+      toast(e.message || 'Error', 'error');
+    }
+  });
+
+  $('admin-delete').addEventListener('click', async () => {
+    if (!currentAdminId || !confirm('Delete this admin user?')) return;
+    try {
+      await api('/api/admin/users/' + currentAdminId, { method: 'DELETE' });
+      toast('Admin deleted');
+      closeModal('admin-modal');
+      loadAdminUsers();
+    } catch (e) {
+      toast(e.message || 'Error', 'error');
+    }
+  });
+
+  // ── Setup wizard ──────────────────────────────────────────────
+  async function loadIntegrations() {
+    integrations = await api('/api/admin/integrations');
+    return integrations;
+  }
+
+  function renderProgress() {
+    const bar = $('wizard-progress');
+    const labels = $('wizard-step-labels');
+    bar.innerHTML = WIZARD_STEPS.map((_, i) => '<div class="progress-step' + (i < wizardStep ? ' done' : '') + (i === wizardStep ? ' current' : '') + '"></div>').join('');
+    labels.innerHTML = WIZARD_STEPS.map((s, i) => '<span>' + s + '</span>').join('');
+    $('ai-tip').textContent = AI_TIPS[wizardStep] || '';
+    const side = $('setup-status-panel');
+    if (side) side.innerHTML = '<p style="font-size:0.75rem;color:var(--text-3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">Live on your shop</p>' + statusChecklistHtml();
+  }
+
+  function statusChecklistHtml() {
+    const s = integrations.stripe || {};
+    const p = integrations.paypal || {};
+    const sa = integrations.socialAuth || {};
+    const g = sa.google || {};
+    const a = sa.apple || {};
+    const f = sa.facebook || {};
+    const items = [
+      { on: !!(s.connected || s.stripeUserId || (s.publishableKey && s.secretKey)), label: 'Stripe payments' },
+      { on: !!(p.connected || (p.clientId && p.clientSecret)), label: 'PayPal checkout' },
+      { on: !!(g.enabled && g.clientId), label: 'Google Sign-In' },
+      { on: !!(a.enabled && a.clientId), label: 'Apple Sign-In' },
+      { on: !!(f.enabled && (f.appId || f.clientId)), label: 'Facebook Sign-In' },
+    ];
+    return '<ul class="status-list">' + items.map(i =>
+      '<li class="' + (i.on ? 'on' : '') + '"><span class="dot"></span>' +
+      (i.on ? '✓ ' : '○ ') + esc(i.label) +
+      (i.on ? ' — live' : ' — not set yet') + '</li>'
+    ).join('') + '</ul>';
+  }
+
+  function showSaveBanner(messages, isWarn) {
+    const el = $('wiz-save-banner');
+    if (!el) return;
+    el.className = 'save-banner show' + (isWarn ? ' warn' : '');
+    el.innerHTML = (messages || []).map(m => '<div>' + esc(m) + '</div>').join('');
+  }
+
+  function field(label, id, value, type) {
+    type = type || 'text';
+    return '<div class="form-field"><label>' + label + '</label><input type="' + type + '" id="' + id + '" value="' + escAttr(value || '') + '"/></div>';
+  }
+
+  async function renderWizard() {
+    renderProgress();
+    const main = $('wizard-main');
+    let html = '';
+    const em = integrations.emailMarketing || {};
+
+    if (wizardStep === 0) {
+      html = '<h2>Welcome, Queen! 👑</h2>' +
+        '<p class="lead">This Setup guide runs entirely in your browser. You’ll open Stripe / Google (etc.) in a new tab, copy your keys, paste them here, and tap <strong>Save</strong>. When you Save, we activate the connection automatically — no terminal, no code, no tech person required.</p>' +
+        '<div class="howto"><h3>How every step works</h3><ol>' +
+        '<li>We tell you which website to open (Stripe, Google, PayPal…).</li>' +
+        '<li>You copy the key from <em>your</em> account (never someone else’s).</li>' +
+        '<li>Paste it in the boxes on this page.</li>' +
+        '<li>Tap <strong>Save &amp; Continue</strong> — we store it and turn it on for queenscustoms.shop.</li>' +
+        '<li>For Stripe Connect, Save also opens Stripe so you can click Approve.</li>' +
+        '</ol></div>' +
+        statusChecklistHtml() +
+        '<div class="wizard-nav"><span></span><button type="button" class="btn-pink" id="wiz-next">Start Setup →</button></div>';
+    } else if (wizardStep === 1) {
+      const e = integrations.etsy || {};
+      const a = integrations.amazon || {};
+      const t = integrations.tiktokShop || {};
+      html = '<h2>E-Commerce Integrations</h2><p class="lead">Connect your marketplace accounts to sync orders and inventory.</p><div class="integration-grid">' +
+        '<div class="integration-block"><h4><span class="connected-dot' + (e.connected ? ' on' : '') + '"></span> Etsy</h4>' + field('API Key', 'wiz-etsy-key', e.apiKey) + field('Shop ID', 'wiz-etsy-shop', e.shopId) + '</div>' +
+        '<div class="integration-block"><h4><span class="connected-dot' + (a.connected ? ' on' : '') + '"></span> Amazon</h4>' + field('Seller ID', 'wiz-amz-seller', a.sellerId) + field('MWS Token', 'wiz-amz-token', a.mwsToken) + '</div>' +
+        '<div class="integration-block"><h4><span class="connected-dot' + (t.connected ? ' on' : '') + '"></span> TikTok Shop</h4>' + field('App Key', 'wiz-tiktok-key', t.appKey) + field('App Secret', 'wiz-tiktok-secret', t.appSecret) + '</div>' +
+        '</div><div class="wizard-nav"><button type="button" class="btn-ghost" id="wiz-back">← Back</button><button type="button" class="btn-pink" id="wiz-save-step">Save & Continue →</button></div>';
+    } else if (wizardStep === 2) {
+      const s = integrations.stripe || {};
+      const p = integrations.paypal || {};
+      const stripeOn = !!(s.connected || s.stripeUserId);
+      html = '<h2>Payments</h2>' +
+        '<div id="wiz-save-banner" class="save-banner"></div>' +
+        '<p class="lead">Connect <strong>your</strong> Stripe and/or PayPal. After you paste keys and hit Save, we activate them on the shop automatically.</p>' +
+        '<div class="howto"><h3>Stripe (recommended)</h3><ol>' +
+        '<li>Open <a href="https://dashboard.stripe.com/register" target="_blank" rel="noopener">Stripe</a> and sign in with your business email.</li>' +
+        '<li>Get your <strong>Secret key</strong> and <strong>Publishable key</strong> from Developers → API keys.</li>' +
+        '<li>For one-click Connect: copy your Connect <strong>client_id</strong> (starts with ca_) from Settings → Connect.</li>' +
+        '<li>Paste below → tap <strong>Save &amp; Continue</strong>. If Connect is ready, Stripe opens so you can Approve — then you’re done.</li>' +
+        '</ol></div>' +
+        '<div class="integration-grid">' +
+        '<div class="integration-block"><h4><span class="connected-dot' + (stripeOn ? ' on' : '') + '"></span> Stripe' +
+        (stripeOn ? ' <span class="connect-status">Connected' + (s.stripeUserId ? ' · ' + esc(s.stripeUserId) : '') + '</span>' : ' <span class="connect-status off">Not connected yet</span>') +
+        '</h4>' +
+        '<div class="connect-actions">' +
+        '<button type="button" class="btn-connect stripe" id="wiz-stripe-connect">🔗 Connect with Stripe now</button>' +
+        (s.stripeUserId ? '<button type="button" class="btn-ghost" id="wiz-stripe-disconnect">Disconnect</button>' : '') +
+        '</div>' +
+        field('Connect Client ID (ca_…)', 'wiz-stripe-connect-id', s.connectClientId) +
+        field('Publishable Key', 'wiz-stripe-pub', s.publishableKey) +
+        field('Secret Key', 'wiz-stripe-secret', s.secretKey) +
+        field('Webhook Secret (optional)', 'wiz-stripe-webhook', s.webhookSecret) +
+        '</div>' +
+        '<div class="integration-block"><h4><span class="connected-dot' + (p.connected ? ' on' : '') + '"></span> PayPal</h4>' +
+        '<div class="howto" style="margin-top:0"><h3>PayPal</h3><ol>' +
+        '<li>Open <a href="https://developer.paypal.com/dashboard/applications" target="_blank" rel="noopener">PayPal Developer</a>.</li>' +
+        '<li>Create (or open) your Live app → copy Client ID &amp; Secret.</li>' +
+        '<li>Paste below → Save. Checkout picks them up automatically.</li>' +
+        '</ol></div>' +
+        field('Client ID', 'wiz-paypal-id', p.clientId) + field('Client Secret', 'wiz-paypal-secret', p.clientSecret) +
+        '</div></div><div class="wizard-nav"><button type="button" class="btn-ghost" id="wiz-back">← Back</button><button type="button" class="btn-pink" id="wiz-save-step">Save & Activate →</button></div>';
+    } else if (wizardStep === 3) {
+      const sa = integrations.socialAuth || {};
+      const g = sa.google || {};
+      const a = sa.apple || {};
+      const f = sa.facebook || {};
+      html = '<h2>Shopper Logins</h2>' +
+        '<div id="wiz-save-banner" class="save-banner"></div>' +
+        '<p class="lead">Optional — let customers sign in with Google, Apple, or Facebook. These apps belong to <strong>you</strong>. After Save, the buttons appear on the shop login automatically.</p>' +
+        '<div class="howto"><h3>Google (easiest)</h3><ol>' +
+        '<li>Open <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Google Cloud Credentials</a>.</li>' +
+        '<li>Create an OAuth Client ID (type: Web application).</li>' +
+        '<li>Add authorized redirect URI exactly: <code>https://queenscustoms.shop/api/auth/google/callback</code></li>' +
+        '<li>Paste Client ID + Secret below, turn Enable ON, tap Save — Google login goes live.</li>' +
+        '</ol></div>' +
+        '<div class="integration-grid">' +
+        '<div class="integration-block"><h4><span class="connected-dot' + (g.enabled && g.clientId ? ' on' : '') + '"></span> Google</h4>' +
+        '<div class="toggle-row"><label for="wiz-google-on">Enable Google Sign-In on the shop</label><input type="checkbox" id="wiz-google-on"' + (g.enabled ? ' checked' : '') + '/></div>' +
+        field('Client ID', 'wiz-google-id', g.clientId) + field('Client Secret', 'wiz-google-secret', g.clientSecret) +
+        '</div>' +
+        '<div class="integration-block"><h4><span class="connected-dot' + (a.enabled && a.clientId ? ' on' : '') + '"></span> Apple</h4>' +
+        '<p class="connect-note">Apple Developer → Services ID + Key (.p8). Return URL: <code>https://queenscustoms.shop/api/auth/apple/callback</code></p>' +
+        '<div class="toggle-row"><label for="wiz-apple-on">Enable Apple Sign-In on the shop</label><input type="checkbox" id="wiz-apple-on"' + (a.enabled ? ' checked' : '') + '/></div>' +
+        field('Services ID (Client ID)', 'wiz-apple-id', a.clientId) +
+        field('Team ID', 'wiz-apple-team', a.teamId) +
+        field('Key ID', 'wiz-apple-key', a.keyId) +
+        '<div class="form-field"><label>Private Key (.p8 contents)</label><textarea id="wiz-apple-private" placeholder="-----BEGIN PRIVATE KEY-----">' + esc(a.privateKey || '') + '</textarea></div>' +
+        '</div>' +
+        '<div class="integration-block"><h4><span class="connected-dot' + (f.enabled && (f.appId || f.clientId) ? ' on' : '') + '"></span> Facebook</h4>' +
+        '<p class="connect-note">Meta for Developers → Facebook Login. Redirect: <code>https://queenscustoms.shop/api/auth/facebook/callback</code></p>' +
+        '<div class="toggle-row"><label for="wiz-fb-on">Enable Facebook Sign-In on the shop</label><input type="checkbox" id="wiz-fb-on"' + (f.enabled ? ' checked' : '') + '/></div>' +
+        field('App ID', 'wiz-fb-id', f.appId || f.clientId) + field('App Secret', 'wiz-fb-secret', f.appSecret || f.clientSecret) +
+        '</div></div><div class="wizard-nav"><button type="button" class="btn-ghost" id="wiz-back">← Back</button><button type="button" class="btn-pink" id="wiz-save-step">Save & Activate →</button></div>';
+    } else if (wizardStep === 4) {
+      html = '<h2>Email Marketing</h2><p class="lead">Connect your email platform for newsletters and order updates.</p>' +
+        '<div class="form-field"><label>Provider</label><select id="wiz-email-provider"><option value="mailchimp">Mailchimp</option><option value="klaviyo">Klaviyo</option><option value="sendgrid">SendGrid</option></select></div>' +
+        field('API Key', 'wiz-email-key', em.apiKey) +
+        '<div id="wiz-list-field" class="form-field"><label>List ID</label><input type="text" id="wiz-email-list" value="' + escAttr(em.listId || '') + '"/></div>' +
+        '<div class="wizard-nav"><button type="button" class="btn-ghost" id="wiz-back">← Back</button><button type="button" class="btn-pink" id="wiz-save-step">Save & Continue →</button></div>';
+    } else if (wizardStep === 5) {
+      const data = await api('/api/admin/products');
+      wizardProducts = data.products || [];
+      const rows = wizardProducts.slice(0, 12).map(p => '<div class="product-quick-row"><span class="name">' + esc(p.name) + '</span><input type="number" data-wiz-price="' + p.id + '" value="' + p.price + '" step="0.01" min="0" title="Price"/><input type="number" data-wiz-inv="' + p.id + '" value="' + p.inventory + '" min="0" title="Inventory"/><button type="button" class="btn-sm" data-wiz-save-prod="' + p.id + '">Save</button></div>').join('');
+      html = '<h2>Products Quick-Edit</h2><p class="lead">Update prices and inventory for your top products.</p>' +
+        (rows || '<p class="empty-state">No products found</p>') +
+        '<div class="wizard-nav"><button type="button" class="btn-ghost" id="wiz-back">← Back</button><button type="button" class="btn-pink" id="wiz-next">Continue →</button></div>';
+    } else if (wizardStep === 6) {
+      html = '<h2>Admin Users</h2><p class="lead">Add team members who can access this portal.</p>' +
+        field('Name', 'wiz-admin-name', '') + field('Email', 'wiz-admin-email', '', 'email') + field('Password', 'wiz-admin-pass', '', 'password') +
+        '<button type="button" class="btn-sm" id="wiz-add-admin" style="margin-top:8px">+ Add Admin</button>' +
+        '<div class="wizard-nav"><button type="button" class="btn-ghost" id="wiz-back">← Back</button><button type="button" class="btn-pink" id="wiz-next">Continue →</button></div>';
+    } else {
+      html = '<div class="complete-icon">👑</div><h2 style="text-align:center">You’re ready!</h2>' +
+        '<p class="lead" style="text-align:center">Everything you Saved is already live on queenscustoms.shop. No extra install steps.</p>' +
+        statusChecklistHtml() +
+        '<div class="wizard-nav" style="justify-content:center"><button type="button" class="btn-pink" id="wiz-finish">Go to Operations →</button></div>';
+    }
+
+    main.innerHTML = html;
+
+    const lastStep = WIZARD_STEPS.length - 1;
+    const back = $('wiz-back');
+    if (back) back.addEventListener('click', () => { wizardStep = Math.max(0, wizardStep - 1); renderWizard(); });
+    const next = $('wiz-next');
+    if (next) next.addEventListener('click', async () => {
+      const nextStep = Math.min(lastStep, wizardStep + 1);
+      try {
+        integrations = await api('/api/admin/integrations', {
+          method: 'PUT',
+          body: { setup: Object.assign({}, integrations.setup || {}, { step: nextStep, complete: false }) }
+        });
+      } catch (_) { /* ignore */ }
+      wizardStep = nextStep;
+      renderWizard();
+    });
+    const saveStep = $('wiz-save-step');
+    if (saveStep) saveStep.addEventListener('click', saveWizardStep);
+    const finish = $('wiz-finish');
+    if (finish) finish.addEventListener('click', async () => {
+      try {
+        integrations = await api('/api/admin/integrations/complete-setup', { method: 'POST', body: {} });
+        toast('Setup marked complete — you’re in Operations');
+      } catch (_) { /* still allow entering ops */ }
+      setMode('operations');
+    });
+
+    if (wizardStep === 2) {
+      const connectBtn = $('wiz-stripe-connect');
+      if (connectBtn) {
+        connectBtn.addEventListener('click', async () => {
+          try {
+            // Persist Connect Client ID + secret first so callback can finish
+            await api('/api/admin/integrations', {
+              method: 'PUT',
+              body: {
+                stripe: {
+                  connectClientId: val('wiz-stripe-connect-id'),
+                  publishableKey: val('wiz-stripe-pub'),
+                  secretKey: val('wiz-stripe-secret'),
+                  webhookSecret: val('wiz-stripe-webhook'),
+                }
+              }
+            });
+            const data = await api('/api/admin/integrations/stripe/connect');
+            if (!data.url) throw new Error('No Connect URL returned');
+            window.location.href = data.url;
+          } catch (e) {
+            toast(e.message || 'Stripe Connect failed', 'error');
+          }
+        });
+      }
+      const disc = $('wiz-stripe-disconnect');
+      if (disc) {
+        disc.addEventListener('click', async () => {
+          try {
+            integrations = await api('/api/admin/integrations/stripe/disconnect', { method: 'POST', body: {} });
+            toast('Stripe Connect disconnected');
+            renderWizard();
+          } catch (e) { toast(e.message || 'Disconnect failed', 'error'); }
+        });
+      }
+    }
+
+    if (wizardStep === 4) {
+      const sel = $('wiz-email-provider');
+      if (sel) {
+        sel.value = em.provider || 'mailchimp';
+        sel.addEventListener('change', () => {
+          const listField = $('wiz-list-field');
+          if (listField) listField.style.display = sel.value === 'sendgrid' ? 'none' : '';
+        });
+        if (sel.value === 'sendgrid') $('wiz-list-field').style.display = 'none';
+      }
+    }
+
+    if (wizardStep === 5) {
+      document.querySelectorAll('[data-wiz-save-prod]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.wizSaveProd;
+          const price = document.querySelector('[data-wiz-price="' + id + '"]').value;
+          const inv = document.querySelector('[data-wiz-inv="' + id + '"]').value;
+          await api('/api/admin/products/' + id, { method: 'PUT', body: { price: parseFloat(price), inventory: parseInt(inv, 10) } });
+          toast('Product saved');
+        });
+      });
+    }
+
+    if (wizardStep === 6) {
+      $('wiz-add-admin').addEventListener('click', async () => {
+        const name = $('wiz-admin-name').value.trim();
+        const email = $('wiz-admin-email').value.trim();
+        const password = $('wiz-admin-pass').value;
+        if (!email || !password) { toast('Email and password required', 'error'); return; }
+        try {
+          await api('/api/admin/users', { method: 'POST', body: { name, email, password } });
+          toast('Admin added');
+          $('wiz-admin-name').value = '';
+          $('wiz-admin-email').value = '';
+          $('wiz-admin-pass').value = '';
+        } catch (e) { toast(e.message, 'error'); }
+      });
+    }
+  }
+
+  async function saveWizardStep() {
+    let body = { _wizardStep: wizardStep };
+    if (wizardStep === 1) {
+      body.etsy = { apiKey: val('wiz-etsy-key'), shopId: val('wiz-etsy-shop'), connected: !!(val('wiz-etsy-key') && val('wiz-etsy-shop')) };
+      body.amazon = { sellerId: val('wiz-amz-seller'), mwsToken: val('wiz-amz-token'), connected: !!(val('wiz-amz-seller') && val('wiz-amz-token')) };
+      body.tiktokShop = { appKey: val('wiz-tiktok-key'), appSecret: val('wiz-tiktok-secret'), connected: !!(val('wiz-tiktok-key') && val('wiz-tiktok-secret')) };
+    } else if (wizardStep === 2) {
+      const prev = integrations.stripe || {};
+      const pub = val('wiz-stripe-pub');
+      const secret = val('wiz-stripe-secret');
+      body.stripe = {
+        connectClientId: val('wiz-stripe-connect-id'),
+        publishableKey: pub,
+        secretKey: secret,
+        webhookSecret: val('wiz-stripe-webhook'),
+        stripeUserId: prev.stripeUserId || '',
+        mode: prev.stripeUserId ? 'connect' : 'keys',
+        connected: !!(prev.stripeUserId || (pub && secret)),
+      };
+      body.paypal = { clientId: val('wiz-paypal-id'), clientSecret: val('wiz-paypal-secret'), connected: !!(val('wiz-paypal-id') && val('wiz-paypal-secret')) };
+    } else if (wizardStep === 3) {
+      const gOn = !!( $('wiz-google-on') && $('wiz-google-on').checked );
+      const aOn = !!( $('wiz-apple-on') && $('wiz-apple-on').checked );
+      const fOn = !!( $('wiz-fb-on') && $('wiz-fb-on').checked );
+      const applePrivate = $('wiz-apple-private') ? $('wiz-apple-private').value.trim() : '';
+      body.socialAuth = {
+        google: { enabled: gOn, clientId: val('wiz-google-id'), clientSecret: val('wiz-google-secret') },
+        apple: { enabled: aOn, clientId: val('wiz-apple-id'), teamId: val('wiz-apple-team'), keyId: val('wiz-apple-key'), privateKey: applePrivate },
+        facebook: { enabled: fOn, appId: val('wiz-fb-id'), appSecret: val('wiz-fb-secret') }
+      };
+    } else if (wizardStep === 4) {
+      const prov = $('wiz-email-provider').value;
+      body.emailMarketing = {
+        provider: prov,
+        apiKey: val('wiz-email-key'),
+        listId: val('wiz-email-list'),
+        connected: !!val('wiz-email-key')
+      };
+    }
+
+    const saveBtn = $('wiz-save-step');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; }
+
+    try {
+      // Activate endpoint: saves + turns features on + may redirect to Stripe
+      const result = await api('/api/admin/integrations/activate', { method: 'POST', body });
+      integrations = result.integrations || result;
+      const messages = result.messages || ['Saved — your shop updated automatically.'];
+      showSaveBanner(messages, false);
+      toast(messages[0] || 'Saved & activated');
+
+      if (result.nextAction && result.nextAction.type === 'redirect' && result.nextAction.url) {
+        showSaveBanner([result.nextAction.message || 'Opening Stripe…'], false);
+        toast('Opening Stripe to finish connecting…');
+        setTimeout(() => { window.location.href = result.nextAction.url; }, 600);
+        return;
+      }
+
+      // Persist wizard progress so she resumes here next login
+      const nextStep = Math.min(WIZARD_STEPS.length - 1, wizardStep + 1);
+      try {
+        integrations = await api('/api/admin/integrations', {
+          method: 'PUT',
+          body: { setup: Object.assign({}, integrations.setup || {}, { step: nextStep, complete: false }) }
+        });
+      } catch (_) { /* non-blocking */ }
+
+      wizardStep = nextStep;
+      renderWizard();
+    } catch (e) {
+      showSaveBanner([e.message || 'Save failed — check the keys and try again.'], true);
+      toast(e.message || 'Save failed', 'error');
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = wizardStep === 2 || wizardStep === 3 ? 'Save & Activate →' : 'Save & Continue →'; }
+    }
+  }
+
+  function val(id) { const el = $(id); return el ? el.value.trim() : ''; }
+
+  function esc(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(s) { return esc(s).replace(/'/g, '&#39;'); }
 
 })();
 </script>
